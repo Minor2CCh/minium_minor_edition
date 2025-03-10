@@ -20,12 +20,12 @@ It is used in recipes for some items and can be used in recipes for other mods t
 Texture borrowed from [Mekanism](https://modrinth.com/mod/mekanism).
 
 - Iris Quartz
-- 
+
 It is produced in the overworld Y=-64~-32 range. This ore has a much lower production rate than diamond and is never produced in areas exposed to air.
 You can craft a Rainbow Quartz Ingot by using 3 Iris Quartz and 3 Osmium Ingots.
 You can create a tool by enhancing it from the following Concentrated Minium. However, when making tools, you will also need the Iris Quartz Update Smithing Template, which can be obtained at a certain rate from the chest in End City.
 The performance is higher than that of Netherlight, and it has a Fireproof effect, so it will not be lost even if it comes in contact with lava.
-In addition, it grants Resistance Effect (Lv.2 for Peaceful~Easy, Lv.1 for Normal~Hard), Absorption Effect (Lv. decreases with increasing difficulty), and several other effects when equipped as a set.
+In addition, it grants Resistance Effect (Lv.2 for Peaceful-Easy, Lv.1 for Normal-Hard), Absorption Effect (Lv. decreases with increasing difficulty), and several other effects when equipped as a set.
 Note, however, that there is a side effect that the Trial Omen Effect is given when the difficulty level is Hard.
 
 ## New Alloy
@@ -62,7 +62,7 @@ The armor's defensive performance is exactly the same as diamonds, but like Mini
 虹水晶3個とオスミウムインゴットを3個使用することで虹水晶インゴットをクラフトすることができます。
 下記の濃縮マイニウムから強化することでツールを作成することができます。ただし、ツールを作る場合はエンドシティのチェストから一定確率で入手できる虹水晶強化の鍛冶型も必要です。
 性能はネザライトより高く、火炎効果を持つので溶岩に触れてもロストしません。
-また、追加効果として、一式装備時に耐性(Peaceful~Easyの場合はLv.2、Normal~Hardの場合はLv.1)と衝撃吸収(Lvは難易度が上がると減少)、その他複数のエフェクトを付与します。
+また、追加効果として、一式装備時に耐性(Peaceful-Easyの場合はLv.2、Normal-Hardの場合はLv.1)と衝撃吸収(Lvは難易度が上がると減少)、その他複数のエフェクトを付与します。
 ただし、難易度がHardの場合試練の予感が付与される副作用があるので注意。
 
 

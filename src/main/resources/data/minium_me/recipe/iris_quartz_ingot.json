@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:gems/iris_quartz"
+    },
+    {
+      "tag": "c:gems/iris_quartz"
+    },
+    {
+      "tag": "c:gems/iris_quartz"
+    },
+    {
+      "tag": "c:ingots/osmium"
+    },
+    {
+      "tag": "c:ingots/osmium"
+    },
+    {
+      "tag": "c:ingots/osmium"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:iris_quartz_ingot"
+  }
+}

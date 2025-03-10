@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "minium_me:item/iris_quartz_elytra"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "broken": 1
+            },
+            "model": "minium_me:item/iris_quartz_broken_elytra"
+        }
+    ]
+}

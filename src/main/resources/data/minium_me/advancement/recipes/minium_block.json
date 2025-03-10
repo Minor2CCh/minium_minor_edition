@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "craft_minium_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minium_me:minium_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:minium_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "craft_minium_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:minium_block"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "minium_me",
+  "version": "${version}",
+  "name": "minium_minor_edition",
+  "description": "This mod is that adds original ores, Minium.",
+  "authors": ["Minor2CCh"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "minium_me.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.github.Minor2CCh.minium_me.client.Minium_meClient"
+    ],
+    "main": [
+      "com.github.Minor2CCh.minium_me.Minium_me"
+    ]
+  },
+  "mixins": [
+    "minium_me.mixins.json",
+    {
+      "config": "minium_me.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": "1.21.1"
+  }
+}

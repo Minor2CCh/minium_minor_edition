@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "group": "minium_ingot",
+  "ingredient": {
+    "item": "minium_me:raw_minium"
+  },
+  "result": {
+    "id": "minium_me:minium_ingot"
+  }
+}

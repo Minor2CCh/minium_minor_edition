@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "c:ingots/iris_quartz"
+    },
+    "X": {
+      "item": "minecraft:elytra"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#X#",
+    "# #"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:iris_quartz_elytra"
+  }
+}

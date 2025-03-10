@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "minium_me:block/raw_osmium_block"
+    }
+  }
+}

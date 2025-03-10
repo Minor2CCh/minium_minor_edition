@@ -1,0 +1,3 @@
+{
+"parent":"minecraft:item/generated",
+"textures":{"layer0":"minium_me:item/iris_quartz_boots","layer1":"minecraft:trims/items/boots_trim_emerald"}}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "iris_quartz_upgrade_smithing_template",
+  "key": {
+    "#": {
+      "tag": "c:storage_blocks/iris_quartz"
+    },
+    "X": {
+      "tag": "c:storage_blocks/osmium"
+    },
+    "Y": {
+      "tag": "c:storage_blocks/concentrated_minium"
+    }
+  },
+  "pattern": [
+    "X#X",
+    "XYX",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:iris_quartz_upgrade_smithing_template"
+  }
+}

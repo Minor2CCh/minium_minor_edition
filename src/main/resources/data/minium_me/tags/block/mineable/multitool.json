@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:mineable/pickaxe",
+    "#minecraft:mineable/shovel",
+    "#minecraft:mineable/axe",
+    "#minecraft:mineable/hoe",
+    "#minecraft:wool",
+    "#minecraft:wool_carpets",
+    "minecraft:powder_snow",
+    "minecraft:ochre_froglight",
+    "minecraft:verdant_froglight",
+    "minecraft:pearlescent_froglight",
+    "minecraft:honeycomb_block",
+    "minecraft:trial_spawner",
+    "minecraft:cobweb",
+    "minecraft:cactus",
+    {
+      "id": "ars_nouveau:mage_block",
+      "required": false
+    }
+  ]
+}

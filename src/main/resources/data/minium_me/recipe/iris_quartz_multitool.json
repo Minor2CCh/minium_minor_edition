@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minium_me:iris_quartz_axe"
+    },
+    {
+      "item": "minium_me:iris_quartz_hoe"
+    },
+    {
+      "item": "minium_me:iris_quartz_pickaxe"
+    },
+    {
+      "item": "minium_me:iris_quartz_shovel"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:iris_quartz_multitool"
+  }
+}

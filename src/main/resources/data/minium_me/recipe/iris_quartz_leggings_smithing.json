@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minium_me:iris_quartz_ingot"
+  },
+  "base": {
+    "item": "minium_me:concentrated_minium_leggings"
+  },
+  "result": {
+    "count": 1,
+    "id": "minium_me:iris_quartz_leggings"
+  },
+  "template": {
+    "item": "minium_me:iris_quartz_upgrade_smithing_template"
+  }
+}

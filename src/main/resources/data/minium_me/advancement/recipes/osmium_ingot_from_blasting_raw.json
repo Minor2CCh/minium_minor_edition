@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_minium_me:raw_osmium": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minium_me:raw_osmium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:blasting_raw_osmium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_minium_me:raw_osmium"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:blasting_raw_osmium"
+    ]
+  }
+}

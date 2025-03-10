@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minium_me:concentrated_minium_axe"
+    },
+    {
+      "item": "minium_me:concentrated_minium_hoe"
+    },
+    {
+      "item": "minium_me:concentrated_minium_pickaxe"
+    },
+    {
+      "item": "minium_me:concentrated_minium_shovel"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:concentrated_minium_multitool"
+  }
+}

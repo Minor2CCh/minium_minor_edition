@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "c:ingots/minium"
+    },
+    "$": {
+      "tag": "c:ingots/concentrated_minium"
+    },
+    "B": {
+      "tag": "minecraft:buttons"
+    },
+    "X": {
+      "tag": "c:storage_blocks/minium"
+    },
+    "Y": {
+      "tag": "c:storage_blocks/concentrated_minium"
+    },
+    "Z": {
+      "tag": "c:storage_blocks/gold"
+    }
+  },
+  "pattern": [
+    "ZYX",
+    " $#",
+    " B#"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:energy_gun"
+  }
+}

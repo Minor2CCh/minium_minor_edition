@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#c:storage_blocks/concentrated_minium",
+    "#c:storage_blocks/iris_quartz",
+    "#c:storage_blocks/minium",
+    "#c:storage_blocks/osmium",
+    "#c:storage_blocks/raw_minium",
+    "#c:storage_blocks/raw_osmium"
+  ]
+}

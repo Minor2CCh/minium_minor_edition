@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "minium_me:block/minium_bulb_lit"
+  }
+}

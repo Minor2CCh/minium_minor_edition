@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "minium_me:minium_ore",
+    "minium_me:deepslate_minium_ore",
+    "minium_me:minium_block",
+    "minium_me:concentrated_minium_block",
+    "minium_me:nether_minium_ore",
+    "minium_me:end_minium_ore",
+    "minium_me:osmium_block",
+    "minium_me:raw_minium_block",
+    "minium_me:raw_osmium_block",
+    "minium_me:osmium_ore",
+    "minium_me:deepslate_osmium_ore",
+    "minium_me:iris_quartz_ore",
+    "minium_me:deepslate_iris_quartz_ore",
+    "minium_me:iris_quartz_block",
+    "minium_me:minium_grate",
+    "minium_me:minium_bulb"
+  ]
+}

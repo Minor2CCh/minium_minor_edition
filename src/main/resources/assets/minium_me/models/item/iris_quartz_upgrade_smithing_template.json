@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minium_me:item/iris_quartz_upgrade_smithing_template"
+  }
+}

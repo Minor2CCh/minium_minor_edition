@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_minium_grate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minium_me:minium_grate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:minium_bulb"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_minium_grate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:minium_bulb"
+    ]
+  }
+}

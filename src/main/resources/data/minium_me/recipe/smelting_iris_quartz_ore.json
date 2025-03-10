@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2,
+  "group": "iris_quartz",
+  "ingredient": {
+    "item": "minium_me:iris_quartz_ore"
+  },
+  "result": {
+    "id": "minium_me:iris_quartz"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minium_me:iris_quartz_elytra"
+  },
+  "base": {
+    "item": "minium_me:iris_quartz_chestplate"
+  },
+  "result": {
+    "count": 1,
+    "id": "minium_me:iris_quartz_elytra_chestplate"
+  },
+  "template": {
+    "item": "minium_me:iris_quartz_upgrade_smithing_template"
+  }
+}

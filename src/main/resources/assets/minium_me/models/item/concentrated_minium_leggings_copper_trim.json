@@ -1,0 +1,3 @@
+{
+"parent":"minecraft:item/generated",
+"textures":{"layer0":"minium_me:item/concentrated_minium_leggings","layer1":"minecraft:trims/items/leggings_trim_copper"}}

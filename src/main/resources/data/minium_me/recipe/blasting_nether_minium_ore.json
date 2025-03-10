@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "group": "minium_ingot",
+  "ingredient": {
+    "item": "minium_me:nether_minium_ore"
+  },
+  "result": {
+    "id": "minium_me:minium_ingot"
+  }
+}

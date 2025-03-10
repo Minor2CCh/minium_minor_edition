@@ -1,0 +1,3 @@
+{
+"parent":"minecraft:item/generated",
+"textures":{"layer0":"minium_me:item/concentrated_minium_chestplate","layer1":"minecraft:trims/items/chestplate_trim_redstone"}}

@@ -1,0 +1,20 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "translate": "enchantment.minium_me.stone_alchemy"
+  },
+  "max_cost": {
+    "base": 37,
+    "per_level_above_first": 20
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 12,
+    "per_level_above_first": 20
+  },
+  "slots": [
+    "hand"
+  ],
+  "supported_items": "#minium_me:enchantable/multitool_extra",
+  "weight": 1
+}

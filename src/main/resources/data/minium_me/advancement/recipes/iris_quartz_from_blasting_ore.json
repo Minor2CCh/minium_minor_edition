@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_minium_me:iris_quartz_ore": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minium_me:iris_quartz_ore"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:blasting_iris_quartz_ore"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_minium_me:iris_quartz_ore"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:blasting_iris_quartz_ore"
+    ]
+  }
+}

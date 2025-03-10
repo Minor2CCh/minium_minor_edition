@@ -1,0 +1,26 @@
+{
+  "item.minium_me.energy_gun.shoot": {
+    "subtitle" :  "subtitles.minium_me.item.energy_gun.shoot" ,
+    "sounds": [
+      "minium_me:item/energy_gun/shoot"
+    ]
+  },
+  "item.minium_me.energy_gun.empty": {
+    "subtitle" :  "subtitles.minium_me.item.energy_gun.empty" ,
+    "sounds": [
+      "minium_me:item/energy_gun/empty"
+    ]
+  },
+  "item.minium_me.energy_gun.reload": {
+    "subtitle" :  "subtitles.minium_me.item.energy_gun.reload" ,
+    "sounds": [
+      "minium_me:item/energy_gun/reload"
+    ]
+  },
+  "item.minium_me.energy_gun.hit": {
+    "subtitle" :  "subtitles.minium_me.item.energy_gun.hit" ,
+    "sounds": [
+      "minium_me:item/energy_gun/hit"
+    ]
+  }
+}

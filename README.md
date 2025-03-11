@@ -21,7 +21,7 @@ Texture borrowed from [Mekanism](https://modrinth.com/mod/mekanism).
 
 - Iris Quartz
 
-It is produced in the overworld Y=-64~-32 range. This ore has a much lower production rate than diamond and is never produced in areas exposed to air.
+It is generated in the overworld Y=-64~-32 range. This ore has a much lower production rate than diamond and is never produced in areas exposed to air.
 You can craft a Rainbow Quartz Ingot by using 3 Iris Quartz and 3 Osmium Ingots.
 You can create a tool by enhancing it from the following Concentrated Minium. However, when making tools, you will also need the Iris Quartz Update Smithing Template, which can be obtained at a certain rate from the chest in End City.
 The performance is higher than that of Netherlight, and it has a Fireproof effect, so it will not be lost even if it comes in contact with lava.

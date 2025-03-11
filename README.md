@@ -54,8 +54,8 @@ Other than that, it also has the following features
 
 This is a simple gun that is loaded with metal or jewelry and fired as energy.
 It can be loaded by holding and using the metal or gem you wish to turn into energy in your off-hand.
-The energy of the gun must be Empty from the matching energy to be loaded.
-The available energy can be found by looking at recipes from JEI and other recipe mods.
+To load, the gun must either be empty or have matching energy.
+The available energy can be found by looking at the recipes from REI or EMI.
 
 # このMODについて
 これはオリジナルの鉱石を追加するシンプルなMODです。
@@ -110,5 +110,5 @@ The available energy can be found by looking at recipes from JEI and other recip
 
 金属や宝石などを装填してエネルギーとして発射する簡易的な銃です。
 オフハンドにエネルギーにしたい金属や宝石を持ち、使用することで装填することができます。
-装填するには一致するエネルギーから銃のエネルギーがEmptyである必要があります。
-使用可能なエネルギーはJEIなどのレシピMODからレシピを見ることでわかります。
+装填するには銃のエネルギーが空であるか、一致するエネルギーかのどちらかである必要があります。
+使用可能なエネルギーはREIかEMIからレシピを見ることでわかります。

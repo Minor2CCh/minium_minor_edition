@@ -1,5 +1,6 @@
 package com.github.Minor2CCh.minium_me.entity;
 
+import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.damage_type.MiniumDamageType;
 import com.github.Minor2CCh.minium_me.particle.MiniumParticle;
@@ -19,6 +20,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.EntityTypeTags;
@@ -139,6 +141,12 @@ public class EnergyBulletEntity extends ProjectileEntity {
                 break;
             case MiniumModComponent.ENERGY_STEEL:
                 color = 0xA2A2A2;
+                break;
+            case MiniumModComponent.ENERGY_CERTUS_QUARTZ:
+                color = 0xACE9FF;
+                break;
+            case MiniumModComponent.ENERGY_FLUIX:
+                color = 0xFF80D7;
                 break;
             default:
                 color = 0xFFFFFF;
@@ -324,7 +332,7 @@ public class EnergyBulletEntity extends ProjectileEntity {
                     , livingEntity);
             resultDamage = baseDamage * 1.2F;
             if(entity.getType().isFireImmune()){
-                resultDamage *= 1.5F;
+                resultDamage *= 1.75F;
             }
         }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_SILVER)) {
             damageSource = new DamageSource(
@@ -334,7 +342,7 @@ public class EnergyBulletEntity extends ProjectileEntity {
                     , livingEntity);
             resultDamage = baseDamage * 1.2F;
             if(!entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_SMITE)){
-                resultDamage *= 1.5F;
+                resultDamage *= 1.75F;
             }
         }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_TIN)) {
             damageSource = new DamageSource(
@@ -344,7 +352,7 @@ public class EnergyBulletEntity extends ProjectileEntity {
                     , livingEntity);
             resultDamage = baseDamage * 1.2F;
             if(entity.isTouchingWaterOrRain()){
-                resultDamage *= 1.5F;
+                resultDamage *= 1.75F;
             }
 
         }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_URANIUM)) {
@@ -382,6 +390,20 @@ public class EnergyBulletEntity extends ProjectileEntity {
                             .entryOf(MiniumDamageType.ENERGY_FIRE)
                     , livingEntity);
             resultDamage = baseDamage * (entity.isTouchingWaterOrRain() ? 0.4F : (entity.isOnFire() ? 2.0F : 1.2F));
+        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_CERTUS_QUARTZ)) {
+            damageSource = new DamageSource(
+                    this.getWorld().getRegistryManager()
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
+                    , livingEntity);
+            resultDamage = baseDamage;
+        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_FLUIX)) {
+            damageSource = new DamageSource(
+                    this.getWorld().getRegistryManager()
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
+                    , livingEntity);
+            resultDamage = baseDamage * 1.5F;
         }
         boolean bl = false;
         if(!(entity instanceof TameableEntity tameableEntity) || !tameableEntity.isOwner(livingEntity)){
@@ -474,23 +496,29 @@ public class EnergyBulletEntity extends ProjectileEntity {
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
-        if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_STEEL)){
-            if (!this.getWorld().isClient) {
-                Entity entity = this.getOwner();
-                if (!(entity instanceof MobEntity) || this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
-                    BlockPos blockPos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
-                    BlockPos blockPos2 = blockHitResult.getBlockPos();
-                    BlockState blockState = this.getWorld().getBlockState(blockPos2);
-                    if (CampfireBlock.canBeLit(blockState) || CandleBlock.canBeLit(blockState) || CandleCakeBlock.canBeLit(blockState)) {
-                        //this.playUseSound(this.getWorld(), blockPos);
-                        this.getWorld().setBlockState(blockPos2, blockState.with(Properties.LIT, Boolean.TRUE));
-                        this.getWorld().emitGameEvent(this, GameEvent.BLOCK_CHANGE, blockPos2);
-                    }else if (this.getWorld().isAir(blockPos)) {
-                        this.getWorld().setBlockState(blockPos, AbstractFireBlock.getState(this.getWorld(), blockPos));
-                    }
+        if (!this.getWorld().isClient) {
+            Entity entity = this.getOwner();
+            if (!(entity instanceof MobEntity) || this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+                BlockPos blockPos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
+                BlockPos blockPos2 = blockHitResult.getBlockPos();
+                BlockState blockState = this.getWorld().getBlockState(blockPos2);
+                if((Objects.equals(EnergyType, MiniumModComponent.ENERGY_REDSTONE) || Objects.equals(EnergyType, MiniumModComponent.ENERGY_STEEL)) && blockState.getBlock() instanceof TntBlock){
+                    TntBlock.primeTnt(this.getWorld(), blockPos2);
+                    this.getWorld().removeBlock(blockPos2, false);
+                }else if (Objects.equals(EnergyType, MiniumModComponent.ENERGY_STEEL) && (CampfireBlock.canBeLit(blockState) || CandleBlock.canBeLit(blockState) || CandleCakeBlock.canBeLit(blockState))) {
+                    //this.playUseSound(this.getWorld(), blockPos);
+                    this.getWorld().setBlockState(blockPos2, blockState.with(Properties.LIT, Boolean.TRUE));
+                    this.getWorld().emitGameEvent(this, GameEvent.BLOCK_CHANGE, blockPos2);
+                }else if (Objects.equals(EnergyType, MiniumModComponent.ENERGY_STEEL) && this.getWorld().isAir(blockPos)) {
+                    this.getWorld().setBlockState(blockPos, AbstractFireBlock.getState(this.getWorld(), blockPos));
+                }else if (Objects.equals(EnergyType, MiniumModComponent.ENERGY_REDSTONE) && (this.getWorld().isAir(blockPos) || this.getWorld().isWater(blockPos))) {
+                    this.getWorld().setBlockState(blockPos, MiniumBlock.REDSTONE_ENERGY_BLOCK.getDefaultState().with(Properties.WATERLOGGED, this.getWorld().getFluidState(blockPos).getFluid() == Fluids.WATER));
+                }else if (Objects.equals(EnergyType, MiniumModComponent.ENERGY_GLOWSTONE) && (this.getWorld().isAir(blockPos) || this.getWorld().isWater(blockPos))) {
+                    this.getWorld().setBlockState(blockPos, MiniumBlock.GLOWSTONE_ENERGY_BLOCK.getDefaultState().with(Properties.WATERLOGGED, this.getWorld().getFluidState(blockPos).getFluid() == Fluids.WATER));
                 }
             }
         }
+
         hitParticles();
     }
     protected void hitParticles() {
@@ -519,7 +547,7 @@ public class EnergyBulletEntity extends ProjectileEntity {
         super.tick();
         Vec3d vec3d = this.getVelocity();
         float velMul = 1.5F;
-        if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_QUARTZ)){
+        if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_QUARTZ) || Objects.equals(EnergyType, MiniumModComponent.ENERGY_CERTUS_QUARTZ)){
             velMul *= 1.5F;
         }
         vec3d = vec3d.multiply(velMul);

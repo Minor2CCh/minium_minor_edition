@@ -15,6 +15,7 @@
     "minecraft:trial_spawner",
     "minecraft:cobweb",
     "minecraft:cactus",
+    "minium_me:wind_charge_block",
     {
       "id": "ars_nouveau:mage_block",
       "required": false

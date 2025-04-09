@@ -556,6 +556,29 @@ public class MiniumGunItem extends Item{
                 bl = true;
             }
         }
+        //ケルタスクォーツ
+        if(Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) || Objects.equals(energyType, MiniumModComponent.ENERGY_CERTUS_QUARTZ)){
+            if(offHandStack.isIn(MiniumItemTag.ENERGY_CERTUS_QUARTZ)){
+                remain = addRemain(remain, offHandStack.getCount());
+                energyType = MiniumModComponent.ENERGY_CERTUS_QUARTZ;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }else if(offHandStack.isIn(MiniumItemTag.ENERGY_CERTUS_QUARTZ_STORAGE_BLOCKS)){
+                remain = addRemain(remain, offHandStack.getCount() * 10);
+                energyType = MiniumModComponent.ENERGY_CERTUS_QUARTZ;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }
+        }
+        //フルーシュ
+        if(Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) || Objects.equals(energyType, MiniumModComponent.ENERGY_FLUIX)){
+            if(offHandStack.isIn(MiniumItemTag.ENERGY_FLUIX)){
+                remain = addRemain(remain, offHandStack.getCount());
+                energyType = MiniumModComponent.ENERGY_FLUIX;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }
+        }
 
 
 
@@ -579,7 +602,8 @@ public class MiniumGunItem extends Item{
                  MiniumModComponent.ENERGY_SOURCE_GEM, MiniumModComponent.ENERGY_ALUMINIUM,
                  MiniumModComponent.ENERGY_LEAD, MiniumModComponent.ENERGY_NICKEL, MiniumModComponent.ENERGY_SILVER,
                  MiniumModComponent.ENERGY_TIN, MiniumModComponent.ENERGY_URANIUM, MiniumModComponent.ENERGY_ZINC,
-                 MiniumModComponent.ENERGY_BRONZE, MiniumModComponent.ENERGY_STEEL ->
+                 MiniumModComponent.ENERGY_BRONZE, MiniumModComponent.ENERGY_STEEL,
+                 MiniumModComponent.ENERGY_CERTUS_QUARTZ, MiniumModComponent.ENERGY_FLUIX ->
                     true;
             default -> false;
         };
@@ -720,6 +744,14 @@ public class MiniumGunItem extends Item{
                     energyName = "item.minium_me.energy.type.steel";
                     color = 0xA2A2A2;
                     break;
+                case MiniumModComponent.ENERGY_CERTUS_QUARTZ:
+                    energyName = "item.minium_me.energy.type.certus_quartz";
+                    color = 0xACE9FF;
+                    break;
+                case MiniumModComponent.ENERGY_FLUIX:
+                    energyName = "item.minium_me.energy.type.fluix";
+                    color = 0xFF80D7;
+                    break;
                 default:
                     energyName = "item.minium_me.energy.type.error";
                     color = 0x7F7F7F;
@@ -727,7 +759,7 @@ public class MiniumGunItem extends Item{
             }
             //tooltip.add(Text.translatable("item.minium_me.energy.type", Text.translatable(energyName)).formatted(formatting));
             tooltip.add(Text.translatable("item.minium_me.energy.type", Text.translatable(energyName)).withColor(color));
-            tooltip.add(Text.translatable(energyName +".explain").formatted(Formatting.WHITE));
+            tooltip.add(Text.translatable(energyName +".desc").formatted(Formatting.WHITE));
 
 
         }
@@ -837,6 +869,12 @@ public class MiniumGunItem extends Item{
                     break;
                 case MiniumModComponent.ENERGY_STEEL:
                     color = 0xA2A2A2;
+                    break;
+                case MiniumModComponent.ENERGY_CERTUS_QUARTZ:
+                    color = 0xACE9FF;
+                    break;
+                case MiniumModComponent.ENERGY_FLUIX:
+                    color = 0xFF80D7;
                     break;
                 default:
                     color = 0x7F7F7F;

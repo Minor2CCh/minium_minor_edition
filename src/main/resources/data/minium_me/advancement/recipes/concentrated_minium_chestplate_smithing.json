@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_minium_upgrade_smithing_template": {
+    "has_concentrated_minium_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "minium_me:minium_upgrade_smithing_template"
+            "items": "minium_me:concentrated_minium_ingot"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_minium_upgrade_smithing_template"
+      "has_concentrated_minium_ingot"
     ]
   ],
   "rewards": {

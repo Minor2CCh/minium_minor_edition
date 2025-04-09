@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/minium"
+    },
+    "$": {
+      "item": "minecraft:paper"
+    },
+    "W": {
+      "tag": "c:storage_blocks/wind_charge"
+    },
+    "g": {
+      "tag": "c:gunpowders"
+    }
+  },
+  "pattern": [
+    "$g$",
+    "#W#",
+    "$W$"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:wind_exploder"
+  }
+}

@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 public class MiniumBlockTag {
 
     public static final TagKey<Block> MULTITOOL_MINEABLE = of("mineable/multitool");
+    public static final TagKey<Block> DEEPSLATE_MINER_CAN_BREAK = of("deepslate_miner_can_break");
 
         private MiniumBlockTag() {
         }

@@ -40,6 +40,8 @@ public class MiniumModComponent {
     public static final String ENERGY_ZINC = "energy_zinc";//亜鉛
     public static final String ENERGY_BRONZE = "energy_bronze";//青銅
     public static final String ENERGY_STEEL = "energy_steel";//鋼鉄
+    public static final String ENERGY_CERTUS_QUARTZ = "energy_certus_quartz";//ケルタスクォーツ
+    public static final String ENERGY_FLUIX = "energy_fluix";//フルーシュ
     public static final Codec<EnergyComponent> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Codec.INT.fieldOf("energy_remain").forGetter(EnergyComponent::remain),
             Codec.STRING.optionalFieldOf("energy_type", ENERGY_EMPTY).forGetter(EnergyComponent::type)
@@ -48,11 +50,7 @@ public class MiniumModComponent {
             Registries.DATA_COMPONENT_TYPE,
             Identifier.of(Minium_me.MOD_ID, "energy_profile"),
             ComponentType.<EnergyComponent>builder().codec(CODEC).build()
-    );/*
-    public static final ComponentType<Integer> RANGE_BREAK_TICK = Registry.register(
-            Registries.DATA_COMPONENT_TYPE,
-            Identifier.of(Minium_me.MOD_ID, "range_break_tick"),
-            ComponentType.<Integer>builder().codec(Codec.INT).build());*/
+    );
 
     /*
     private static <T>ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator){

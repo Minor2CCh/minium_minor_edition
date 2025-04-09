@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/minium"
+    },
+    "$": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "tag": "c:storage_blocks/redstone"
+    }
+  },
+  "pattern": [
+    "$#$",
+    "#R#",
+    "$#$"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:deepslate_miner"
+  }
+}

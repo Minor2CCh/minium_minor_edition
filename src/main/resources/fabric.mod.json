@@ -5,7 +5,10 @@
   "name": "minium_minor_edition",
   "description": "This mod is that adds original ores, Minium.",
   "authors": ["Minor2CCh"],
-  "contact": {},
+  "contact": {
+    "homepage": "https://modrinth.com/project/minium_minor_edition",
+    "issues": "https://github.com/Minor2CCh/minium_minor_edition/issues",
+    "sources": "https://github.com/Minor2CCh/minium_minor_edition"},
   "license": "MIT",
   "icon": "minium_me.png",
   "environment": "*",

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "minium_me:redstone_energy_block",
+    "minium_me:glowstone_energy_block"
+  ]
+}

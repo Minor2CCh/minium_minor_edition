@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:deepslate_ore_replaceables",
+    {
+      "id": "eternal_starlight:voidstone",
+      "required": false
+    },
+    {
+      "id": "eternal_starlight:haze_ice",
+      "required": false
+    }
+  ]
+}

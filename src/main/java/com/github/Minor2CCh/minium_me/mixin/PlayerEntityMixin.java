@@ -29,10 +29,10 @@ public class PlayerEntityMixin {
             default -> 2;
         };
 
-        if ((itemStackHead.isOf(MiniumItem.IRIS_QUARTZ_HELMET) &&
-                (itemStackChestplate.isOf(MiniumItem.IRIS_QUARTZ_CHESTPLATE) || (itemStackChestplate.isOf(MiniumItem.IRIS_QUARTZ_ELYTRA_CHESTPLATE)) &&
+        if (itemStackHead.isOf(MiniumItem.IRIS_QUARTZ_HELMET) &&
+                (itemStackChestplate.isOf(MiniumItem.IRIS_QUARTZ_CHESTPLATE) || itemStackChestplate.isOf(MiniumItem.IRIS_QUARTZ_ELYTRA_CHESTPLATE)) &&
                 itemStackLeggings.isOf(MiniumItem.IRIS_QUARTZ_LEGGINGS) &&
-                itemStackBoots.isOf(MiniumItem.IRIS_QUARTZ_BOOTS)))) {
+                itemStackBoots.isOf(MiniumItem.IRIS_QUARTZ_BOOTS)) {
 
             int[] coolTick = new int[]{200, 200, 400, 800};//tick、1s=20tick
             int[] resistLevel = new int[]{1, 1, 0, 0};//peaceful,easy=level 2 normal,hard=level 1

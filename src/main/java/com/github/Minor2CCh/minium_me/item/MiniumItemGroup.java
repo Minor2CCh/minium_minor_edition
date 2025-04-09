@@ -5,6 +5,8 @@ import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.UnbreakableComponent;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -103,12 +105,24 @@ public class MiniumItemGroup {
                     MiniumModComponent.ENERGY_URANIUM,
                     MiniumModComponent.ENERGY_ZINC,
                     MiniumModComponent.ENERGY_BRONZE,
-                    MiniumModComponent.ENERGY_STEEL)) {
+                    MiniumModComponent.ENERGY_STEEL,
+                    MiniumModComponent.ENERGY_CERTUS_QUARTZ,
+                    MiniumModComponent.ENERGY_FLUIX)) {
                 ItemStack gunStack = MiniumItem.ENERGY_GUN.getDefaultStack();
                 gunStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(2147483647, s));
                 itemGroup.add(gunStack);
             }
-
+            itemGroup.add(MiniumBlock.WIND_CHARGE_BLOCK);
+            itemGroup.add(MiniumItem.DEEPSLATE_MINER);
+            itemGroup.add(MiniumItem.WIND_EXPLODER);
+            ItemStack windExploderStack = MiniumItem.WIND_EXPLODER.getDefaultStack();
+            windExploderStack.set(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(true));
+            itemGroup.add(windExploderStack);
+            itemGroup.add(MiniumItem.ADVANCED_WIND_EXPLODER);
+            ItemStack advancedWindExploderStack = MiniumItem.ADVANCED_WIND_EXPLODER.getDefaultStack();
+            advancedWindExploderStack.set(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(true));
+            advancedWindExploderStack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
+            itemGroup.add(advancedWindExploderStack);
             //from mekanism
             itemGroup.add(MiniumItem.OSMIUM_INGOT_FROM_MEKANISM);
             itemGroup.add(MiniumItem.RAW_OSMIUM_FROM_MEKANISM);

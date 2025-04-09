@@ -23,9 +23,19 @@ public class PoisonHealEffect extends StatusEffect{
         if(entity.hasStatusEffect(StatusEffects.POISON)) {
             int poisonAmplifier = Objects.requireNonNull(entity.getStatusEffect(StatusEffects.POISON)).getAmplifier();
             int poisonDuration = Objects.requireNonNull(entity.getStatusEffect(StatusEffects.POISON)).getDuration();
-            entity.removeStatusEffect(StatusEffects.POISON);
-            if (!entity.hasStatusEffect(StatusEffects.POISON)){
-                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, poisonDuration, poisonAmplifier, true, true, true));
+            //entity.removeStatusEffect(StatusEffects.POISON);
+            if((25 >> poisonAmplifier) <= 1){//Lv.5以上は毒回避ができないので4に丸める
+                entity.removeStatusEffect(StatusEffects.POISON);
+                entity.setStatusEffect(new StatusEffectInstance(StatusEffects.POISON, poisonDuration, (poisonAmplifier = 3)), null);
+            }
+            if(poisonDuration <= 0){
+                entity.removeStatusEffect(StatusEffects.POISON);
+            }else if((poisonDuration) % (25 >> poisonAmplifier) == 0){
+                entity.removeStatusEffect(StatusEffects.POISON);
+                entity.setStatusEffect(new StatusEffectInstance(StatusEffects.POISON, poisonDuration - 1, poisonAmplifier), null);
+            }
+            if (!entity.hasStatusEffect(MiniumStatusEffects.POISONOUS_REGENERATION)){
+                entity.addStatusEffect(new StatusEffectInstance(MiniumStatusEffects.POISONOUS_REGENERATION, 50, poisonAmplifier, true, true, true));
             }
             /*
             int i = 25 >> poisonAmplifier;

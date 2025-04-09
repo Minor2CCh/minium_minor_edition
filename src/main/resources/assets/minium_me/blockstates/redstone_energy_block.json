@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "minium_me:block/redstone_energy_block"
+    }
+  }
+}

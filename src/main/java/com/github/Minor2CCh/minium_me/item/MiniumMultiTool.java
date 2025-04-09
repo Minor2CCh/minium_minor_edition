@@ -2,6 +2,8 @@ package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantmentTags;
+import com.github.Minor2CCh.minium_me.mixin.TrialSpawnerAccessor;
+import com.github.Minor2CCh.minium_me.mixin.TrialSpawnerSetter;
 import com.google.common.collect.BiMap;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.fabricmc.fabric.mixin.content.registry.AxeItemAccessor;
@@ -9,12 +11,15 @@ import net.fabricmc.fabric.mixin.content.registry.ShovelItemAccessor;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.TrialSpawnerBlockEntity;
+import net.minecraft.block.enums.TrialSpawnerState;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -27,10 +32,7 @@ import net.minecraft.world.WorldEvents;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static net.minecraft.block.Block.dropStacks;
 import static net.minecraft.block.Block.getDroppedStacks;
@@ -41,16 +43,20 @@ public class MiniumMultiTool extends MiningToolItem {
     private static final Map<Block, BlockState> PATH_STATES;
     private static final Map<Block, Block> STRIPPED_BLOCKS;
 
+
     public MiniumMultiTool(ToolMaterial material, Item.Settings settings) {
 
         super(material, MiniumBlockTag.MULTITOOL_MINEABLE, settings);
     }
-
+    @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos();
         PlayerEntity playerEntity = context.getPlayer();
         if (ToggleBulb(context, world, blockPos, playerEntity)) {
+            return ActionResult.success(world.isClient);
+        }
+        if (accelerateTrialSpawner(context, world, blockPos, playerEntity)) {
             return ActionResult.success(world.isClient);
         }
         if (shouldCancelStripAttempt(context)) {
@@ -184,17 +190,39 @@ public class MiniumMultiTool extends MiningToolItem {
         }
         return false;
     }
-    //WIP
+
     private boolean accelerateTrialSpawner(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
         BlockState blockState = world.getBlockState(blockPos);
         if (blockState.getBlock() instanceof TrialSpawnerBlock trialSpawnerBlock) {
-            //BlockEntity blockEntity = world.getBlockEntity(blockPos);
-            //ComponentMap componentMap = Objects.requireNonNull(blockEntity).getComponents();
+            // && trialSpawnerBlock.TRIAL_SPAWNER_STATE.equals(TrialSpawnerState.COOLDOWN)
+            if(blockState.get(TrialSpawnerBlock.TRIAL_SPAWNER_STATE).equals(TrialSpawnerState.COOLDOWN)){
+                TrialSpawnerBlockEntity trialSpawnerBlockEntity = (TrialSpawnerBlockEntity) world.getBlockEntity(blockPos);
+                long oldCooldown = ((TrialSpawnerAccessor)(Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getData())).cooldownEnd();//クライアントは0のみを返す
+                //long cooldownLength = Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getCooldownLength();
+                long remainCooldown = oldCooldown - world.getTime();
+                if(remainCooldown > 20) {
+                    long newCooldown = (long)(remainCooldown * 0.9)+world.getTime();
+                    if(!world.isClient()){
+                        ((TrialSpawnerSetter)(Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getData())).setCooldownEnd(newCooldown);
+                        /*
+                        System.out.println(((TrialSpawnerAccessor)(Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getData())).cooldownEnd());
+                        System.out.println(oldCooldown);
+                        System.out.println(world.getTime());
+                        */
+                    }
+                    context.getStack().damage(10, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+                }
+                world.playSound(playerEntity, blockPos, SoundEvents.BLOCK_VAULT_INSERT_ITEM_FAIL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.playSound(playerEntity, blockPos, SoundEvents.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, SoundCategory.BLOCKS, 1.0F, 0.5F);
+                Random random = new Random();
+                for(int i=0;i<8;i++){
+                    world.addParticle(ParticleTypes.TRIAL_SPAWNER_DETECTION, blockPos.getX()+random.nextDouble(-0.25, 1.25), blockPos.getY()+random.nextDouble(-0.25, 1.25), blockPos.getZ()+random.nextDouble(-0.25, 1.25), 0.0, random.nextDouble(0.05, 0.075), 0.0);
+                    world.addParticle(ParticleTypes.TRIAL_SPAWNER_DETECTION_OMINOUS, blockPos.getX()+random.nextDouble(-0.25, 1.25), blockPos.getY()+random.nextDouble(-0.25, 1.25), blockPos.getZ()+random.nextDouble(-0.25, 1.25), 0.0, random.nextDouble(0.05, 0.075), 0.0);
 
-            TrialSpawnerBlockEntity trialSpawnerBlockEntity = (TrialSpawnerBlockEntity) world.getBlockEntity(blockPos);
-            //BlockState blockState2 = blockState.with(TrialSpawnerBlock., !blockState.get(LIT));
-            //updateBlockState(world, blockPos, blockState2, playerEntity, context);
-            return true;
+                }
+                return true;
+            }
+
         }
         return false;
     }
@@ -233,34 +261,43 @@ public class MiniumMultiTool extends MiningToolItem {
     private boolean blockDisassemble(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
         BlockState blockState = world.getBlockState(blockPos);
         if (blockState.isOf(Blocks.GLOWSTONE)) {
-            world.playSound(playerEntity, blockPos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            dropItemFromBlock(world, blockPos, Items.GLOWSTONE_DUST, 4);
-            world.removeBlock(blockPos, false);
-            context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+            if(!world.isClient()){
+                dropItemInventory(Items.GLOWSTONE_DUST, 4, playerEntity);
+                world.breakBlock(blockPos, false, playerEntity);
+                context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+            }
             return true;
         }
         if (blockState.isOf(Blocks.SEA_LANTERN)) {
-            world.playSound(playerEntity, blockPos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            dropItemFromBlock(world, blockPos, Items.PRISMARINE_SHARD, 4);
-            dropItemFromBlock(world, blockPos, Items.PRISMARINE_CRYSTALS, 5);
-            world.removeBlock(blockPos, false);
-            context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+            if(!world.isClient()) {
+                dropItemInventory(Items.PRISMARINE_SHARD, 4, playerEntity);
+                dropItemInventory(Items.PRISMARINE_CRYSTALS, 5, playerEntity);
+                world.breakBlock(blockPos, false, playerEntity);
+                context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+            }
             return true;
         }
         if (blockState.isOf(Blocks.HONEYCOMB_BLOCK) && !playerEntity.shouldCancelInteraction()) {
-            world.playSound(playerEntity, blockPos, SoundEvents.BLOCK_CORAL_BLOCK_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            dropItemFromBlock(world, blockPos, Items.HONEYCOMB, 4);
-            world.removeBlock(blockPos, false);
-            context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+            if(!world.isClient()) {
+                dropItemInventory(Items.HONEYCOMB, 4, playerEntity);
+                world.breakBlock(blockPos, false, playerEntity);
+                context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+            }
             return true;
         }
         return false;
     }
+    private void dropItemInventory(Item lootItem, int count, PlayerEntity playerEntity){
+        ItemStack dropStack = lootItem.getDefaultStack();
+        dropStack.setCount(count);
+        if (!playerEntity.getInventory().insertStack(dropStack)) {
+            playerEntity.dropItem(dropStack, false);
+        }
+    }
+
     private void dropItemFromBlock(World world, BlockPos blockPos, Item lootItem, int count){
         ItemStack dropStack = lootItem.getDefaultStack();
-        if(count > 1){
-            dropStack.increment(count - 1);
-        }
+        dropStack.setCount(count);
         Block.dropStack(world, blockPos, dropStack);
     }
     //道生成
@@ -316,7 +353,7 @@ public class MiniumMultiTool extends MiningToolItem {
                 world.syncWorldEvent(player, 3005, pos, 0);
                 return optional2;
             } else {
-                Optional<BlockState> optional3 = Optional.ofNullable((Block) ((BiMap) HoneycombItem.WAXED_TO_UNWAXED_BLOCKS.get()).get(state.getBlock())).map((block) -> block.getStateWithProperties(state));
+                Optional<BlockState> optional3 = Optional.ofNullable((Block) ((BiMap<?, ?>) HoneycombItem.WAXED_TO_UNWAXED_BLOCKS.get()).get(state.getBlock())).map((block) -> block.getStateWithProperties(state));
                 if (optional3.isPresent()) {
                     world.playSound(player, pos, SoundEvents.ITEM_AXE_WAX_OFF, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     world.syncWorldEvent(player, 3004, pos, 0);
@@ -340,7 +377,7 @@ public class MiniumMultiTool extends MiningToolItem {
     public void appendTooltip(ItemStack itemStack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(itemStack, context, tooltip, type);
         if(itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL)){
-            tooltip.add(Text.translatable("item.minium_me.iris_quartz_multitool.explain"));
+            tooltip.add(Text.translatable("item.minium_me.iris_quartz_multitool.desc"));
         }
 
     }

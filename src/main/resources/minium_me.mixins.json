@@ -4,7 +4,9 @@
   "package": "com.github.Minor2CCh.minium_me.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "TrialSpawnerAccessor",
+    "TrialSpawnerSetter"
   ],
   "injectors": {
     "defaultRequire": 1

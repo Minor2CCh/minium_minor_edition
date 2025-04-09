@@ -27,5 +27,6 @@ public class Minium_me implements ModInitializer {
         MiniumParticle.initialize();
         MiniumDamageType.initialize();
         MiniumStatusEffects.initialize();
+        MiniumPotions.initialize();
     }
 }

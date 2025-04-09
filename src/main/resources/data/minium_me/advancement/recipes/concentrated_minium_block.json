@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "craft_concentrated_minium_block": {
+    "craft_concentrated_minium_ingot": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "craft_concentrated_minium_block"
+      "craft_concentrated_minium_ingot"
     ]
   ],
   "rewards": {

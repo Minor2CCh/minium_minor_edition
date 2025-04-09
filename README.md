@@ -44,11 +44,13 @@ This is a tool that can be made using Pickaxe, Shovel, Axe, and Hoe made from th
 The durability value is 3 times that of the stand-alone tool. Therefore, the durability value is slightly less than that of 4 tools. This tool is a suitable tool for a small number of blocks in addition to those that can be mined with Pickaxe, Shovel, Axe, and Hoe.
 Other than that, it also has the following features
 
-・Extract raw materials for Sea Lantern, Glowstone, and Honeycomb Block
+・Extract raw materials for Sea Lantern, Glowstone, and Honeycomb Block.
 
-・Turn Obsidian into Crying Obsidian
+・Turn Obsidian into Crying Obsidian.
 
 ・The same function as right-click of Shovel and Axe.
+
+・TrialSpawner cool time reduced to 9/10.
 
 - Energy Gun
 
@@ -56,6 +58,17 @@ This is a simple gun that is loaded with metal or jewelry and fired as energy.
 It can be loaded by holding and using the metal or gem you wish to turn into energy in your off-hand.
 To load, the gun must either be empty or have matching energy.
 The available energy can be found by looking at the recipes from REI or EMI.
+
+- Deepslate Miner
+
+This item destroys Deepslate or Tuff in a 5x5x5 area in front of or in the center of the selected block.
+It is a disposable item and will be gone after one use.
+It can be crafted with 4 Iron Ingot, 4 Minium Ingot and 1 RedStone Block.
+
+- Wind Exploder
+
+The item emits a blast at one's feet when used.
+There are two versions: a standard version and an advanced version, the latter of which can be enchanted with Unbreaking and Mending enchantments.
 
 # このMODについて
 これはオリジナルの鉱石を追加するシンプルなMODです。
@@ -106,9 +119,22 @@ The available energy can be found by looking at the recipes from REI or EMI.
 
 ・シャベル、斧の右クリックと同じ機能
 
+・試練のスポナーのクールタイムを9/10に短縮
+
 - エネルギーガン
 
 金属や宝石などを装填してエネルギーとして発射する簡易的な銃です。
 オフハンドにエネルギーにしたい金属や宝石を持ち、使用することで装填することができます。
 装填するには銃のエネルギーが空であるか、一致するエネルギーかのどちらかである必要があります。
 使用可能なエネルギーはREIかEMIからレシピを見ることでわかります。
+
+- 深層岩採掘器
+
+選択したブロックの前方または中心の5x5x5の範囲にある深層岩または凝灰岩を破壊するアイテムです。
+使い捨てアイテムであり1回使うとなくなります。
+鉄インゴットを4つ、マイニウムインゴットを4つ、レッドストーンブロックを1つでクラフトすることができます。
+
+- ウィンドエクスプローダー
+
+使用した時に自分の足元に爆風を発するアイテムです。
+通常版と改良版の２つがあり、後者は耐久力と修繕のエンチャントを施すことができます。

@@ -20,6 +20,9 @@ public class Minium_meClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), MiniumBlock.MINIUM_GRATE);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), MiniumBlock.REDSTONE_ENERGY_BLOCK);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), MiniumBlock.GLOWSTONE_ENERGY_BLOCK);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.EASY_GRINDER);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.MINIUM_ARTIFICIAL_FLOWER);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.POTTED_MINIUM_ARTIFICIAL_FLOWER);
         LivingEntityFeatureRendererRegistrationCallback.EVENT
                 .register((entityType, entityRenderer, registrationHelper, context) -> {
                     registrationHelper

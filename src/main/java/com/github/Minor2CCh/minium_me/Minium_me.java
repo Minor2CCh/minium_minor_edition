@@ -9,7 +9,10 @@ import com.github.Minor2CCh.minium_me.particle.MiniumParticle;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import com.github.Minor2CCh.minium_me.worldgen.MiniumOres;
 import net.fabricmc.api.ModInitializer;
-//import net.minecraft.item.*;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.minecraft.block.BlockState;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
 
 public class Minium_me implements ModInitializer {
 

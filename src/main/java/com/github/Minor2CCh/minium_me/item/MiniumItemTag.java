@@ -7,6 +7,9 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public class MiniumItemTag {
+
+    public static final TagKey<Item> SPEARS = modOf("spears");
+    public static final TagKey<Item> IRIS_QUARTZ_BONUS_WEAPON = modOf("iris_quartz_bonus_weapon");
     //Default:Dusts
     public static final TagKey<Item> ENERGY_REDSTONE_STORAGE_BLOCKS = conventionalOf("storage_blocks/redstone");//レッドストーン
     public static final TagKey<Item> ENERGY_REDSTONE = conventionalOf("dusts/redstone");
@@ -64,6 +67,10 @@ public class MiniumItemTag {
     public static final TagKey<Item> ENERGY_BRONZE = conventionalOf("ingots/bronze");
     public static final TagKey<Item> ENERGY_STEEL_STORAGE_BLOCKS = conventionalOf("storage_blocks/steel");//鋼鉄(MOD)
     public static final TagKey<Item> ENERGY_STEEL = conventionalOf("ingots/steel");
+    public static final TagKey<Item> ENERGY_REFINED_GLOWSTONE_STORAGE_BLOCKS = conventionalOf("storage_blocks/refined_glowstone");//精製グロウストーン(MOD)
+    public static final TagKey<Item> ENERGY_REFINED_GLOWSTONE = conventionalOf("ingots/refined_glowstone");
+    public static final TagKey<Item> ENERGY_REFINED_OBSIDIAN_STORAGE_BLOCKS = conventionalOf("storage_blocks/refined_obsidian");//精製黒曜石(MOD)
+    public static final TagKey<Item> ENERGY_REFINED_OBSIDIAN = conventionalOf("ingots/refined_obsidian");
 
 
 

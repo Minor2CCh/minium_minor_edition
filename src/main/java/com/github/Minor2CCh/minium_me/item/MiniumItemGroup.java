@@ -107,7 +107,10 @@ public class MiniumItemGroup {
                     MiniumModComponent.ENERGY_BRONZE,
                     MiniumModComponent.ENERGY_STEEL,
                     MiniumModComponent.ENERGY_CERTUS_QUARTZ,
-                    MiniumModComponent.ENERGY_FLUIX)) {
+                    MiniumModComponent.ENERGY_FLUIX,
+                    MiniumModComponent.ENERGY_FLUORITE,
+                    MiniumModComponent.ENERGY_REFINED_GLOWSTONE,
+                    MiniumModComponent.ENERGY_REFINED_OBSIDIAN)) {
                 ItemStack gunStack = MiniumItem.ENERGY_GUN.getDefaultStack();
                 gunStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(2147483647, s));
                 itemGroup.add(gunStack);
@@ -123,6 +126,13 @@ public class MiniumItemGroup {
             advancedWindExploderStack.set(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(true));
             advancedWindExploderStack.set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true);
             itemGroup.add(advancedWindExploderStack);
+            itemGroup.add(MiniumItem.MINIUM_SPEAR);
+            itemGroup.add(MiniumItem.C_MINIUM_SPEAR);
+            itemGroup.add(MiniumItem.IRIS_QUARTZ_SPEAR);
+            itemGroup.add(MiniumBlock.EASY_GRINDER);
+            itemGroup.add(MiniumBlock.EASY_CONVEYOR);
+            itemGroup.add(MiniumBlock.MINIUM_ARTIFICIAL_FLOWER);
+
             //from mekanism
             itemGroup.add(MiniumItem.OSMIUM_INGOT_FROM_MEKANISM);
             itemGroup.add(MiniumItem.RAW_OSMIUM_FROM_MEKANISM);

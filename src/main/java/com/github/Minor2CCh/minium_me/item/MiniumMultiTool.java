@@ -1,9 +1,9 @@
 package com.github.Minor2CCh.minium_me.item;
 
+import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantmentTags;
 import com.github.Minor2CCh.minium_me.mixin.TrialSpawnerAccessor;
-import com.github.Minor2CCh.minium_me.mixin.TrialSpawnerSetter;
 import com.google.common.collect.BiMap;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.fabricmc.fabric.mixin.content.registry.AxeItemAccessor;
@@ -19,7 +19,6 @@ import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -34,9 +33,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-import static net.minecraft.block.Block.dropStacks;
-import static net.minecraft.block.Block.getDroppedStacks;
-import static net.minecraft.block.BulbBlock.LIT;
 import static net.minecraft.enchantment.EnchantmentHelper.hasAnyEnchantmentsIn;
 
 public class MiniumMultiTool extends MiningToolItem {
@@ -87,7 +83,7 @@ public class MiniumMultiTool extends MiningToolItem {
     private boolean rangeStoneBreak(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
         BlockState blockState = world.getBlockState(blockPos);
         ItemStack itemStack = context.getStack();
-        if (itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL) && blockState.isIn(ConventionalBlockTags.STONES)) {//石系ブロック
+        if (itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL) && (blockState.isIn(ConventionalBlockTags.STONES) || blockState.isIn(ConventionalBlockTags.NETHERRACKS) || blockState.isIn(ConventionalBlockTags.END_STONES))) {//石系ブロックorネザーラック
             if(playerEntity.isSneaking()){
                 if (!world.isClient()) {
                     stoneBreakDrop(world, blockPos, playerEntity, itemStack);
@@ -96,7 +92,7 @@ public class MiniumMultiTool extends MiningToolItem {
                             for(int k = 0;k < 7;k++) {
                                 Direction direction = context.getSide();
                                 BlockPos tempBlockPos = blockPos.add(i + (direction == Direction.EAST ? -6 : (direction == Direction.WEST ? 0 : -3)), j - 3, k + (direction == Direction.SOUTH ? -6 : (direction == Direction.NORTH ? 0 : -3)));
-                                if (world.getBlockState(tempBlockPos).isIn(ConventionalBlockTags.STONES)){
+                                if (world.getBlockState(tempBlockPos).isIn(ConventionalBlockTags.STONES) || world.getBlockState(tempBlockPos).isIn(ConventionalBlockTags.NETHERRACKS) || world.getBlockState(tempBlockPos).isIn(ConventionalBlockTags.END_STONES)){
                                     stoneBreakDrop(world, tempBlockPos, playerEntity, itemStack);
                                     if(Math.random() < 0.25F){
                                         context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
@@ -123,48 +119,26 @@ public class MiniumMultiTool extends MiningToolItem {
     private void stoneBreakDrop(World world, BlockPos blockPos, PlayerEntity playerEntity, ItemStack itemStack){
         BlockState blockState = world.getBlockState(blockPos);
         if(hasAnyEnchantmentsIn(itemStack, MiniumEnchantmentTags.TRANSFORMER_STONE)){
-            if((int) (Math.random() * 20) == 0){
-                if((int) (Math.random() * 5) == 0){//1%の確率でランダムに鉱石を落とす
-                    int seed = (int) (Math.random() * 100);
-                    if(seed < 10){//10%で石炭
-                        dropItemFromBlock(world, blockPos, Items.COAL, 1);
+            Random rand = new Random();
+            if(rand.nextInt(20) == 0){
+                if(rand.nextInt(5) == 0){//1%の確率でランダムに鉱石を落とす
+                    if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.STONES)){
+                        Block.dropStacks(MiniumBlock.STONE_ALCHEMY_BREAK_STONE.getDefaultState(), world, blockPos, null, playerEntity, itemStack);
+                        // loot_table/blocks/stone_alchemy_break_stone.json
+                    }else if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.NETHERRACKS)){
+                        Block.dropStacks(MiniumBlock.STONE_ALCHEMY_BREAK_NETHERRACK.getDefaultState(), world, blockPos, null, playerEntity, itemStack);
+                        // loot_table/blocks/stone_alchemy_break_netherrack.json
+                    }else if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.END_STONES)){
+                        Block.dropStacks(MiniumBlock.STONE_ALCHEMY_BREAK_END_STONE.getDefaultState(), world, blockPos, null, playerEntity, itemStack);
+                        // loot_table/blocks/stone_alchemy_break_end_stone.json
                     }
-                    else if(seed < 20){//10%で鉄の原石
-                        dropItemFromBlock(world, blockPos, Items.RAW_IRON, 1);
-                    }
-                    else if(seed < 30){//10%で銅の原石
-                        dropItemFromBlock(world, blockPos, Items.RAW_COPPER, 1);
-                    }
-                    else if(seed < 40){//10%で金の原石
-                        dropItemFromBlock(world, blockPos, Items.RAW_GOLD, 1);
-                    }
-                    else if(seed < 50){//10%でマイニウムの原石
-                        dropItemFromBlock(world, blockPos, MiniumItem.R_MINIUM, 1);
-                    }
-                    else if(seed < 60){//10%でオスミウムの原石
-                        dropItemFromBlock(world, blockPos, MiniumItem.RAW_OSMIUM_FROM_MEKANISM, 1);
-                    }
-                    else if(seed < 70){//10%でレッドストーンダスト
-                        dropItemFromBlock(world, blockPos, Items.REDSTONE, 1);
-                    }
-                    else if(seed < 80){//10%でラピスラズリ
-                        dropItemFromBlock(world, blockPos, Items.LAPIS_LAZULI, 1);
-                    }
-                    else if(seed < 90){//10%でエメラルド
-                        dropItemFromBlock(world, blockPos, Items.EMERALD, 1);
-                    }
-                    else if(seed < 99){//9%でダイヤモンド
-                        dropItemFromBlock(world, blockPos, Items.DIAMOND, 1);
-                    }else{//1%で虹水晶
-                        dropItemFromBlock(world, blockPos, MiniumItem.IRIS_QUARTZ, 1);
-                    }//これによりマイニウム&オスミウム(&虹水晶)は再生可能資源となる
 
                 }else{//4%の確率で1経験値落とす
                     world.spawnEntity(new ExperienceOrbEntity(world, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5, 1));
                 }
             }
         }else{
-            dropStacks(blockState, world, blockPos, null, playerEntity, itemStack);
+            Block.dropStacks(blockState, world, blockPos, null, playerEntity, itemStack);
         }
         world.breakBlock(blockPos, false, playerEntity);
 
@@ -203,7 +177,7 @@ public class MiniumMultiTool extends MiningToolItem {
                 if(remainCooldown > 20) {
                     long newCooldown = (long)(remainCooldown * 0.9)+world.getTime();
                     if(!world.isClient()){
-                        ((TrialSpawnerSetter)(Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getData())).setCooldownEnd(newCooldown);
+                        ((TrialSpawnerAccessor)(Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getData())).setCooldownEnd(newCooldown);
                         /*
                         System.out.println(((TrialSpawnerAccessor)(Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getData())).cooldownEnd());
                         System.out.println(oldCooldown);
@@ -230,8 +204,8 @@ public class MiniumMultiTool extends MiningToolItem {
     private boolean ToggleBulb(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
         BlockState blockState = world.getBlockState(blockPos);
         if (blockState.getBlock() instanceof BulbBlock && !playerEntity.shouldCancelInteraction()) {
-            world.playSound(playerEntity, blockPos, blockState.get(LIT) ? SoundEvents.BLOCK_COPPER_BULB_TURN_OFF : SoundEvents.BLOCK_COPPER_BULB_TURN_ON, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            BlockState blockState2 = blockState.with(BulbBlock.LIT, !blockState.get(LIT));
+            world.playSound(playerEntity, blockPos, blockState.get(BulbBlock.LIT) ? SoundEvents.BLOCK_COPPER_BULB_TURN_OFF : SoundEvents.BLOCK_COPPER_BULB_TURN_ON, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            BlockState blockState2 = blockState.with(BulbBlock.LIT, !blockState.get(BulbBlock.LIT));
             updateBlockState(world, blockPos, blockState2, playerEntity, context);
             return true;
         }

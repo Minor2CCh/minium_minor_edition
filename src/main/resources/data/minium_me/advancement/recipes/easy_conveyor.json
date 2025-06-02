@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_concentrated_minium": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/concentrated_minium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:easy_conveyor"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_concentrated_minium"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:easy_conveyor"
+    ]
+  }
+}

@@ -36,6 +36,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class EnergyBulletEntity extends ProjectileEntity {
     private int existTime = 0;
@@ -46,7 +47,7 @@ public class EnergyBulletEntity extends ProjectileEntity {
     public int renderColor = 0xFFFFFF;
     public EnergyBulletEntity(EntityType<? extends EnergyBulletEntity> entityType, World world) {
         super(entityType, world);
-        //this.noClip = true;
+        this.noClip = true;
 
     }
 
@@ -56,6 +57,8 @@ public class EnergyBulletEntity extends ProjectileEntity {
         this.setOwner(owner);
         Vec3d vec3d = owner.getBoundingBox().getCenter();
         this.refreshPositionAndAngles(vec3d.x, vec3d.y, vec3d.z, this.getYaw(), this.getPitch());
+        setYaw(owner.getYaw());
+        setPitch(owner.getPitch());
         Vec3d vel3d = this.getVelocity();
         this.setPosition(this.getX() + vel3d.x * 2, owner.getEyeY() - 0.1F + vel3d.y * 2, this.getZ() + vel3d.z * 2);
         EnergyType = energyType;
@@ -148,6 +151,15 @@ public class EnergyBulletEntity extends ProjectileEntity {
             case MiniumModComponent.ENERGY_FLUIX:
                 color = 0xFF80D7;
                 break;
+            case MiniumModComponent.ENERGY_FLUORITE:
+                color = 0xEEFDF6;
+                break;
+            case MiniumModComponent.ENERGY_REFINED_GLOWSTONE:
+                color = 0xFFF09D;
+                break;
+            case MiniumModComponent.ENERGY_REFINED_OBSIDIAN:
+                color = 0x8469AC;
+                break;
             default:
                 color = 0xFFFFFF;
             }
@@ -172,238 +184,295 @@ public class EnergyBulletEntity extends ProjectileEntity {
         Objects.requireNonNull(livingEntity);
         //DamageSource damageSource = this.getDamageSources().mobProjectile(this, livingEntity);
         //DamageSource damageSource = this.getDamageSources().mobAttack(livingEntity);
-        DamageSource damageSource = this.getDamageSources().outOfWorld();
+        DamageSource damageSource;
         final float baseDamage = 10.0F;
-        float resultDamage = 0.0F;
-        //Coal
-        if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_COAL)){
-            damageSource = new DamageSource(
+        float resultDamage;
+        switch(EnergyType){
+            case MiniumModComponent.ENERGY_COAL:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_FIRE)
-                    ,livingEntity);
-            resultDamage = baseDamage * 0.5F;
-        }
-        //Iron
-        else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_IRON)){
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 0.5F;
+                break;
+            case MiniumModComponent.ENERGY_IRON:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
-                    .get(RegistryKeys.DAMAGE_TYPE)
-                    .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    ,livingEntity);
-            resultDamage = baseDamage;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_COPPER)){
-            damageSource = new DamageSource(
-                    this.getWorld().getRegistryManager()
-                    .get(RegistryKeys.DAMAGE_TYPE)
-                    .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    ,livingEntity);
-            resultDamage = baseDamage;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_GOLD)){
-            damageSource = new DamageSource(
-                    this.getWorld().getRegistryManager()
-                    .get(RegistryKeys.DAMAGE_TYPE)
-                    .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    ,livingEntity);
-            resultDamage = baseDamage;
-            if(entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_SMITE)){
-                resultDamage *= 1.5F;
-            }
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_LAPIS)){
-            damageSource = new DamageSource(
-                    this.getWorld().getRegistryManager()
-                    .get(RegistryKeys.DAMAGE_TYPE)
-                    .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    ,livingEntity);
-            resultDamage = baseDamage * 0.8F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_REDSTONE)){
-            damageSource = new DamageSource(
-                    this.getWorld().getRegistryManager()
-                    .get(RegistryKeys.DAMAGE_TYPE)
-                    .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    ,livingEntity);
-            resultDamage = baseDamage * 0.8F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_DIAMOND)){
-            damageSource = new DamageSource(
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_DEFAULT)
+                        ,livingEntity);
+                resultDamage = baseDamage;
+                break;
+            case MiniumModComponent.ENERGY_COPPER:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
                     ,livingEntity);
-            resultDamage = baseDamage * 1.75F;
-            if(entity.getType().isIn(ConventionalEntityTypeTags.BOSSES)){
-                resultDamage *= 1.5F;
-            }
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_EMERALD)){
-            damageSource = new DamageSource(
-                    this.getWorld().getRegistryManager()
-                            .get(RegistryKeys.DAMAGE_TYPE)
-                            .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
-                    ,livingEntity);
-            resultDamage = baseDamage * 1.5F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_QUARTZ)){
-            damageSource = new DamageSource(
-                    this.getWorld().getRegistryManager()
-                            .get(RegistryKeys.DAMAGE_TYPE)
-                            .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
-                    ,livingEntity);
-            resultDamage = baseDamage;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_GLOWSTONE)){
-            damageSource = new DamageSource(
+                resultDamage = baseDamage;
+                break;
+            case MiniumModComponent.ENERGY_GOLD:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
                     ,livingEntity);
-            resultDamage = baseDamage;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_NETHERITE)){
-            damageSource = new DamageSource(
+                resultDamage = baseDamage;
+                if(entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_SMITE)){
+                    resultDamage *= 1.5F;
+                }
+                break;
+            case MiniumModComponent.ENERGY_LAPIS:
+                damageSource = new DamageSource(
+                    this.getWorld().getRegistryManager()
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_DEFAULT)
+                    ,livingEntity);
+                resultDamage = baseDamage * 0.8F;
+                break;
+            case MiniumModComponent.ENERGY_REDSTONE:
+                damageSource = new DamageSource(
+                    this.getWorld().getRegistryManager()
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_DEFAULT)
+                        ,livingEntity);
+                resultDamage = baseDamage * 0.8F;
+                break;
+            case MiniumModComponent.ENERGY_DIAMOND:
+                damageSource = new DamageSource(
+                    this.getWorld().getRegistryManager()
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_DEFAULT)
+                        ,livingEntity);
+                resultDamage = baseDamage * 1.75F;
+                if(entity.getType().isIn(ConventionalEntityTypeTags.BOSSES)){
+                    resultDamage *= 1.5F;
+                }
+                break;
+            case MiniumModComponent.ENERGY_EMERALD:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
-                    ,livingEntity);
-            resultDamage = baseDamage * 2.5F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_AMETHYST)){
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 1.5F;
+                break;
+            case MiniumModComponent.ENERGY_QUARTZ:
+                damageSource = new DamageSource(
+                    this.getWorld().getRegistryManager()
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
+                        ,livingEntity);
+                resultDamage = baseDamage;
+                break;
+            case MiniumModComponent.ENERGY_GLOWSTONE:
+                damageSource = new DamageSource(
+                    this.getWorld().getRegistryManager()
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_DEFAULT)
+                        ,livingEntity);
+                resultDamage = baseDamage;
+                break;
+            case MiniumModComponent.ENERGY_NETHERITE:
+                damageSource = new DamageSource(
+                    this.getWorld().getRegistryManager()
+                            .get(RegistryKeys.DAMAGE_TYPE)
+                            .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
+                        ,livingEntity);
+                resultDamage = baseDamage * 2.5F;
+                break;
+            case MiniumModComponent.ENERGY_AMETHYST:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_AMETHYST)
-                    ,livingEntity);
-            resultDamage = baseDamage * 0.6F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_MINIUM)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 0.6F;
+                break;
+            case MiniumModComponent.ENERGY_MINIUM:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.5F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_C_MINIUM)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 1.5F;
+                break;
+            case MiniumModComponent.ENERGY_C_MINIUM:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
-                    , livingEntity);
-            resultDamage = baseDamage * 2.5F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_OSMIUM)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 2.5F;
+                break;
+            case MiniumModComponent.ENERGY_OSMIUM:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.5F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_IRIS_QUARTZ)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 1.5F;
+                break;
+            case MiniumModComponent.ENERGY_IRIS_QUARTZ:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_IRIS_QUARTZ)
-                    , livingEntity);
-            resultDamage = baseDamage * 4.0F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_REFINED_IRON)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 4.0F;
+                break;
+            case MiniumModComponent.ENERGY_REFINED_IRON:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.5F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_SOURCE_GEM)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 1.5F;
+                break;
+            case MiniumModComponent.ENERGY_SOURCE_GEM:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.2F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_ALUMINIUM)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage * 1.2F;
+                break;
+            case MiniumModComponent.ENERGY_ALUMINIUM:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_LEAD)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                resultDamage = baseDamage;
+                break;
+            case MiniumModComponent.ENERGY_LEAD:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.2F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_NICKEL)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                    resultDamage = baseDamage * 1.2F;
+                break;
+            case MiniumModComponent.ENERGY_NICKEL:
+                damageSource = new DamageSource(
+                        this.getWorld().getRegistryManager()
+                                .get(RegistryKeys.DAMAGE_TYPE)
+                                .entryOf(MiniumDamageType.ENERGY_DEFAULT)
+                            ,livingEntity);
+                    resultDamage = baseDamage * 1.2F;
+                    if(entity.getType().isFireImmune()){
+                        resultDamage *= 1.75F;
+                    }
+                break;
+            case MiniumModComponent.ENERGY_SILVER:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.2F;
-            if(entity.getType().isFireImmune()){
-                resultDamage *= 1.75F;
-            }
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_SILVER)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                    resultDamage = baseDamage * 1.2F;
+                    if(!entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_SMITE)){
+                        resultDamage *= 1.75F;
+                    }
+                break;
+            case MiniumModComponent.ENERGY_TIN:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.2F;
-            if(!entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_SMITE)){
-                resultDamage *= 1.75F;
-            }
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_TIN)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                    resultDamage = baseDamage * 1.2F;
+                    if(entity.isTouchingWaterOrRain()){
+                        resultDamage *= 1.75F;
+                    }
+                break;
+            case MiniumModComponent.ENERGY_URANIUM:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.2F;
-            if(entity.isTouchingWaterOrRain()){
-                resultDamage *= 1.75F;
-            }
-
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_URANIUM)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                    resultDamage = baseDamage;
+                    if(entity.getType().isIn(EntityTypeTags.ILLAGER)
+                            || entity.getType().equals(EntityType.VILLAGER)
+                            || entity.getType().equals(EntityType.WANDERING_TRADER)
+                            || entity.getType().equals(EntityType.WITCH)
+                            || entity.getType().equals(EntityType.PLAYER)){
+                        resultDamage *= 5.0F;
+                    }
+                break;
+            case MiniumModComponent.ENERGY_ZINC:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage;
-            if(entity.getType().isIn(EntityTypeTags.ILLAGER)
-                    || entity.getType().equals(EntityType.VILLAGER)
-                    || entity.getType().equals(EntityType.WANDERING_TRADER)
-                    || entity.getType().equals(EntityType.WITCH)
-                    || entity.getType().equals(EntityType.PLAYER)){
-                resultDamage *= 5.0F;
-            }
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_ZINC)) {
-            damageSource = new DamageSource(
-                    this.getWorld().getRegistryManager()
-                            .get(RegistryKeys.DAMAGE_TYPE)
-                            .entryOf(MiniumDamageType.ENERGY_DEFAULT)
-                    , livingEntity);
-            resultDamage = baseDamage * 0.4F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_BRONZE)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                    resultDamage = baseDamage * 0.4F;
+                break;
+            case MiniumModComponent.ENERGY_BRONZE:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.75F;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_STEEL)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                    resultDamage = baseDamage * 1.75F;
+                break;
+            case MiniumModComponent.ENERGY_STEEL:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_FIRE)
-                    , livingEntity);
-            resultDamage = baseDamage * (entity.isTouchingWaterOrRain() ? 0.4F : (entity.isOnFire() ? 2.0F : 1.2F));
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_CERTUS_QUARTZ)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                    resultDamage = baseDamage * (entity.isTouchingWaterOrRain() ? 0.4F : (entity.isOnFire() ? 2.0F : 1.2F));
+                break;
+            case MiniumModComponent.ENERGY_CERTUS_QUARTZ:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
-                    , livingEntity);
-            resultDamage = baseDamage;
-        }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_FLUIX)) {
-            damageSource = new DamageSource(
+                        ,livingEntity);
+                    resultDamage = baseDamage;
+                break;
+            case MiniumModComponent.ENERGY_FLUIX:
+                damageSource = new DamageSource(
                     this.getWorld().getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
-                    , livingEntity);
-            resultDamage = baseDamage * 1.5F;
+                        ,livingEntity);
+                    resultDamage = baseDamage * 1.5F;
+                break;
+            case MiniumModComponent.ENERGY_FLUORITE:
+                damageSource = new DamageSource(
+                        this.getWorld().getRegistryManager()
+                                .get(RegistryKeys.DAMAGE_TYPE)
+                                .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
+                        ,livingEntity);
+                resultDamage = baseDamage * 1.5F;
+                break;
+            case MiniumModComponent.ENERGY_REFINED_GLOWSTONE:
+                damageSource = new DamageSource(
+                        this.getWorld().getRegistryManager()
+                                .get(RegistryKeys.DAMAGE_TYPE)
+                                .entryOf(MiniumDamageType.ENERGY_NOT_PROJECTILE)
+                        ,livingEntity);
+                resultDamage = baseDamage * 1.5F;
+                if(entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_SMITE)){
+                    resultDamage *= 2.0F;
+                }
+                break;
+            case MiniumModComponent.ENERGY_REFINED_OBSIDIAN:
+                damageSource = new DamageSource(
+                        this.getWorld().getRegistryManager()
+                                .get(RegistryKeys.DAMAGE_TYPE)
+                                .entryOf(MiniumDamageType.ENERGY_DEFAULT)
+                        ,livingEntity);
+                resultDamage = baseDamage * 3.0F;
+                break;
+            default:
+                damageSource = this.getDamageSources().outOfWorld();
+                resultDamage = 0.0F;
+
         }
         boolean bl = false;
         if(!(entity instanceof TameableEntity tameableEntity) || !tameableEntity.isOwner(livingEntity)){
@@ -418,11 +487,6 @@ public class EnergyBulletEntity extends ProjectileEntity {
                 }
             }
         }
-        //Objects.requireNonNull(livingEntity).setHealth(livingEntity.getHealth()+1);
-        /*
-        if(Objects.requireNonNull(livingEntity).isAlive()){
-            Objects.requireNonNull(livingEntity).setHealth(livingEntity.getHealth()+20);
-        }*/
         hitParticles();
         if (bl) {
             if (this.getWorld() instanceof ServerWorld serverWorld) {
@@ -431,9 +495,8 @@ public class EnergyBulletEntity extends ProjectileEntity {
             }
             if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_SOURCE_GEM)) {
                 if (livingEntity.isAlive()) {
-                    double rand = Math.random();
-                    int selectEffect = (int) (rand * 6);
-                    switch (selectEffect) {
+                    Random rand = new Random();
+                    switch (rand.nextInt(6)) {
                         case 0:
                             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 200, 0), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
                             break;
@@ -459,13 +522,12 @@ public class EnergyBulletEntity extends ProjectileEntity {
                 //livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 40), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
 
                 //金、発光効果
-                if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_GOLD) || Objects.equals(EnergyType, MiniumModComponent.ENERGY_GLOWSTONE)){
-                    livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 500), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
+                if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_GOLD) || Objects.equals(EnergyType, MiniumModComponent.ENERGY_GLOWSTONE) || Objects.equals(EnergyType, MiniumModComponent.ENERGY_REFINED_GLOWSTONE)){
+                    livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, Objects.equals(EnergyType, MiniumModComponent.ENERGY_REFINED_GLOWSTONE) ? 2500 : 500), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
                 //ラピスラズリ、ランダムエフェクト
                 }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_LAPIS)){
-                    double rand = Math.random();
-                    int selectEffect = (int) (rand*3);
-                    switch(selectEffect){
+                    Random rand = new Random();
+                    switch(rand.nextInt(3)){
                         case 0:
                             livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 160, 1), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
                             break;
@@ -484,7 +546,8 @@ public class EnergyBulletEntity extends ProjectileEntity {
                 }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_LEAD)){
                     livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20, 3), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
                 }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_ZINC)){
-                    if(livingEntity2.getHealth() <= 0 && Math.random() < 0.1F) {
+                    Random rand = new Random();
+                    if(livingEntity2.getHealth() <= 0 && rand.nextFloat() < 0.1F) {
                         livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 9, 0), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
                     }
                 }
@@ -511,9 +574,9 @@ public class EnergyBulletEntity extends ProjectileEntity {
                     this.getWorld().emitGameEvent(this, GameEvent.BLOCK_CHANGE, blockPos2);
                 }else if (Objects.equals(EnergyType, MiniumModComponent.ENERGY_STEEL) && this.getWorld().isAir(blockPos)) {
                     this.getWorld().setBlockState(blockPos, AbstractFireBlock.getState(this.getWorld(), blockPos));
-                }else if (Objects.equals(EnergyType, MiniumModComponent.ENERGY_REDSTONE) && (this.getWorld().isAir(blockPos) || this.getWorld().isWater(blockPos))) {
+                }else if (Objects.equals(EnergyType, MiniumModComponent.ENERGY_REDSTONE) && (this.getWorld().isAir(blockPos) || this.getWorld().isWater(blockPos) || this.getWorld().getBlockState(blockPos).isReplaceable())) {
                     this.getWorld().setBlockState(blockPos, MiniumBlock.REDSTONE_ENERGY_BLOCK.getDefaultState().with(Properties.WATERLOGGED, this.getWorld().getFluidState(blockPos).getFluid() == Fluids.WATER));
-                }else if (Objects.equals(EnergyType, MiniumModComponent.ENERGY_GLOWSTONE) && (this.getWorld().isAir(blockPos) || this.getWorld().isWater(blockPos))) {
+                }else if ((Objects.equals(EnergyType, MiniumModComponent.ENERGY_GLOWSTONE) || Objects.equals(EnergyType, MiniumModComponent.ENERGY_REFINED_GLOWSTONE)) && (this.getWorld().isAir(blockPos) || this.getWorld().isWater(blockPos) || this.getWorld().getBlockState(blockPos).isReplaceable())) {
                     this.getWorld().setBlockState(blockPos, MiniumBlock.GLOWSTONE_ENERGY_BLOCK.getDefaultState().with(Properties.WATERLOGGED, this.getWorld().getFluidState(blockPos).getFluid() == Fluids.WATER));
                 }
             }

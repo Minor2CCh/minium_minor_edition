@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "minium_me:iris_quartz_ingot"
+    "tag": "c:ingots/iris_quartz"
   },
   "base": {
     "item": "minium_me:concentrated_minium_axe"

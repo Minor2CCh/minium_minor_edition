@@ -106,84 +106,15 @@ public class MiniumGunItem extends Item{
             itemStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(remain, energyType));
             if (!world.isClient) {
                 EnergyBulletEntity energybulletEntity = new EnergyBulletEntity(world, user, energyType);
-                energybulletEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.5F, 1.0F);
+                energybulletEntity.setPitch(user.getPitch());
+                energybulletEntity.setYaw(user.getYaw());
+                energybulletEntity.setVelocity(0.0, 0.0, 0.0);
+                energybulletEntity.setVelocity(energybulletEntity, energybulletEntity.getPitch(), energybulletEntity.getYaw(), 0.0F, 1.5F, 1.0F);
                 world.spawnEntity(energybulletEntity);
                 user.getItemCooldownManager().set(this, (Objects.equals(energyType, MiniumModComponent.ENERGY_REDSTONE) ? 7 : ((Objects.equals(energyType, MiniumModComponent.ENERGY_ALUMINIUM) ? 5 : 10))));
 
             }
         }
-        /*
-        ItemStack itemStackoffhand = user.getEquippedStack(EquipmentSlot.OFFHAND);
-        if(itemStackoffhand.isIn(ENERGY_OSMIUM) && false){//対象のItemStackに該当のタグがあるか確認
-            world.playSound(
-                    null,
-                    user.getX(),
-                    user.getY(),
-                    user.getZ(),
-                    SoundEvents.ITEM_TRIDENT_THUNDER,
-                    SoundCategory.NEUTRAL,
-                    0.75F,
-                    1.0F//音を鳴らす
-            );
-            //デバッグタイプチェンジ
-            if(user.isCreative()) {
-                switch (energyType) {
-                    case minium_modcomponent.ENERGY_EMPTY:
-                        energyType = minium_modcomponent.ENERGY_COAL;
-                        break;
-                    case minium_modcomponent.ENERGY_COAL:
-                        energyType = minium_modcomponent.ENERGY_IRON;
-                        break;
-                    case minium_modcomponent.ENERGY_IRON:
-                        energyType = minium_modcomponent.ENERGY_COPPER;
-                        break;
-                    case minium_modcomponent.ENERGY_COPPER:
-                        energyType = minium_modcomponent.ENERGY_GOLD;
-                        break;
-                    case minium_modcomponent.ENERGY_GOLD:
-                        energyType = minium_modcomponent.ENERGY_LAPIS;
-                        break;
-                    case minium_modcomponent.ENERGY_LAPIS:
-                        energyType = minium_modcomponent.ENERGY_REDSTONE;
-                        break;
-                    case minium_modcomponent.ENERGY_REDSTONE:
-                        energyType = minium_modcomponent.ENERGY_DIAMOND;
-                        break;
-                    case minium_modcomponent.ENERGY_DIAMOND:
-                        energyType = minium_modcomponent.ENERGY_EMERALD;
-                        break;
-                    case minium_modcomponent.ENERGY_EMERALD:
-                        energyType = minium_modcomponent.ENERGY_QUARTZ;
-                        break;
-                    case minium_modcomponent.ENERGY_QUARTZ:
-                        energyType = minium_modcomponent.ENERGY_GLOWSTONE;
-                        break;
-                    case minium_modcomponent.ENERGY_GLOWSTONE:
-                        energyType = minium_modcomponent.ENERGY_NETHERITE;
-                        break;
-                    case minium_modcomponent.ENERGY_NETHERITE:
-                        energyType = minium_modcomponent.ENERGY_AMETHYST;
-                        break;
-                    case minium_modcomponent.ENERGY_AMETHYST:
-                        energyType = minium_modcomponent.ENERGY_MINIUM;
-                        break;
-                    case minium_modcomponent.ENERGY_MINIUM:
-                        energyType = minium_modcomponent.ENERGY_C_MINIUM;
-                        break;
-                    case minium_modcomponent.ENERGY_C_MINIUM:
-                        energyType = minium_modcomponent.ENERGY_OSMIUM;
-                        break;
-                    case minium_modcomponent.ENERGY_OSMIUM:
-                        energyType = minium_modcomponent.ENERGY_IRIS_QUARTZ;
-                        break;
-                    case minium_modcomponent.ENERGY_IRIS_QUARTZ:
-                        energyType = minium_modcomponent.ENERGY_COAL;
-                        break;
-                }
-            }
-
-            itemStack.set(minium_modcomponent.REMAIN_ENERGY, new minium_modcomponent.EnergyComponent(remain, energyType));
-        }*/
 
 
         return TypedActionResult.success(itemStack, world.isClient());//itemStackの部分を変えるとアイテムがそれに化ける
@@ -579,6 +510,48 @@ public class MiniumGunItem extends Item{
                 bl = true;
             }
         }
+        //蛍石
+        if(Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) || Objects.equals(energyType, MiniumModComponent.ENERGY_FLUORITE)){
+            if(offHandStack.isIn(MiniumItemTag.ENERGY_FLUORITE)){
+                remain = addRemain(remain, offHandStack.getCount());
+                energyType = MiniumModComponent.ENERGY_FLUORITE;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }else if(offHandStack.isIn(MiniumItemTag.ENERGY_FLUORITE_STORAGE_BLOCKS)){
+                remain = addRemain(remain, offHandStack.getCount() * 10);
+                energyType = MiniumModComponent.ENERGY_FLUORITE;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }
+        }
+        //精製グロウストーン
+        if(Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) || Objects.equals(energyType, MiniumModComponent.ENERGY_REFINED_GLOWSTONE)){
+            if(offHandStack.isIn(MiniumItemTag.ENERGY_REFINED_GLOWSTONE)){
+                remain = addRemain(remain, offHandStack.getCount());
+                energyType = MiniumModComponent.ENERGY_REFINED_GLOWSTONE;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }else if(offHandStack.isIn(MiniumItemTag.ENERGY_REFINED_GLOWSTONE_STORAGE_BLOCKS)){
+                remain = addRemain(remain, offHandStack.getCount() * 10);
+                energyType = MiniumModComponent.ENERGY_REFINED_GLOWSTONE;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }
+        }
+        //精製黒曜石
+        if(Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) || Objects.equals(energyType, MiniumModComponent.ENERGY_REFINED_OBSIDIAN)){
+            if(offHandStack.isIn(MiniumItemTag.ENERGY_REFINED_OBSIDIAN)){
+                remain = addRemain(remain, offHandStack.getCount());
+                energyType = MiniumModComponent.ENERGY_REFINED_OBSIDIAN;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }else if(offHandStack.isIn(MiniumItemTag.ENERGY_REFINED_OBSIDIAN_STORAGE_BLOCKS)){
+                remain = addRemain(remain, offHandStack.getCount() * 10);
+                energyType = MiniumModComponent.ENERGY_REFINED_OBSIDIAN;
+                offHandStack.decrementUnlessCreative(offHandStack.getCount(), user);
+                bl = true;
+            }
+        }
 
 
 
@@ -603,7 +576,8 @@ public class MiniumGunItem extends Item{
                  MiniumModComponent.ENERGY_LEAD, MiniumModComponent.ENERGY_NICKEL, MiniumModComponent.ENERGY_SILVER,
                  MiniumModComponent.ENERGY_TIN, MiniumModComponent.ENERGY_URANIUM, MiniumModComponent.ENERGY_ZINC,
                  MiniumModComponent.ENERGY_BRONZE, MiniumModComponent.ENERGY_STEEL,
-                 MiniumModComponent.ENERGY_CERTUS_QUARTZ, MiniumModComponent.ENERGY_FLUIX ->
+                 MiniumModComponent.ENERGY_CERTUS_QUARTZ, MiniumModComponent.ENERGY_FLUIX,
+                 MiniumModComponent.ENERGY_FLUORITE, MiniumModComponent.ENERGY_REFINED_GLOWSTONE, MiniumModComponent.ENERGY_REFINED_OBSIDIAN ->
                     true;
             default -> false;
         };
@@ -752,6 +726,18 @@ public class MiniumGunItem extends Item{
                     energyName = "item.minium_me.energy.type.fluix";
                     color = 0xFF80D7;
                     break;
+                case MiniumModComponent.ENERGY_FLUORITE:
+                    energyName = "item.minium_me.energy.type.fluorite";
+                    color = 0xEEFDF6;
+                    break;
+                case MiniumModComponent.ENERGY_REFINED_GLOWSTONE:
+                    energyName = "item.minium_me.energy.type.refined_glowstone";
+                    color = 0xFFF09D;
+                    break;
+                case MiniumModComponent.ENERGY_REFINED_OBSIDIAN:
+                    energyName = "item.minium_me.energy.type.refined_obsidian";
+                    color = 0x8469AC;
+                    break;
                 default:
                     energyName = "item.minium_me.energy.type.error";
                     color = 0x7F7F7F;
@@ -760,6 +746,7 @@ public class MiniumGunItem extends Item{
             //tooltip.add(Text.translatable("item.minium_me.energy.type", Text.translatable(energyName)).formatted(formatting));
             tooltip.add(Text.translatable("item.minium_me.energy.type", Text.translatable(energyName)).withColor(color));
             tooltip.add(Text.translatable(energyName +".desc").formatted(Formatting.WHITE));
+
 
 
         }
@@ -875,6 +862,15 @@ public class MiniumGunItem extends Item{
                     break;
                 case MiniumModComponent.ENERGY_FLUIX:
                     color = 0xFF80D7;
+                    break;
+                case MiniumModComponent.ENERGY_FLUORITE:
+                    color = 0xEEFDF6;
+                    break;
+                case MiniumModComponent.ENERGY_REFINED_GLOWSTONE:
+                    color = 0xFFF09D;
+                    break;
+                case MiniumModComponent.ENERGY_REFINED_OBSIDIAN:
+                    color = 0x8469AC;
                     break;
                 default:
                     color = 0x7F7F7F;

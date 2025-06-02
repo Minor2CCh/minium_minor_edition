@@ -64,7 +64,9 @@ public class WindChargeBlock extends Block {
     protected void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
         BlockPos pos = hit.getBlockPos();
         if (!world.isClient && projectile.canModifyAt(world, pos) && projectile.canBreakBlocks(world)) {
-                WindChargeEntity windChargeEntity = new WindChargeEntity(world, pos.getX(), pos.getY(), pos.getZ(), new Vec3d(0, -0.125, 0));
+            WindChargeEntity windChargeEntity =
+                    //new WindChargeEntity(world, pos.getX(), pos.getY(), pos.getZ(), new Vec3d(0, -0.125, 0));
+            new WindChargeEntity(world, projectile.getX(), projectile.getY(), projectile.getZ(), new Vec3d(0, -0.125, 0));
                 world.createExplosion(
                         windChargeEntity,
                         null,

@@ -1,0 +1,16 @@
+{
+  "type": "mekanism:compressing",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "mekanism:osmium"
+  },
+  "item_input": {
+    "count": 1,
+    "tag": "c:ingots/minium"
+  },
+  "output": {
+    "count": 1,
+    "id": "minium_me:concentrated_minium_ingot"
+  },
+  "per_tick_usage": true
+}

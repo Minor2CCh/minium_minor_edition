@@ -42,6 +42,9 @@ public class MiniumModComponent {
     public static final String ENERGY_STEEL = "energy_steel";//鋼鉄
     public static final String ENERGY_CERTUS_QUARTZ = "energy_certus_quartz";//ケルタスクォーツ
     public static final String ENERGY_FLUIX = "energy_fluix";//フルーシュ
+    public static final String ENERGY_FLUORITE = "energy_fluorite";//フルーシュ
+    public static final String ENERGY_REFINED_GLOWSTONE = "energy_refined_glowstone";//精製グロウストーン
+    public static final String ENERGY_REFINED_OBSIDIAN = "energy_refined_obsidian";//精製黒曜石
     public static final Codec<EnergyComponent> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Codec.INT.fieldOf("energy_remain").forGetter(EnergyComponent::remain),
             Codec.STRING.optionalFieldOf("energy_type", ENERGY_EMPTY).forGetter(EnergyComponent::type)

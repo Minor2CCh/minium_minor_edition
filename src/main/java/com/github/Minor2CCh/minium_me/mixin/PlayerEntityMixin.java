@@ -1,6 +1,7 @@
 package com.github.Minor2CCh.minium_me.mixin;
 
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
+import com.github.Minor2CCh.minium_me.item.MiniumItemTag;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -51,7 +52,7 @@ public class PlayerEntityMixin {
             if(player.getWorld().getDifficulty() == Difficulty.HARD){
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.TRIAL_OMEN, 20, 0, false, false, true));
             }
-            if(player.getEquippedStack(EquipmentSlot.MAINHAND).isOf(MiniumItem.IRIS_QUARTZ_SWORD)){
+            if(player.getEquippedStack(EquipmentSlot.MAINHAND).isIn(MiniumItemTag.IRIS_QUARTZ_BONUS_WEAPON)){
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 20, 3, false, false, false));
             }
         }else if ((itemStackHead.isOf(MiniumItem.MINIUM_HELMET) &&

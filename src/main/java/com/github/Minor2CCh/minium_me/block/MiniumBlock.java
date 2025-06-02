@@ -1,7 +1,10 @@
 package com.github.Minor2CCh.minium_me.block;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
+import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import net.minecraft.block.*;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -13,7 +16,8 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 import java.util.function.Function;
 
-import static net.minecraft.block.Blocks.createLightLevelFromLitBlockState;
+import static net.minecraft.block.Blocks.createFlowerPotBlock;
+
 
 public class MiniumBlock{
 
@@ -42,7 +46,7 @@ public class MiniumBlock{
                             .sounds(BlockSoundGroup.COPPER_BULB)
                             .requiresTool()
                             .solidBlock(Blocks::never)
-                            .luminance(createLightLevelFromLitBlockState(15))
+                            .luminance(Blocks.createLightLevelFromLitBlockState(15))
             ),"minium_bulb",new Item.Settings()
     );
     public static final Block IRIS_QUARTZ_ORE = register(new ExperienceDroppingBlock(UniformIntProvider.create(20, 25),Block.Settings.create().strength(5f, 3.0f).mapColor(MapColor.STONE_GRAY).requiresTool()), "iris_quartz_ore", new Item.Settings().fireproof());
@@ -67,8 +71,51 @@ public class MiniumBlock{
             .noCollision()
             .luminance(state -> 15)
             ), "glowstone_energy_block");
+    public static final Block STONE_ALCHEMY_BREAK_STONE = register(new Block(AbstractBlock.Settings.create()
+            .mapColor(MapColor.STONE_GRAY)
+            .strength(0F, 0F)
+            .nonOpaque()
+            .noCollision()
+            .sounds(BlockSoundGroup.STONE)
+    ), "stone_alchemy_break_stone");
+    public static final Block STONE_ALCHEMY_BREAK_NETHERRACK = register(new Block(AbstractBlock.Settings.create()
+            .mapColor(MapColor.DARK_RED)
+            .strength(0F, 0F)
+            .nonOpaque()
+            .noCollision()
+            .sounds(BlockSoundGroup.NETHERRACK)
+    ), "stone_alchemy_break_netherrack");
+    public static final Block STONE_ALCHEMY_BREAK_END_STONE = register(new Block(AbstractBlock.Settings.create()
+            .mapColor(MapColor.PALE_YELLOW)
+            .strength(0F, 0F)
+            .nonOpaque()
+            .noCollision()
+            .sounds(BlockSoundGroup.STONE)
+    ), "stone_alchemy_break_end_stone");
     public static final Block WIND_CHARGE_BLOCK = register(new WindChargeBlock(Block.Settings.create().strength(1.0f, 1.5f).mapColor(MapColor.LIGHT_BLUE_GRAY).sounds(BlockSoundGroup.WOOL)), "wind_charge_block", new Item.Settings());
+    public static final Block EASY_GRINDER = register(new GrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.CYAN).sounds(BlockSoundGroup.COPPER_BULB)
+            //.solidBlock(Blocks::never)
+            //.solid()
+            .suffocates(Blocks::never)
+            .nonOpaque()
+            .blockVision(Blocks::never)), "easy_grinder", new Item.Settings());
+    public static final Block EASY_CONVEYOR = register(new ConveyorBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.CYAN).sounds(BlockSoundGroup.COPPER_BULB).allowsSpawning(Blocks::never)), "easy_conveyor", new Item.Settings());
 
+    public static final Block MINIUM_ARTIFICIAL_FLOWER = register(
+
+            new FlowerBlock(
+                    MiniumStatusEffects.POISON_HEAL,
+                    8,
+                    AbstractBlock.Settings.create()
+                            .mapColor(MapColor.CYAN)
+                            .noCollision()
+                            .breakInstantly()
+                            .sounds(BlockSoundGroup.GRASS)
+                            .offset(AbstractBlock.OffsetType.XZ)
+                            .pistonBehavior(PistonBehavior.DESTROY)
+            ),"minium_artificial_flower", new Item.Settings());
+
+    public static final Block POTTED_MINIUM_ARTIFICIAL_FLOWER = register(createFlowerPotBlock(MINIUM_ARTIFICIAL_FLOWER), "potted_minium_artificial_flower");
     //from mekanism
     public static final Block OSMIUM_BLOCK_FROM_MEKANISM = register(new Block(Block.Settings.create().strength(5f, 6.0f).mapColor(MapColor.LIGHT_BLUE_GRAY).requiresTool()), "osmium_block", new Item.Settings());
     public static final Block RAW_OSMIUM_BLOCK_FROM_MEKANISM = register(new Block(Block.Settings.create().strength(5f, 6.0f).mapColor(MapColor.LIGHT_BLUE_GRAY).requiresTool()), "raw_osmium_block", new Item.Settings());

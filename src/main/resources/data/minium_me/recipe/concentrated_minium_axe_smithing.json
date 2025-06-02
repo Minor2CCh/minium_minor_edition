@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "minium_me:concentrated_minium_ingot"
+    "tag": "c:ingots/concentrated_minium"
   },
   "base": {
     "item": "minium_me:minium_axe"

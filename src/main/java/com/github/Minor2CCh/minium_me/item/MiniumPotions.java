@@ -1,6 +1,7 @@
 package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
+import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -23,8 +24,12 @@ public class MiniumPotions {
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
         builder.registerPotionRecipe(
                 Potions.AWKWARD,
-                MiniumItem.MINIUM_INGOT,
+                MiniumBlock.MINIUM_ARTIFICIAL_FLOWER.asItem(),
                 Registries.POTION.getEntry(POISON_HEAL));
+        builder.registerPotionRecipe(
+                Potions.WATER,
+                MiniumBlock.MINIUM_ARTIFICIAL_FLOWER.asItem(),
+                Potions.MUNDANE);
         builder.registerPotionRecipe(
                 Registries.POTION.getEntry(POISON_HEAL),
                 Items.REDSTONE,

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "minium_me:item/concentrated_minium_spear"
+  }
+}

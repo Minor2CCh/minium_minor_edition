@@ -8,4 +8,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface TrialSpawnerAccessor {
     @Accessor("cooldownEnd")
     long cooldownEnd();
+    @Accessor("cooldownEnd")
+    void setCooldownEnd(long newCooldownEnd);
 }

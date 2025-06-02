@@ -6,7 +6,9 @@
   "mixins": [
     "PlayerEntityMixin",
     "TrialSpawnerAccessor",
-    "TrialSpawnerSetter"
+    "AdditionSpearEnchantment",
+    "LivingEntityAccessor",
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

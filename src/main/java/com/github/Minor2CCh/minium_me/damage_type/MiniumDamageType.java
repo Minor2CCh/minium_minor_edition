@@ -14,6 +14,7 @@ public class MiniumDamageType {
     public static final RegistryKey<DamageType> ENERGY_NOT_PROJECTILE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Minium_me.MOD_ID, "energy_not_projectile"));
     public static final RegistryKey<DamageType> ENERGY_AMETHYST = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Minium_me.MOD_ID, "energy_amethyst"));
     public static final RegistryKey<DamageType> ENERGY_IRIS_QUARTZ = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Minium_me.MOD_ID, "energy_iris_quartz"));
+    public static final RegistryKey<DamageType> MINIUM_GRINDING = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Minium_me.MOD_ID, "minium_grinding"));
     //public static DamageSource of(World world, RegistryKey<DamageType> key) {
     //    return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(key));
     //}

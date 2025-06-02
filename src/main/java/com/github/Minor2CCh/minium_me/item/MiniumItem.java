@@ -5,7 +5,6 @@ import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-//import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
@@ -13,7 +12,6 @@ public class MiniumItem{
     public static final Item MINIUM_INGOT = register(new Item(new Item.Settings()), "minium_ingot");
     public static final Item C_MINIUM_INGOT = register(new Item(new Item.Settings()), "concentrated_minium_ingot");
     public static final Item R_MINIUM = register(new Item(new Item.Settings()), "raw_minium");
-    //public static Item DUMMY = register(new Item(new Item.Settings()),  "sculk");
     public static final Item MINIUM_UPGRADE_SMITHING_TEMPLATE = register(MiniumSmithingTemplateItem.createMiniumUpgrade(), "minium_upgrade_smithing_template");
     public static final Item IRIS_QUARTZ_UPGRADE_SMITHING_TEMPLATE = register(MiniumSmithingTemplateItem.createIrisQuartzUpgrade(), "iris_quartz_upgrade_smithing_template");
 
@@ -54,6 +52,10 @@ public class MiniumItem{
     public static final Item IRIS_QUARTZ = register(new Item(new Item.Settings().fireproof()), "iris_quartz");
     public static final Item IRIS_QUARTZ_INGOT = register(new Item(new Item.Settings().fireproof()), "iris_quartz_ingot");
     public static final Item ENERGY_GUN = register(new MiniumGunItem(new Item.Settings().maxCount(1).component(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(0, MiniumModComponent.ENERGY_EMPTY))), "energy_gun");
+
+    public static final Item MINIUM_SPEAR = register(new MiniumSpearItem(MiniumToolMaterial.MINIUM_TOOL, new Item.Settings().attributeModifiers(MiniumSpearItem.createAttributeModifiers(MiniumToolMaterial.MINIUM_TOOL, 3, -2.4f, 0))), "minium_spear");
+    public static final Item C_MINIUM_SPEAR = register(new MiniumSpearItem(MiniumToolMaterial.C_MINIUM_TOOL, new Item.Settings().attributeModifiers(MiniumSpearItem.createAttributeModifiers(MiniumToolMaterial.C_MINIUM_TOOL, 3, -2.4f, 0))), "concentrated_minium_spear");
+    public static final Item IRIS_QUARTZ_SPEAR = register(new MiniumSpearItem(MiniumToolMaterial.IRIS_QUARTZ_TOOL, new Item.Settings().attributeModifiers(MiniumSpearItem.createAttributeModifiers(MiniumToolMaterial.IRIS_QUARTZ_TOOL, 3, -2.4f, 1.0f)).rarity(Rarity.EPIC).fireproof()), "iris_quartz_spear");
 
     public static final Item DEEPSLATE_MINER = register(new DeepslateMinerItem(new Item.Settings().maxCount(16)), "deepslate_miner");
     public static final Item WIND_EXPLODER = register(new WindExploderItem(new Item.Settings().maxDamage(64)), "wind_exploder");

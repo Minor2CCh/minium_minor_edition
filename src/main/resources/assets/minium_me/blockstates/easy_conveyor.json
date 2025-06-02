@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "minium_me:block/easy_conveyor",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "minium_me:block/easy_conveyor",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "minium_me:block/easy_conveyor"
+    },
+    "facing=west": {
+      "model": "minium_me:block/easy_conveyor",
+      "y": 90
+    }
+  }
+}

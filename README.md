@@ -70,6 +70,21 @@ It can be crafted with 4 Iron Ingot, 4 Minium Ingot and 1 RedStone Block.
 The item emits a blast at one's feet when used.
 There are two versions: a standard version and an advanced version, the latter of which can be enchanted with Unbreaking and Mending enchantments.
 
+- Spear
+
+This weapon has a longer attack distance of 2 blocks compared to other tools. Compared to the sword, the attack is a single attack, so instead of being weak against many, it can avoid mobs you don't want to attack. It can be enchanted with enchantments that increase damage and Unbreakable, Mending, and Looting.
+Iris Quartz's tool has a range of 1 block longer.
+
+## New Block
+
+- Easy Grinder
+
+This block is capable of damaging the Mob it is on. The mobs that fall due to this damage drop experience, but do not drop items such as blaze rods, which players must defeat to drop them.
+
+- Easy Conveyor
+
+This is a block that moves the Mob in the direction it is placed. Mob will not spawn on this block.
+
 # このMODについて
 これはオリジナルの鉱石を追加するシンプルなMODです。
 最初に装備を作るときは鉄を使う場合が多く、他に鉄を使いたい状態では装備にリソースを割く事が多く、どうしても鉄の不足が目立ってしまいます。
@@ -138,3 +153,18 @@ There are two versions: a standard version and an advanced version, the latter o
 
 使用した時に自分の足元に爆風を発するアイテムです。
 通常版と改良版の２つがあり、後者は耐久力と修繕のエンチャントを施すことができます。
+
+- 鎗
+
+他のツールと比べて攻撃距離が2ブロック分長い武器です。剣と比べると攻撃が単体なので対多数に弱い代わりに攻撃したくないMobを避けることができます。ダメージが上がるエンチャントと耐久力、ドロップ増加、修繕を付与することができます。
+虹水晶のツールは射程が1ブロック更に長くなります。
+
+## 新しいブロック
+
+- 簡易グラインダー
+
+乗っているMobにダメージを与えることができるブロックです。このダメージで倒れたMobからは経験値を落としますが、ブレイズロッドのようなプレイヤーが倒さないと落とさないアイテムはドロップしません。
+
+- 簡易コンベアー
+
+設置した時の方向にMobを移動させるブロックです。このブロックの上にMobがスポーンすることはありません。

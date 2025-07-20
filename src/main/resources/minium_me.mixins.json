@@ -4,11 +4,12 @@
   "package": "com.github.Minor2CCh.minium_me.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "PlayerEntityMixin",
+    "AdditionEnchantment",
+    "LivingEntityMixin",
+    "PoisonStatusEffectMixin",
     "TrialSpawnerAccessor",
-    "AdditionSpearEnchantment",
     "LivingEntityAccessor",
-    "LivingEntityMixin"
+    "PowderSnowBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

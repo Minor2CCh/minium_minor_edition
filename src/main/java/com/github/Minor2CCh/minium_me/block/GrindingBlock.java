@@ -28,6 +28,7 @@ public class GrindingBlock extends Block implements Waterloggable {
     public static final MapCodec<GrindingBlock> CODEC = createCodec(GrindingBlock::new);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 7.0, 16.0);
+    protected static final float GRIND_DAMAGE = 5.0F;
     public GrindingBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, Boolean.FALSE));
@@ -69,18 +70,28 @@ public class GrindingBlock extends Block implements Waterloggable {
     }
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if(entity instanceof LivingEntity){
-            int playerHitTime = ((LivingEntityAccessor)(entity)).playerHitTimer();
+        if(entity instanceof LivingEntity livingEntity){
+            if(!world.isClient()){
+                damageEntity(world, livingEntity, pos);
+            }
+        }
+    }
+
+    protected void damageEntity(World world, LivingEntity livingEntity, BlockPos pos) {
+        if(!world.isClient()){
+            int playerHitTime = ((LivingEntityAccessor)(livingEntity)).playerHitTimer();
             if(playerHitTime == 0){
-                ((LivingEntityAccessor)(entity)).setPlayerHitTimer(10);
+                ((LivingEntityAccessor)(livingEntity)).setPlayerHitTimer(10);
             }
             DamageSource damageSource = new DamageSource(
                     world.getRegistryManager()
                             .get(RegistryKeys.DAMAGE_TYPE)
                             .entryOf(MiniumDamageType.MINIUM_GRINDING));
-            entity.damage(damageSource, 5.0F);
+            livingEntity.damage(damageSource, GRIND_DAMAGE);
         }
-    }/*
+    }
+
+    /*
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;

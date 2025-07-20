@@ -1,6 +1,12 @@
 {
   "values": [
-    "#c:storage_blocks/aluminium",
-    "#c:storage_blocks/aluminum"
+    {
+      "id": "#c:storage_blocks/aluminium",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/aluminum",
+      "required": false
+    }
   ]
 }

@@ -46,9 +46,9 @@ public class WindChargeBlock extends Block {
                         windChargeEntity,
                         null,
                         EXPLOSION_BEHAVIOR,
-                        pos.getX()+0.5,
+                        clampDouble(entity.getX(), pos.getX(), pos.getX()+1),
                         pos.getY()+1.0,
-                        pos.getZ()+0.5,
+                        clampDouble(entity.getZ(), pos.getZ(), pos.getZ()+1),
                         1.4F,
                         false,
                         World.ExplosionSourceType.TRIGGER,
@@ -71,9 +71,9 @@ public class WindChargeBlock extends Block {
                         windChargeEntity,
                         null,
                         EXPLOSION_BEHAVIOR,
-                        pos.getX()+0.5,
-                        pos.getY()+1.0,
-                        pos.getZ()+0.5,
+                        hit.getPos().getX(),
+                        hit.getPos().getY(),
+                        hit.getPos().getZ(),
                         1.4F,
                         false,
                         World.ExplosionSourceType.TRIGGER,
@@ -81,6 +81,22 @@ public class WindChargeBlock extends Block {
                         ParticleTypes.GUST_EMITTER_LARGE,
                         SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST);
         }
+    }
+    private double clampDouble(double value, double minValue, double maxValue){
+        if(minValue > maxValue){
+            double temp = minValue;
+            minValue = maxValue;
+            maxValue = temp;
+
+        }if(minValue == maxValue){
+            return minValue;
+        }
+        if(value < minValue){
+            return minValue;
+        }else if(maxValue < value){
+            return maxValue;
+        }
+        return value;
     }
 
 }

@@ -12,8 +12,6 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.util.Objects;
-
 public class RedStoneEnergyBlock extends AbstractEnergyBlock{
     public static final MapCodec<RedStoneEnergyBlock> CODEC = createCodec(RedStoneEnergyBlock::new);
     private static final Vec3d[] COLORS = Util.make(new Vec3d[16], colors -> {
@@ -25,7 +23,7 @@ public class RedStoneEnergyBlock extends AbstractEnergyBlock{
             colors[i] = new Vec3d(g, h, j);
         }
     });
-    public RedStoneEnergyBlock(AbstractBlock.Settings settings) {
+    public RedStoneEnergyBlock(Block.Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, Boolean.FALSE));
     }

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minium_me:concentrated_minium_spear"
+    },
+    "R": {
+      "tag": "c:storage_blocks/concentrated_minium"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#R#"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:advanced_grinder"
+  }
+}

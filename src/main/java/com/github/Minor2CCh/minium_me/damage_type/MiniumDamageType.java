@@ -1,12 +1,10 @@
 package com.github.Minor2CCh.minium_me.damage_type;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
 public class MiniumDamageType {
     public static final RegistryKey<DamageType> ENERGY_DEFAULT = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Minium_me.MOD_ID, "energy_default"));

@@ -18,6 +18,9 @@
     ],
     "main": [
       "com.github.Minor2CCh.minium_me.Minium_me"
+    ],
+    "rei_client": [
+      "com.github.Minor2CCh.minium_me.client.rei.MiniumREIClientPlugin"
     ]
   },
   "mixins": [
@@ -31,5 +34,8 @@
     "fabricloader": "*",
     "fabric": "*",
     "minecraft": "1.21.1"
+  },
+  "suggests": {
+    "roughlyenoughitems": "*"
   }
 }

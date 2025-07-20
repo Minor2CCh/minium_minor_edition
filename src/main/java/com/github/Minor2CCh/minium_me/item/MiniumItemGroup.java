@@ -15,8 +15,6 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.Arrays;
-
 public class MiniumItemGroup {
     public static final RegistryKey<ItemGroup> MINIUM_ITEM_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(Minium_me.MOD_ID, "minium_item_group"));
     public static final ItemGroup MINIUM_ITEM_GROUP = FabricItemGroup.builder()
@@ -79,38 +77,7 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumBlock.DEEPSLATE_IRIS_QUARTZ_ORE);
             itemGroup.add(MiniumBlock.IRIS_QUARTZ_BLOCK);
             itemGroup.add(MiniumItem.ENERGY_GUN);
-            for (String s : Arrays.asList(MiniumModComponent.ENERGY_COAL,
-                    MiniumModComponent.ENERGY_IRON,
-                    MiniumModComponent.ENERGY_COPPER,
-                    MiniumModComponent.ENERGY_GOLD,
-                    MiniumModComponent.ENERGY_LAPIS,
-                    MiniumModComponent.ENERGY_REDSTONE,
-                    MiniumModComponent.ENERGY_DIAMOND,
-                    MiniumModComponent.ENERGY_EMERALD,
-                    MiniumModComponent.ENERGY_QUARTZ,
-                    MiniumModComponent.ENERGY_GLOWSTONE,
-                    MiniumModComponent.ENERGY_NETHERITE,
-                    MiniumModComponent.ENERGY_AMETHYST,
-                    MiniumModComponent.ENERGY_MINIUM,
-                    MiniumModComponent.ENERGY_C_MINIUM,
-                    MiniumModComponent.ENERGY_OSMIUM,
-                    MiniumModComponent.ENERGY_IRIS_QUARTZ,
-                    MiniumModComponent.ENERGY_REFINED_IRON,
-                    MiniumModComponent.ENERGY_SOURCE_GEM,
-                    MiniumModComponent.ENERGY_ALUMINIUM,
-                    MiniumModComponent.ENERGY_LEAD,
-                    MiniumModComponent.ENERGY_NICKEL,
-                    MiniumModComponent.ENERGY_SILVER,
-                    MiniumModComponent.ENERGY_TIN,
-                    MiniumModComponent.ENERGY_URANIUM,
-                    MiniumModComponent.ENERGY_ZINC,
-                    MiniumModComponent.ENERGY_BRONZE,
-                    MiniumModComponent.ENERGY_STEEL,
-                    MiniumModComponent.ENERGY_CERTUS_QUARTZ,
-                    MiniumModComponent.ENERGY_FLUIX,
-                    MiniumModComponent.ENERGY_FLUORITE,
-                    MiniumModComponent.ENERGY_REFINED_GLOWSTONE,
-                    MiniumModComponent.ENERGY_REFINED_OBSIDIAN)) {
+            for (String s : MiniumModComponent.ENERGY_LIST) {
                 ItemStack gunStack = MiniumItem.ENERGY_GUN.getDefaultStack();
                 gunStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(2147483647, s));
                 itemGroup.add(gunStack);
@@ -130,6 +97,7 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumItem.C_MINIUM_SPEAR);
             itemGroup.add(MiniumItem.IRIS_QUARTZ_SPEAR);
             itemGroup.add(MiniumBlock.EASY_GRINDER);
+            itemGroup.add(MiniumBlock.ADVANCED_GRINDER);
             itemGroup.add(MiniumBlock.EASY_CONVEYOR);
             itemGroup.add(MiniumBlock.MINIUM_ARTIFICIAL_FLOWER);
 

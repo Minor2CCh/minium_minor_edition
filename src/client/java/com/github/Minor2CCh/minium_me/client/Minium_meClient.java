@@ -1,6 +1,8 @@
 package com.github.Minor2CCh.minium_me.client;
 
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
+import com.github.Minor2CCh.minium_me.client.registry.MiniumBlockClient;
+import com.github.Minor2CCh.minium_me.client.registry.MiniumItemClient;
 import com.github.Minor2CCh.minium_me.item.IrisQuartzElytraItem;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
 import com.github.Minor2CCh.minium_me.particle.MiniumParticle;
@@ -21,6 +23,7 @@ public class Minium_meClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), MiniumBlock.REDSTONE_ENERGY_BLOCK);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), MiniumBlock.GLOWSTONE_ENERGY_BLOCK);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.EASY_GRINDER);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.ADVANCED_GRINDER);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.MINIUM_ARTIFICIAL_FLOWER);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.POTTED_MINIUM_ARTIFICIAL_FLOWER);
         LivingEntityFeatureRendererRegistrationCallback.EVENT
@@ -37,5 +40,7 @@ public class Minium_meClient implements ClientModInitializer {
         MiniumEntityRenderers.initialize();
         ParticleFactoryRegistry.getInstance().register(MiniumParticle.ENERGY_HIT_PARTICLE, EnergyHitParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(MiniumParticle.ENERGY_HIT_PARTICLE2, EnergyHitParticle.Factory::new);
+        MiniumItemClient.initialize();
+        MiniumBlockClient.initialize();
     }
 }

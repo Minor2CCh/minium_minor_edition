@@ -1,0 +1,3 @@
+{
+"parent":"minecraft:item/generated",
+"textures":{"layer0":"minium_me:item/minium_helmet","layer1":"minecraft:trims/items/helmet_trim_iris_quartz"}}

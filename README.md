@@ -58,6 +58,7 @@ This is a simple gun that is loaded with metal or jewelry and fired as energy.
 It can be loaded by holding and using the metal or gem you wish to turn into energy in your off-hand.
 To load, the gun must either be empty or have matching energy.
 The available energy can be found by looking at the recipes from REI or EMI.
+It can be enchanted with Energy Boost and Looting enchantments; Energy Boost is an enchantment that increases power and can be obtained at a certain rate from Mineshaft's chest loot.
 
 - Deepslate Miner
 
@@ -80,6 +81,10 @@ Iris Quartz's tool has a range of 1 block longer.
 - Easy Grinder
 
 This block is capable of damaging the Mob it is on. The mobs that fall due to this damage drop experience, but do not drop items such as blaze rods, which players must defeat to drop them.
+
+- Advanced Grinder
+
+It is more powerful than Easy Grinder, and mobs that fall due to this damage drop loot from player kills, such as blazes.
 
 - Easy Conveyor
 
@@ -142,6 +147,7 @@ This is a block that moves the Mob in the direction it is placed. Mob will not s
 オフハンドにエネルギーにしたい金属や宝石を持ち、使用することで装填することができます。
 装填するには銃のエネルギーが空であるか、一致するエネルギーかのどちらかである必要があります。
 使用可能なエネルギーはREIかEMIからレシピを見ることでわかります。
+エネルギーブーストとドロップ数増加のエンチャントを付与できます。エネルギーブーストは威力が上がるエンチャントであり、廃坑のチェスト戦利品から一定確率で入手可能です。
 
 - 深層岩採掘器
 
@@ -164,6 +170,10 @@ This is a block that moves the Mob in the direction it is placed. Mob will not s
 - 簡易グラインダー
 
 乗っているMobにダメージを与えることができるブロックです。このダメージで倒れたMobからは経験値を落としますが、ブレイズロッドのようなプレイヤーが倒さないと落とさないアイテムはドロップしません。
+
+- 改良型グラインダー
+
+乗っているMobにダメージを与えることができるブロックです。簡易グラインダーより威力が上がっており、このダメージで倒れたMobからは経験値の他にブレイズロッドのようなプレイヤーが倒さないといけないアイテムもドロップします。
 
 - 簡易コンベアー
 

@@ -1,6 +1,5 @@
 package com.github.Minor2CCh.minium_me.client.item;
 
-import com.github.Minor2CCh.minium_me.item.MiniumItem;
 import com.github.Minor2CCh.minium_me.item.MiniumMultiToolItem;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.Item;

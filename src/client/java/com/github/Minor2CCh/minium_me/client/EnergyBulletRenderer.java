@@ -34,16 +34,11 @@ public class EnergyBulletRenderer extends EntityRenderer<EnergyBulletEntity> {
         matrixStack.scale(-0.5F, -0.5F, 0.5F);
         this.model.setAngles(energyBulletEntity, 0.0F, 0.0F, 0.0F, h, j);
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.model.getLayer(TEXTURE));
-        if(energyBulletEntity.colorID == -1){
-            energyBulletEntity.renderColor = EnergyBulletEntity.color;
-            energyBulletEntity.colorID = 0;
-        }
-        //double rand = Math.random();
-        //color = (int) (16777215*rand);
-        this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, energyBulletEntity.renderColor);
+        int color = EnergyBulletEntity.getRenderColor(energyBulletEntity.getUuid());
+        this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, color);
         matrixStack.scale(1.5F, 1.5F, 1.5F);
         VertexConsumer vertexConsumer2 = vertexConsumerProvider.getBuffer(LAYER);
-        this.model.render(matrixStack, vertexConsumer2, i, OverlayTexture.DEFAULT_UV, (energyBulletEntity.renderColor | 0x26000000));
+        this.model.render(matrixStack, vertexConsumer2, i, OverlayTexture.DEFAULT_UV, (color | 0x26000000));
         matrixStack.pop();
         super.render(energyBulletEntity, f, g, matrixStack, vertexConsumerProvider, i);
     }

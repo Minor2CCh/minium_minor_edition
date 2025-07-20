@@ -2,7 +2,6 @@ package com.github.Minor2CCh.minium_me.enchantment;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;

@@ -1,0 +1,10 @@
+{
+  "asset_name": "concentrated_minium",
+  "description": {
+    "color": "#009866",
+    "translate": "trim_material.minium_me.concentrated_minium"
+  },
+  "ingredient": "minium_me:concentrated_minium_ingot",
+  "override_armor_materials": {},
+  "item_model_index": 0.716202
+}

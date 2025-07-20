@@ -1,6 +1,12 @@
 {
   "values": [
-    "#c:ingots/aluminium",
-    "#c:ingots/aluminum"
+    {
+      "id": "#c:ingots/aluminium",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/aluminum",
+      "required": false
+    }
   ]
 }

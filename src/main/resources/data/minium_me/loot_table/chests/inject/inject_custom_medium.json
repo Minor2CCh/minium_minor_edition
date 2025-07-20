@@ -1,0 +1,26 @@
+{
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 16.0,
+                "min": 7.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minium_me:minium_ingot",
+          "weight": 5
+        }
+        ],
+      "rolls": 1.0
+    }
+  ]
+}

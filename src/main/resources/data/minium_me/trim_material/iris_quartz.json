@@ -1,0 +1,10 @@
+{
+  "asset_name": "iris_quartz",
+  "description": {
+    "color": "#FFFFFF",
+    "translate": "trim_material.minium_me.iris_quartz"
+  },
+  "ingredient": "minium_me:iris_quartz_ingot",
+  "override_armor_materials": {},
+  "item_model_index": 0.716203
+}

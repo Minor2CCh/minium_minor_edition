@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +21,7 @@ public class ConveyorBlock extends HorizontalFacingBlock {
     public MapCodec<ConveyorBlock> getCodec() {
         return CODEC;
     }
-    public ConveyorBlock(AbstractBlock.Settings settings) {
+    public ConveyorBlock(Block.Settings settings) {
         super(settings);
     }
     @Override
@@ -40,19 +39,15 @@ public class ConveyorBlock extends HorizontalFacingBlock {
         Vec3d prevPos = entity.getPos();
         switch(state.get(FACING)){
             case Direction.NORTH:
-                //entity.setPos(entity.getX(), entity.getY(), entity.getZ()+VELOCITY);
                 entity.addVelocity(0, 0, VELOCITY);
                 break;
             case Direction.WEST:
-                //entity.setPos(entity.getX()+VELOCITY, entity.getY(), entity.getZ());
                 entity.addVelocity(VELOCITY, 0, 0);
                 break;
             case Direction.EAST:
-                //entity.setPos(entity.getX()-VELOCITY, entity.getY(), entity.getZ());
                 entity.addVelocity(-VELOCITY, 0, 0);
                 break;
             case Direction.SOUTH:
-                //entity.setPos(entity.getX(), entity.getY(), entity.getZ()-VELOCITY);
                 entity.addVelocity(0, 0, -VELOCITY);
                 break;
             }

@@ -1,0 +1,10 @@
+{
+  "asset_name": "minium",
+  "description": {
+    "color": "#33FFD3",
+    "translate": "trim_material.minium_me.minium"
+  },
+  "ingredient": "minium_me:minium_ingot",
+  "override_armor_materials": {},
+  "item_model_index": 0.716201
+}

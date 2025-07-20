@@ -1,29 +1,21 @@
 package com.github.Minor2CCh.minium_me.item;
 
-import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.WindChargeEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
 import net.minecraft.world.explosion.ExplosionBehavior;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -73,15 +65,5 @@ public class WindExploderItem extends Item {
         }
 
         return TypedActionResult.success(itemStack, world.isClient());//itemStackの部分を変えるとアイテムがそれに化ける
-    }
-    @Override
-    public void appendTooltip(ItemStack itemStack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        if(itemStack.isOf(MiniumItem.WIND_EXPLODER)){
-            tooltip.add(Text.translatable("item.minium_me.wind_exploder.desc").formatted(Formatting.WHITE));
-        }else
-        if(itemStack.isOf(MiniumItem.ADVANCED_WIND_EXPLODER)){
-            tooltip.add(Text.translatable("item.minium_me.advanced_wind_exploder.desc").formatted(Formatting.WHITE));
-        }
-
     }
 }

@@ -2,7 +2,6 @@ package com.github.Minor2CCh.minium_me.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -11,9 +10,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-
-import java.util.Objects;
 
 public class GlowStoneEnergyBlock extends AbstractEnergyBlock{
     public static final MapCodec<GlowStoneEnergyBlock> CODEC = createCodec(GlowStoneEnergyBlock::new);
@@ -26,7 +22,7 @@ public class GlowStoneEnergyBlock extends AbstractEnergyBlock{
             colors[i] = new Vec3d(g, h, j);
         }
     });
-    public GlowStoneEnergyBlock(AbstractBlock.Settings settings) {
+    public GlowStoneEnergyBlock(Block.Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, Boolean.FALSE));
     }

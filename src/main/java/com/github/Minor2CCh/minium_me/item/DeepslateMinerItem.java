@@ -1,30 +1,18 @@
 package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
-import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
-import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantmentTags;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.ExperienceOrbEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.Items;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import java.util.List;
 
 import static net.minecraft.block.Block.dropStacks;
-import static net.minecraft.enchantment.EnchantmentHelper.hasAnyEnchantmentsIn;
 
 public class DeepslateMinerItem extends Item{
     public DeepslateMinerItem(Item.Settings settings) {
@@ -74,9 +62,5 @@ public class DeepslateMinerItem extends Item{
         dropStacks(blockState, world, blockPos, null, playerEntity, itemStack);
         world.breakBlock(blockPos, false, playerEntity);
 
-    }
-    @Override
-    public void appendTooltip(ItemStack itemStack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-            tooltip.add(Text.translatable("item.minium_me.deepslate_miner.desc").formatted(Formatting.WHITE));
     }
 }

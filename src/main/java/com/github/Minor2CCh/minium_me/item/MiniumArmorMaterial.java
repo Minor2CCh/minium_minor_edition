@@ -1,6 +1,6 @@
 package com.github.Minor2CCh.minium_me.item;
 
-//import com.github.Minor2CCh.minium_me.Minium_me;
+import com.github.Minor2CCh.minium_me.Minium_me;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
@@ -23,11 +23,11 @@ public final class MiniumArmorMaterial{
 
     public static RegistryEntry<ArmorMaterial> registerMaterial(String id, Map<ArmorItem.Type, Integer> defensePoints, int enchantability, RegistryEntry<SoundEvent> equipSound, Supplier<Ingredient> repairIngredientSupplier, float toughness, float knockbackResistance, boolean dyeable) {
         List<ArmorMaterial.Layer> layers = List.of(
-                new ArmorMaterial.Layer(Identifier.of("minium_me", id), "", dyeable)
+                new ArmorMaterial.Layer(Identifier.of(Minium_me.MOD_ID, id), "", dyeable)
         );
 
         ArmorMaterial material = new ArmorMaterial(defensePoints, enchantability, equipSound, repairIngredientSupplier, layers, toughness, knockbackResistance);
-        material = Registry.register(Registries.ARMOR_MATERIAL, Identifier.of("minium_me", id), material);
+        material = Registry.register(Registries.ARMOR_MATERIAL, Identifier.of(Minium_me.MOD_ID, id), material);
         return RegistryEntry.of(material);
     }
     public static final RegistryEntry<ArmorMaterial> MINIUM = registerMaterial("minium",
@@ -39,7 +39,7 @@ public final class MiniumArmorMaterial{
             ),
             15,
             SoundEvents.ITEM_ARMOR_EQUIP_IRON,
-            () -> Ingredient.ofItems(MiniumItem.MINIUM_INGOT),
+            () -> Ingredient.fromTag(MiniumItemTag.MINIUM_INGOT),
             1.0F,
             0.0F,
             false);
@@ -53,7 +53,7 @@ public final class MiniumArmorMaterial{
             ),
             15,
             SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND,
-            () -> Ingredient.ofItems(MiniumItem.C_MINIUM_INGOT),
+            () -> Ingredient.fromTag(MiniumItemTag.C_MINIUM_INGOT),
             2.0F,
             0.05F,
             false);
@@ -67,7 +67,7 @@ public final class MiniumArmorMaterial{
             ),
             25,
             SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND,
-            () -> Ingredient.ofItems(MiniumItem.IRIS_QUARTZ_INGOT),
+            () -> Ingredient.fromTag(MiniumItemTag.IRIS_QUARTZ_INGOT),
             5.0F,
             0.1F,
             false);

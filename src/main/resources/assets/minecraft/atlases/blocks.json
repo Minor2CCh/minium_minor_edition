@@ -1,0 +1,19 @@
+{
+  "sources": [
+    {
+      "type": "paletted_permutations",
+      "textures": [
+        "trims/items/leggings_trim",
+        "trims/items/chestplate_trim",
+        "trims/items/helmet_trim",
+        "trims/items/boots_trim"
+      ],
+      "palette_key": "trims/color_palettes/trim_palette",
+      "permutations": {
+        "minium": "minium_me:trims/color_palettes/minium",
+        "concentrated_minium": "minium_me:trims/color_palettes/concentrated_minium",
+        "iris_quartz": "minium_me:trims/color_palettes/iris_quartz"
+      }
+    }
+  ]
+}

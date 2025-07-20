@@ -18,7 +18,7 @@ import java.util.Objects;
 public abstract class AbstractEnergyBlock extends Block implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 4.0, 4.0, 12.0, 12.0, 12.0);
-    public AbstractEnergyBlock(AbstractBlock.Settings settings) {
+    public AbstractEnergyBlock(Block.Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, Boolean.FALSE));
     }
@@ -39,7 +39,7 @@ public abstract class AbstractEnergyBlock extends Block implements Waterloggable
     protected BlockState getStateForNeighborUpdate(
             BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos
     ) {
-        if ((Boolean)state.get(WATERLOGGED)) {
+        if (state.get(WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 

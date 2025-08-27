@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -36,6 +36,20 @@ repositories {
             includeGroup "dev.architectury"
         }
     }
+    maven {
+        name = "Greenhouse Maven"
+        url = 'https://repo.greenhouse.house/releases/'
+    }
+    maven {
+        name = "Greenhouse Maven (Snapshots)"
+        url = 'https://repo.greenhouse.house/snapshots/'
+    }
+    maven {
+        url "https://jitpack.io/"
+        content {
+            excludeGroup "io.github.fabricators_of_create"
+        }
+    }
 }
 
 dependencies {
@@ -47,6 +61,12 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+    modImplementation("vectorwing:FarmersDelight:${project.fdfr_version}") {
+        exclude(group: "net.fabricmc")
+    }
+    //compileOnly("vectorwing:FarmersDelight:${project.fdfr_version}") {
+    //    exclude(group: "net.fabricmc")
+    //}
 }
 
 processResources {

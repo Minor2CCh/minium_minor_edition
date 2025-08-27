@@ -6,21 +6,26 @@ import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantmentTags;
 import com.github.Minor2CCh.minium_me.handler.DoubleClickHandler;
 import com.github.Minor2CCh.minium_me.mixin.TrialSpawnerAccessor;
 import com.google.common.collect.BiMap;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.fabricmc.fabric.mixin.content.registry.AxeItemAccessor;
 import net.fabricmc.fabric.mixin.content.registry.ShovelItemAccessor;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.TrialSpawnerBlockEntity;
 import net.minecraft.block.enums.TrialSpawnerState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -28,19 +33,20 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
 import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-import static net.minecraft.enchantment.EnchantmentHelper.hasAnyEnchantmentsIn;
-
-public class MiniumMultiToolItem extends MiningToolItem {
-    private static final Map<Block, BlockState> PATH_STATES;
-    private static final Map<Block, Block> STRIPPED_BLOCKS;
+public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTooltip{
+    private final ShovelItem internalShovel;
+    private final AxeItem internalAxe;
+    protected static final Map<Block, BlockState> PATH_STATES = ShovelItemAccessor.getPathStates();
+    protected static final Map<Block, Block> STRIPPED_BLOCKS = AxeItemAccessor.getStrippedBlocks();
 
 
     public MiniumMultiToolItem(ToolMaterial material, Item.Settings settings) {
         super(material, MiniumBlockTag.MULTITOOL_MINEABLE, settings);
+        this.internalShovel = (ShovelItem) Items.DIAMOND_SHOVEL;
+        this.internalAxe = (AxeItem) Items.DIAMOND_AXE;
     }
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
@@ -63,14 +69,11 @@ public class MiniumMultiToolItem extends MiningToolItem {
             return ActionResult.success(world.isClient);
         }
 
-        if (stripBlock(context, world, blockPos, playerEntity)) {
+        if (useAxe(context, world, blockPos, playerEntity)) {
             return ActionResult.success(world.isClient);
         }
         if (rangeStoneBreak(context, world, blockPos, playerEntity)) {
             return ActionResult.success(world.isClient);
-        }
-        if (context.getSide() == Direction.DOWN) {
-            return ActionResult.PASS;
         }
         if (useShovel(context, world, blockPos, playerEntity)) {
             return ActionResult.success(world.isClient);
@@ -116,7 +119,7 @@ public class MiniumMultiToolItem extends MiningToolItem {
     }
     private void stoneBreakDrop(World world, BlockPos blockPos, PlayerEntity playerEntity, ItemStack itemStack){
         BlockState blockState = world.getBlockState(blockPos);
-        if(hasAnyEnchantmentsIn(itemStack, MiniumEnchantmentTags.TRANSFORMER_STONE)){
+        if(EnchantmentHelper.hasAnyEnchantmentsIn(itemStack, MiniumEnchantmentTags.TRANSFORMER_STONE)){
             Random rand = new Random();
             if(rand.nextInt(20) == 0){
                 if(rand.nextInt(5) == 0){//1%の確率でランダムに鉱石を落とす
@@ -142,25 +145,54 @@ public class MiniumMultiToolItem extends MiningToolItem {
 
     }
     //樹木剥がし
-    private boolean stripBlock(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity) {
-        Optional<BlockState> optional = this.tryStrip(world, blockPos, playerEntity, world.getBlockState(blockPos));
-        if (optional.isPresent()) {
-            ItemStack itemStack = context.getStack();
-            if (playerEntity instanceof ServerPlayerEntity) {
-                Criteria.ITEM_USED_ON_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockPos, itemStack);
+    private boolean useAxe(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity) {
+        if(!FabricLoader.getInstance().isModLoaded("neoforge")){
+            ActionResult actionResult = internalAxe.useOnBlock(context);
+            return actionResult.isAccepted();
+        }else{ //Connector環境で失敗するので旧式
+            Optional<BlockState> optional = this.tryStrip(world, blockPos, playerEntity, world.getBlockState(blockPos));
+            if (optional.isPresent()) {
+                ItemStack itemStack = context.getStack();
+                if (playerEntity instanceof ServerPlayerEntity) {
+                    Criteria.ITEM_USED_ON_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockPos, itemStack);
+                }
+                BlockState newState = optional.get();
+                world.setBlockState(blockPos, newState, 11);
+                world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Emitter.of(playerEntity, newState));
+                if (playerEntity != null) {
+                    itemStack.damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+                }
+                return true;
             }
-
-            BlockState newState = optional.get();
-            world.setBlockState(blockPos, newState, 11);
-            world.emitGameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Emitter.of(playerEntity, newState));
-            if (playerEntity != null) {
-                //playerEntity.dropItem(itemStack, false);
-                itemStack.damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
-            }
-
-            return true;
+            return false;
         }
-        return false;
+    }
+    //錆止めor錆落とし
+    private Optional<BlockState> tryStrip(World world, BlockPos pos, @Nullable PlayerEntity player, BlockState state) {
+        Optional<BlockState> optional = this.getStrippedState(state);
+        if (optional.isPresent()) {
+            world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            return optional;
+        } else {
+            Optional<BlockState> optional2 = Oxidizable.getDecreasedOxidationState(state);
+            if (optional2.isPresent()) {
+                world.playSound(player, pos, SoundEvents.ITEM_AXE_SCRAPE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.syncWorldEvent(player, 3005, pos, 0);
+                return optional2;
+            } else {
+                Optional<BlockState> optional3 = Optional.ofNullable((Block) ((BiMap<?, ?>) HoneycombItem.WAXED_TO_UNWAXED_BLOCKS.get()).get(state.getBlock())).map((block) -> block.getStateWithProperties(state));
+                if (optional3.isPresent()) {
+                    world.playSound(player, pos, SoundEvents.ITEM_AXE_WAX_OFF, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                    world.syncWorldEvent(player, 3004, pos, 0);
+                    return optional3;
+                } else {
+                    return Optional.empty();
+                }
+            }
+        }
+    }
+    private Optional<BlockState> getStrippedState(BlockState state) {
+        return Optional.ofNullable(STRIPPED_BLOCKS.get(state.getBlock())).map((block) -> block.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)));
     }
 
     private boolean accelerateTrialSpawner(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
@@ -274,6 +306,13 @@ public class MiniumMultiToolItem extends MiningToolItem {
     }
     //道生成
     private boolean useShovel(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
+        if(!FabricLoader.getInstance().isModLoaded("neoforge")){
+            ActionResult actionResult = internalShovel.useOnBlock(context);
+            return actionResult.isAccepted();
+        }else{ //Connector環境で失敗するので旧式
+            if((context.getSide() == Direction.DOWN)){
+                return false;
+            }
             BlockState blockState = world.getBlockState(blockPos);
             BlockState blockState2 = PATH_STATES.get(blockState.getBlock());
             if (blockState2 != null && world.getBlockState(blockPos.up()).isAir()) {
@@ -292,6 +331,7 @@ public class MiniumMultiToolItem extends MiningToolItem {
                 return true;
             }
             return false;
+        }
     }
     private void updateBlockState2(World world, BlockPos blockPos, BlockState newState, PlayerEntity playerEntity, ItemUsageContext context) {
         world.setBlockState(blockPos, newState, 11);
@@ -308,42 +348,16 @@ public class MiniumMultiToolItem extends MiningToolItem {
         }
     }
 
-    private static boolean shouldCancelStripAttempt(ItemUsageContext context) {
+    private boolean shouldCancelStripAttempt(ItemUsageContext context) {
         PlayerEntity playerEntity = context.getPlayer();
         return context.getHand().equals(Hand.MAIN_HAND) && Objects.requireNonNull(playerEntity).getOffHandStack().isOf(Items.SHIELD) && !playerEntity.shouldCancelInteraction();
     }
-    //錆止めor錆落とし
-    private Optional<BlockState> tryStrip(World world, BlockPos pos, @Nullable PlayerEntity player, BlockState state) {
-        Optional<BlockState> optional = this.getStrippedState(state);
-        if (optional.isPresent()) {
-            world.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            return optional;
-        } else {
-            Optional<BlockState> optional2 = Oxidizable.getDecreasedOxidationState(state);
-            if (optional2.isPresent()) {
-                world.playSound(player, pos, SoundEvents.ITEM_AXE_SCRAPE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                world.syncWorldEvent(player, 3005, pos, 0);
-                return optional2;
-            } else {
-                Optional<BlockState> optional3 = Optional.ofNullable((Block) ((BiMap<?, ?>) HoneycombItem.WAXED_TO_UNWAXED_BLOCKS.get()).get(state.getBlock())).map((block) -> block.getStateWithProperties(state));
-                if (optional3.isPresent()) {
-                    world.playSound(player, pos, SoundEvents.ITEM_AXE_WAX_OFF, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    world.syncWorldEvent(player, 3004, pos, 0);
-                    return optional3;
-                } else {
-                    return Optional.empty();
-                }
-            }
+    @Override
+    public void customTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType type, boolean hasShiftDown) {
+        if (Objects.equals(this, MiniumItem.IRIS_QUARTZ_MULTITOOL)) {
+            HasCustomTooltip.super.customTooltip(itemStack, context, tooltip, type, hasShiftDown);
         }
-    }
-    private Optional<BlockState> getStrippedState(BlockState state) {
-        return Optional.ofNullable(STRIPPED_BLOCKS.get(state.getBlock())).map((block) -> block.getDefaultState().with(PillarBlock.AXIS, state.get(PillarBlock.AXIS)));
-    }
-    static{
-        STRIPPED_BLOCKS = AxeItemAccessor.getStrippedBlocks();
-    }
-    static {
-        PATH_STATES = ShovelItemAccessor.getPathStates();
+
     }
 
 }

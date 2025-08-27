@@ -96,11 +96,11 @@ public class MiniumBlock{
             .sounds(BlockSoundGroup.STONE)
     ), "stone_alchemy_break_end_stone");
     public static final Block WIND_CHARGE_BLOCK = register(new WindChargeBlock(Block.Settings.create().strength(1.0f, 1.5f).mapColor(MapColor.LIGHT_BLUE_GRAY).sounds(BlockSoundGroup.WOOL).instrument(NoteBlockInstrument.GUITAR)), "wind_charge_block", new Item.Settings());
-    public static Block EASY_GRINDER = register(new GrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.CYAN).sounds(BlockSoundGroup.COPPER_BULB)
+    public static final Block EASY_GRINDER = register(new GrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.CYAN).sounds(BlockSoundGroup.COPPER_BULB)
             .suffocates(Blocks::never)
             .nonOpaque()
             .blockVision(Blocks::never)), "easy_grinder", new Item.Settings());
-    public static Block ADVANCED_GRINDER = register(new AdvancedGrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.DIAMOND_BLUE).sounds(BlockSoundGroup.COPPER_BULB)
+    public static final Block ADVANCED_GRINDER = register(new AdvancedGrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.DIAMOND_BLUE).sounds(BlockSoundGroup.COPPER_BULB)
             .suffocates(Blocks::never)
             .nonOpaque()
             .blockVision(Blocks::never)), "advanced_grinder", new Item.Settings());
@@ -147,10 +147,5 @@ public class MiniumBlock{
         return state -> state.get(Properties.WATERLOGGED) ? MapColor.WATER_BLUE : mapColor;
     }
     public static void initialize() {
-    }
-    public static String getBlockId(Block block){
-        String key = block.getTranslationKey();
-        int lastDot = key.lastIndexOf(".");
-        return key.substring(lastDot + 1);
     }
 }

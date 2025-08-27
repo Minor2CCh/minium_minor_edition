@@ -19,7 +19,7 @@ import net.minecraft.world.explosion.ExplosionBehavior;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class WindExploderItem extends Item {
+public class WindExploderItem extends Item implements HasCustomTooltip{
     private static final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
             true, false, Optional.of(1.22F), Registries.BLOCK.getEntryList(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity()));
     public WindExploderItem(Settings settings) {

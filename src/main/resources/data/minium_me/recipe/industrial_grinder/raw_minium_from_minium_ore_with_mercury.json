@@ -1,0 +1,40 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ],
+  "type": "techreborn:industrial_grinder",
+  "fluid": {
+    "amount": {
+      "value": 81000
+    },
+    "fluid": {
+      "fluid": "techreborn:mercury"
+    }
+  },
+  "ingredients": [
+    {
+      "tag": "c:ores/minium"
+    }
+  ],
+  "outputs": [
+    {
+      "count": 3,
+      "id": "minium_me:raw_minium"
+    },
+    {
+      "count": 3,
+      "id": "minium_me:osmium_nugget"
+    },
+    {
+      "count": 3,
+      "id": "techreborn:nickel_nugget"
+    }
+  ],
+  "power": 64,
+  "time": 100
+}

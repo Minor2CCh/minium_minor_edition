@@ -49,18 +49,18 @@ public class ElytraChestplateItem extends ArmorItem implements FabricElytraItem 
                     AttributeModifierSlot attributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(type.getEquipmentSlot());
                     Identifier identifier = Identifier.ofVanilla("armor." + type.getName());
                     builder.add(
-                            EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(identifier, (double)i, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot
+                            EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(identifier, i, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot
                     );
                     builder.add(
                             EntityAttributes.GENERIC_ARMOR_TOUGHNESS,
-                            new EntityAttributeModifier(identifier, (double)f, EntityAttributeModifier.Operation.ADD_VALUE),
+                            new EntityAttributeModifier(identifier, f, EntityAttributeModifier.Operation.ADD_VALUE),
                             attributeModifierSlot
                     );
                     float g = material.value().knockbackResistance();
                     if (g > 0.0F) {
                         builder.add(
                                 EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
-                                new EntityAttributeModifier(identifier, (double)g, EntityAttributeModifier.Operation.ADD_VALUE),
+                                new EntityAttributeModifier(identifier, g, EntityAttributeModifier.Operation.ADD_VALUE),
                                 attributeModifierSlot
                         );
                     }
@@ -95,6 +95,10 @@ public class ElytraChestplateItem extends ArmorItem implements FabricElytraItem 
         return this.getMaterial().value().equipSound();
     }*/
     @Override
+    public AttributeModifiersComponent getAttributeModifiers() {
+        return this.attributeModifiers.get();
+    }
+    @Override
     public void doVanillaElytraTick(LivingEntity entity, ItemStack chestStack) {
         int nextRoll = entity.getFallFlyingTicks() + 1;
         if (!entity.getWorld().isClient && nextRoll % 10 == 0) {
@@ -114,7 +118,7 @@ public class ElytraChestplateItem extends ArmorItem implements FabricElytraItem 
         ItemEnchantmentsComponent itemEnchantmentsComponent = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
         int getLevel = 0;
         for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : itemEnchantmentsComponent.getEnchantmentEntries()) {
-            consumer.accept((RegistryEntry<Enchantment>)entry.getKey(), entry.getIntValue());
+            consumer.accept(entry.getKey(), entry.getIntValue());
             getLevel = entry.getIntValue();
         }
         return getLevel;

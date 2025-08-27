@@ -1,6 +1,7 @@
 package com.github.Minor2CCh.minium_me.block;
 
 import com.github.Minor2CCh.minium_me.damage_type.MiniumDamageType;
+import com.github.Minor2CCh.minium_me.item.HasCustomTooltip;
 import com.github.Minor2CCh.minium_me.mixin.LivingEntityAccessor;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -10,11 +11,16 @@ import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -22,9 +28,10 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
+import java.util.List;
 import java.util.Objects;
 
-public class GrindingBlock extends Block implements Waterloggable {
+public class GrindingBlock extends Block implements Waterloggable, HasCustomTooltip {
     public static final MapCodec<GrindingBlock> CODEC = createCodec(GrindingBlock::new);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 7.0, 16.0);
@@ -117,5 +124,13 @@ public class GrindingBlock extends Block implements Waterloggable {
     @Override
     protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return false;
+    }
+    @Override
+    public void customTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options, boolean hasShiftDown) {
+        if (hasShiftDown) {
+            tooltip.add(Text.translatable(stack.getItem().getTranslationKey()+".desc", GRIND_DAMAGE).formatted(Formatting.WHITE));
+        } else {
+            tooltip.add(Text.translatable("item.minium_me.hide_tooltip.desc"));
+        }
     }
 }

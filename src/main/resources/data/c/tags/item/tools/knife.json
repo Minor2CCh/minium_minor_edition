@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minium_me:minium_knife",
+      "required": false
+    },
+    {
+      "id": "minium_me:concentrated_minium_knife",
+      "required": false
+    },
+    {
+      "id": "minium_me:iris_quartz_knife",
+      "required": false
+    }
+  ]
+}

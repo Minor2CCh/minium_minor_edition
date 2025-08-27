@@ -12,9 +12,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 
+
 import static net.minecraft.block.Block.dropStacks;
 
-public class DeepslateMinerItem extends Item{
+public class DeepslateMinerItem extends Item implements HasCustomTooltip{
     public DeepslateMinerItem(Item.Settings settings) {
         super(settings);
     }

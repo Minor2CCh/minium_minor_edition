@@ -1,0 +1,40 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ],
+  "type": "techreborn:industrial_grinder",
+  "fluid": {
+    "amount": {
+      "value": 81000
+    },
+    "fluid": {
+      "fluid": "minecraft:water"
+    }
+  },
+  "ingredients": [
+    {
+      "tag": "c:ores/osmium"
+    }
+  ],
+  "outputs": [
+    {
+      "count": 2,
+      "id": "minium_me:raw_osmium"
+    },
+    {
+      "count": 3,
+      "id": "minecraft:iron_nugget"
+    },
+    {
+      "count": 1,
+      "id": "techreborn:nickel_nugget"
+    }
+  ],
+  "power": 64,
+  "time": 100
+}

@@ -5,12 +5,15 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-
+@SuppressWarnings("unused")
 public class MiniumItemTag {
 
     public static final TagKey<Item> SPEARS = modOf("spears");
     public static final TagKey<Item> ENERGY_GUNS = modOf("energy_guns");
     public static final TagKey<Item> IRIS_QUARTZ_BONUS_WEAPON = modOf("iris_quartz_bonus_weapon");
+    public static final TagKey<Item> MINIUM_ARMORS = modOf("minium_armors");
+    public static final TagKey<Item> CONCENTRATED_MINIUM_ARMORS = modOf("concentrated_minium_armors");
+    public static final TagKey<Item> IRIS_QUARTZ_ARMORS = modOf("iris_quartz_armors");
     public static final TagKey<Item> IRIS_QUARTZ_INGOT = conventionalOf("ingots/iris_quartz");
     public static final TagKey<Item> MINIUM_INGOT = conventionalOf("ingots/minium");
     public static final TagKey<Item> C_MINIUM_INGOT = conventionalOf("ingots/concentrated_minium");
@@ -81,6 +84,8 @@ public class MiniumItemTag {
     public static final TagKey<Item> ENERGY_REFINED_GLOWSTONE = modOf("energy/ingots/refined_glowstone");
     public static final TagKey<Item> ENERGY_REFINED_OBSIDIAN_STORAGE_BLOCKS = modOf("energy/storage_blocks/refined_obsidian");//精製黒曜石(MOD)
     public static final TagKey<Item> ENERGY_REFINED_OBSIDIAN = modOf("energy/ingots/refined_obsidian");
+    public static final TagKey<Item> ENERGY_ELECTRUM_STORAGE_BLOCKS = modOf("energy/storage_blocks/electrum");//エレクトラム(MOD)
+    public static final TagKey<Item> ENERGY_ELECTRUM = modOf("energy/ingots/electrum");
 
 
 

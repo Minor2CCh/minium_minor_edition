@@ -31,10 +31,6 @@ public class LivingEntityMixin {
     private void IrisQuartzBonusInject(CallbackInfo ci){
         LivingEntity entity = ((LivingEntity) (Object) this);
         boolean hasPendant = EntityFunctions.hasItem(entity, MiniumItem.IRIS_QUARTZ_PENDANT);
-        ItemStack itemStackHead = entity.getEquippedStack(EquipmentSlot.HEAD);
-        ItemStack itemStackChestplate = entity.getEquippedStack(EquipmentSlot.CHEST);
-        ItemStack itemStackLeggings = entity.getEquippedStack(EquipmentSlot.LEGS);
-        ItemStack itemStackBoots = entity.getEquippedStack(EquipmentSlot.FEET);
         int ParamDifficulty = switch (entity.getWorld().getDifficulty()) {
             case Difficulty.PEACEFUL -> 0;
             case Difficulty.EASY -> 1;

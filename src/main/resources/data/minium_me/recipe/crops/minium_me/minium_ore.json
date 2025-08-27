@@ -1,0 +1,40 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "botanypots",
+        "botany_pots_ore_planting"
+      ]
+    }
+  ],
+  "type": "botanypots:crop",
+  "input": {
+    "item": "minium_me:minium_ingot"
+  },
+  "soil": {
+    "tag": "c:storage_blocks/minium"
+  },
+  "grow_time": 1200,
+  "display": {
+    "type": "botanypots:simple",
+    "block_state": {
+      "block": "minium_me:minium_ore"
+    }
+  },
+  "drops": [
+    {
+      "type": "botanypots:items",
+      "items": [
+        {
+          "result": {
+            "id": "minium_me:raw_minium"
+          },
+          "chance": 1.0
+        }
+      ]
+    }
+  ],
+  "yield": 2.5,
+  "yield_scale": 1.0
+}

@@ -5,6 +5,7 @@ import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.UnbreakableComponent;
 import net.minecraft.item.ItemGroup;
@@ -100,6 +101,8 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumBlock.ADVANCED_GRINDER);
             itemGroup.add(MiniumBlock.EASY_CONVEYOR);
             itemGroup.add(MiniumBlock.MINIUM_ARTIFICIAL_FLOWER);
+            itemGroup.add(MiniumItem.IRIS_QUARTZ_PENDANT);
+
 
             //from mekanism
             itemGroup.add(MiniumItem.OSMIUM_INGOT_FROM_MEKANISM);
@@ -113,5 +116,8 @@ public class MiniumItemGroup {
 
 
         });
+        if(FabricLoader.getInstance().isModLoaded("farmersdelight")){
+            FDItems.addCreativeTabKnife(MINIUM_ITEM_GROUP_KEY);
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.damage_type.MiniumDamageType;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantments;
 import com.github.Minor2CCh.minium_me.entity.MiniumEntityType;
+import com.github.Minor2CCh.minium_me.event.PendantProtectionEvent;
 import com.github.Minor2CCh.minium_me.event.PicklingSaltReduceEvent;
 import com.github.Minor2CCh.minium_me.handler.DoubleClickHandler;
 import com.github.Minor2CCh.minium_me.item.*;
@@ -12,6 +13,7 @@ import com.github.Minor2CCh.minium_me.particle.MiniumParticle;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import com.github.Minor2CCh.minium_me.worldgen.MiniumOres;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class Minium_me implements ModInitializer {
 
@@ -20,6 +22,9 @@ public class Minium_me implements ModInitializer {
     @Override
     public void onInitialize() {
         MiniumItem.initialize();
+        if(FabricLoader.getInstance().isModLoaded("farmersdelight")){
+            FDItems.initialize();
+        }
         MiniumBlock.initialize();
         MiniumOres.initialize();
         MiniumItemGroup.initialize();
@@ -33,5 +38,6 @@ public class Minium_me implements ModInitializer {
         MiniumEnchantments.initialize();
         DoubleClickHandler.initialize();
         PicklingSaltReduceEvent.initialize();
+        PendantProtectionEvent.initialize();
     }
 }

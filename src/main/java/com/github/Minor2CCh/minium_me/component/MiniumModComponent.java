@@ -68,6 +68,7 @@ public class MiniumModComponent {
     public static final String ENERGY_SALT = register("energy_salt", 0xDBDCD8, MiniumDamageType.ENERGY_DEFAULT, 0.6F, MiniumItemTag.ENERGY_SALT, null, 5);//塩
     public static final String ENERGY_RUBY = register("energy_ruby", 0xB23744, MiniumDamageType.ENERGY_NOT_PROJECTILE, 1.0F, MiniumItemTag.ENERGY_RUBY, MiniumItemTag.ENERGY_RUBY_STORAGE_BLOCKS, 10);//ルビー
     public static final String ENERGY_SAPPHIRE = register("energy_sapphire", 0x6E9DEF, MiniumDamageType.ENERGY_NOT_PROJECTILE, 1.0F, MiniumItemTag.ENERGY_SAPPHIRE, MiniumItemTag.ENERGY_SAPPHIRE_STORAGE_BLOCKS, 10);//サファイア
+    public static final String ENERGY_ELECTRUM = register("energy_electrum", 0xCFB56F, MiniumDamageType.ENERGY_DEFAULT, 1.0F, MiniumItemTag.ENERGY_ELECTRUM, MiniumItemTag.ENERGY_ELECTRUM_STORAGE_BLOCKS, 10);//エレクトラム
 
 
     public static final Codec<EnergyComponent> CODEC = RecordCodecBuilder.create(builder -> builder.group(

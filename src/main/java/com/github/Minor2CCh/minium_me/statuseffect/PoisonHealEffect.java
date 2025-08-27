@@ -22,7 +22,6 @@ public class PoisonHealEffect extends StatusEffect{
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if(entity.hasStatusEffect(StatusEffects.POISON)) {
             int poisonAmplifier = Objects.requireNonNull(entity.getStatusEffect(StatusEffects.POISON)).getAmplifier();
-            //int poisonDuration = Objects.requireNonNull(entity.getStatusEffect(StatusEffects.POISON)).getDuration();
 
             if (!entity.hasStatusEffect(MiniumStatusEffects.POISONOUS_REGENERATION)){
                 entity.addStatusEffect(new StatusEffectInstance(MiniumStatusEffects.POISONOUS_REGENERATION, 50, poisonAmplifier, true, true, true));

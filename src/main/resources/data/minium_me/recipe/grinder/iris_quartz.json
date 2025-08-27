@@ -1,0 +1,24 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ],
+  "type": "techreborn:grinder",
+  "ingredients": [
+    {
+      "tag": "c:ores/iris_quartz"
+    }
+  ],
+  "outputs": [
+    {
+      "count": 2,
+      "id": "minium_me:iris_quartz"
+    }
+  ],
+  "power": 2,
+  "time": 270
+}

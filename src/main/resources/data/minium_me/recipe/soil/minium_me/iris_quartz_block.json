@@ -1,0 +1,22 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "botanypots",
+        "botany_pots_ore_planting"
+      ]
+    }
+  ],
+  "type": "botanypots:soil",
+  "input": {
+    "item": "minium_me:iris_quartz_block"
+  },
+  "display": {
+    "type": "botanypots:simple",
+    "block_state": {
+      "block": "minium_me:iris_quartz_block"
+    }
+  },
+  "growth_modifier": 0.0
+}

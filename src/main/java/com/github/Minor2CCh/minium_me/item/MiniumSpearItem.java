@@ -28,7 +28,6 @@ public class MiniumSpearItem extends ToolItem {
     private static ToolComponent createToolComponent() {
         return new ToolComponent(
                 List.of(ToolComponent.Rule.ofAlwaysDropping(List.of(Blocks.COBWEB), 15.0F)), 1.0F, 2);
-        //return new ToolComponent(List.of(ToolComponent.Rule.ofAlwaysDropping(List.of(Blocks.COBWEB), mulMiningSpeed)), defaultMiningSpeed, damagePerBlock);
     }
 
     public static AttributeModifiersComponent createAttributeModifiers(ToolMaterial material, float baseAttackDamage, float attackSpeed, float extraInteractionRange) {

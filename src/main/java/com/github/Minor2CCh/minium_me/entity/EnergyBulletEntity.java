@@ -243,6 +243,13 @@ public class EnergyBulletEntity extends ProjectileEntity {
                     }
                 }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_SALT)){
                     livingEntity2.addStatusEffect(new StatusEffectInstance(MiniumStatusEffects.PICKLING_SALT, 400, 0), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
+                }else if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_ELECTRUM)){
+                    if(entity.getType().isIn(EntityTypeTags.SENSITIVE_TO_SMITE)){
+                        livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 600, 5), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
+                    }else{
+                        livingEntity2.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 1200), MoreObjects.firstNonNull(Objects.requireNonNull(entity2), this));
+
+                    }
                 }
             }
 

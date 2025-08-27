@@ -3,6 +3,10 @@
     {
       "id": "#c:dusts/salt",
       "required": false
+    },
+    {
+      "id": "#c:salts",
+      "required": false
     }
   ]
 }

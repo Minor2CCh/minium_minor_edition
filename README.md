@@ -76,6 +76,13 @@ There are two versions: a standard version and an advanced version, the latter o
 This weapon has a longer attack distance of 2 blocks compared to other tools. Compared to the sword, the attack is a single attack, so instead of being weak against many, it can avoid mobs you don't want to attack. It can be enchanted with enchantments that increase damage and Unbreakable, Mending, and Looting.
 Iris Quartz's tool has a range of 1 block longer.
 
+- Iris Quartz Pendant
+
+Gain Poison Heal Effect and Prevent fall damage and collision damage.
+When you die, you consume and revive, but a minute cooldown is imposed.
+If you fall into the void, in dimensions with a ceiling you will respawn at the spawn point, and in dimensions without a ceiling you will be granted Slow Falling and warped to a high location(Only Players).
+Some effects are enhanced, Reduce damage except for certain parts and Prevent wither damage when wearing a full set of Iris Quartz equipment.
+
 ## New Block
 
 - Easy Grinder
@@ -89,6 +96,12 @@ It is more powerful than Easy Grinder, and mobs that fall due to this damage dro
 - Easy Conveyor
 
 This is a block that moves the Mob in the direction it is placed. Mob will not spawn on this block.
+
+## Compatible MOD
+
+- Farmer's Delight[(Fabric)](https://modrinth.com/mod/farmers-delight-refabricated)/[(NeoForge)](https://modrinth.com/mod/farmers-delight)
+
+You can craft knives from the ores added by this MOD.
 
 # このMODについて
 これはオリジナルの鉱石を追加するシンプルなMODです。
@@ -165,6 +178,14 @@ This is a block that moves the Mob in the direction it is placed. Mob will not s
 他のツールと比べて攻撃距離が2ブロック分長い武器です。剣と比べると攻撃が単体なので対多数に弱い代わりに攻撃したくないMobを避けることができます。ダメージが上がるエンチャントと耐久力、ドロップ増加、修繕を付与することができます。
 虹水晶のツールは射程が1ブロック更に長くなります。
 
+- 虹水晶のペンダント
+
+毒治癒を付与し、落下ダメージや衝突ダメージを防ぎます。
+死ぬと消費して蘇生するが1分のクールタイムが課せられます。
+プレイヤー限定で奈落に落ちた場合、天井があるディメンションではリスポーン地点に戻り、天井がないディメンションでは落下速度低下を付与し、高いところにワープします。
+虹水晶装備を一式でつけている場合は付与される効果が強化され、一部以外のダメージを軽減し、衰弱ダメージは無効化します。
+
+
 ## 新しいブロック
 
 - 簡易グラインダー
@@ -178,3 +199,9 @@ This is a block that moves the Mob in the direction it is placed. Mob will not s
 - 簡易コンベアー
 
 設置した時の方向にMobを移動させるブロックです。このブロックの上にMobがスポーンすることはありません。
+
+# 互換性のあるMOD
+
+- Farmer's Delight[(Fabric)](https://modrinth.com/mod/farmers-delight-refabricated)/[(NeoForge)](https://modrinth.com/mod/farmers-delight)
+
+このMODで追加される鉱石からナイフを作ることができます。

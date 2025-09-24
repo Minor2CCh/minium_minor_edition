@@ -1,4 +1,5 @@
 package com.github.Minor2CCh.minium_me.item;
+import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
 import com.google.common.base.Suppliers;
 import java.util.function.Supplier;
 import net.minecraft.block.Block;
@@ -18,7 +19,7 @@ import net.minecraft.registry.tag.TagKey;
 public enum MiniumToolMaterial implements ToolMaterial{
     MINIUM_TOOL(BlockTags.INCORRECT_FOR_IRON_TOOL, 375, 10.0f, 2.5f, 15, () -> Ingredient.fromTag(MiniumItemTag.MINIUM_INGOT)),
     C_MINIUM_TOOL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 1949, 11.0f, 3.5f, 15, () -> Ingredient.fromTag(MiniumItemTag.C_MINIUM_INGOT)),
-    IRIS_QUARTZ_TOOL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 7716, 13.0f, 6f, 25, () -> Ingredient.fromTag(MiniumItemTag.IRIS_QUARTZ_INGOT)),
+    IRIS_QUARTZ_TOOL(MiniumBlockTag.INCORRECT_FOR_IRIS_QUARTZ_TOOL, 7716, 13.0f, 6f, 25, () -> Ingredient.fromTag(MiniumItemTag.IRIS_QUARTZ_INGOT)),
     MINIUM_MULTITOOL(MINIUM_TOOL.inverseTag, MINIUM_TOOL.itemDurability*3, MINIUM_TOOL.miningSpeed, MINIUM_TOOL.attackDamage, MINIUM_TOOL.enchantability, MINIUM_TOOL.repairIngredient),
     C_MINIUM_MULTITOOL(C_MINIUM_TOOL.inverseTag, C_MINIUM_TOOL.itemDurability*3, C_MINIUM_TOOL.miningSpeed, C_MINIUM_TOOL.attackDamage, C_MINIUM_TOOL.enchantability, C_MINIUM_TOOL.repairIngredient),
     IRIS_QUARTZ_MULTITOOL(IRIS_QUARTZ_TOOL.inverseTag, IRIS_QUARTZ_TOOL.itemDurability*3, IRIS_QUARTZ_TOOL.miningSpeed, IRIS_QUARTZ_TOOL.attackDamage, IRIS_QUARTZ_TOOL.enchantability, IRIS_QUARTZ_TOOL.repairIngredient);

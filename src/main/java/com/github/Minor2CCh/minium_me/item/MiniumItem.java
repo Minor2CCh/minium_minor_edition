@@ -2,6 +2,7 @@ package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -99,6 +100,13 @@ public class MiniumItem{
 
 
     public static final Item IRIS_QUARTZ_PENDANT = register(new Item(new Item.Settings().maxCount(1).fireproof().rarity(Rarity.EPIC)), "iris_quartz_pendant");
+    public static final Item MINIUM_NUGGET = register(new Item(new Item.Settings()), "minium_nugget");
+    public static final Item IRIS_QUARTZ_MACE = register(new IrisQuartzMaceItem(new Item.Settings()
+            .fireproof()
+            .rarity(Rarity.EPIC)
+            .maxDamage(7716)
+            .component(DataComponentTypes.TOOL, IrisQuartzMaceItem.createToolComponent())
+            .attributeModifiers(IrisQuartzMaceItem.createAttributeModifiers())), "iris_quartz_mace");
     //from mekanism
     public static final Item OSMIUM_INGOT_FROM_MEKANISM = register(new Item(new Item.Settings()), "osmium_ingot");
     public static final Item OSMIUM_NUGGET_FROM_MEKANISM = register(new Item(new Item.Settings()), "osmium_nugget");

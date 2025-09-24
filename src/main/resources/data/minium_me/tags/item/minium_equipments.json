@@ -1,0 +1,34 @@
+{
+  "values": [
+    "minium_me:minium_helmet",
+    "minium_me:minium_chestplate",
+    "minium_me:minium_leggings",
+    "minium_me:minium_boots",
+    "minium_me:minium_sword",
+    "minium_me:minium_spear",
+    "minium_me:minium_shovel",
+    "minium_me:minium_pickaxe",
+    "minium_me:minium_axe",
+    "minium_me:minium_hoe",
+    "minium_me:minium_multitool",
+    "minium_me:concentrated_minium_helmet",
+    "minium_me:concentrated_minium_chestplate",
+    "minium_me:concentrated_minium_leggings",
+    "minium_me:concentrated_minium_boots",
+    "minium_me:concentrated_minium_sword",
+    "minium_me:concentrated_minium_spear",
+    "minium_me:concentrated_minium_shovel",
+    "minium_me:concentrated_minium_pickaxe",
+    "minium_me:concentrated_minium_axe",
+    "minium_me:concentrated_minium_hoe",
+    "minium_me:concentrated_minium_multitool",
+    {
+      "id": "minium_me:minium_knife",
+      "required": false
+    },
+    {
+      "id": "minium_me:concentrated_minium_knife",
+      "required": false
+    }
+  ]
+}

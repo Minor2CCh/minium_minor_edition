@@ -10,11 +10,10 @@ public class MiniumBlockTag {
 
     public static final TagKey<Block> MULTITOOL_MINEABLE = of("mineable/multitool");
     public static final TagKey<Block> DEEPSLATE_MINER_CAN_BREAK = of("deepslate_miner_can_break");
+    public static final TagKey<Block> INCORRECT_FOR_IRIS_QUARTZ_TOOL = of("incorrect_for_iris_quartz_tool");
 
-        private MiniumBlockTag() {
-        }
 
-        private static TagKey<Block> of(String id) {
-            return TagKey.of(RegistryKeys.BLOCK, Identifier.of(Minium_me.MOD_ID, id));
-        }
+    private static TagKey<Block> of(String id) {
+        return TagKey.of(RegistryKeys.BLOCK, Identifier.of(Minium_me.MOD_ID, id));
+    }
 }

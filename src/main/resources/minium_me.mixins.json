@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.github.Minor2CCh.minium_me.mixin",
+  "plugin" : "com.github.Minor2CCh.minium_me.mixin.MiniumMixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AdditionEnchantment",
@@ -9,7 +10,10 @@
     "PoisonStatusEffectMixin",
     "TrialSpawnerAccessor",
     "LivingEntityAccessor",
-    "PowderSnowBlockMixin"
+    "PowderSnowBlockMixin",
+    "compat.SimpleCompatibilityProviderMixin",
+    "compat.SimpleCompatibilityProviderAccessor",
+    "MaceItemInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

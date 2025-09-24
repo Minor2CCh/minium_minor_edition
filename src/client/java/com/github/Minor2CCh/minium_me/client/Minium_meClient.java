@@ -1,6 +1,9 @@
 package com.github.Minor2CCh.minium_me.client;
 
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
+import com.github.Minor2CCh.minium_me.client.event.LivingEntityEventTickClient;
+import com.github.Minor2CCh.minium_me.client.keybinds.ClientIrisQuartzElytraBoostEvent;
+import com.github.Minor2CCh.minium_me.event.IrisQuartzElytraBoostEvent;
 import com.github.Minor2CCh.minium_me.item.HasCustomTooltip;
 import com.github.Minor2CCh.minium_me.item.IrisQuartzElytraItem;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
@@ -13,6 +16,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRe
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,13 +30,17 @@ public class Minium_meClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), MiniumBlock.MINIUM_GRATE);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), MiniumBlock.REDSTONE_ENERGY_BLOCK);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), MiniumBlock.GLOWSTONE_ENERGY_BLOCK);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.EASY_GRINDER);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.ADVANCED_GRINDER);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.MINIUM_ARTIFICIAL_FLOWER);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), MiniumBlock.POTTED_MINIUM_ARTIFICIAL_FLOWER);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
+                MiniumBlock.MINIUM_GRATE,
+                MiniumBlock.REDSTONE_ENERGY_BLOCK,
+                MiniumBlock.GLOWSTONE_ENERGY_BLOCK,
+                MiniumBlock.MINIUM_CHAIN);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+                MiniumBlock.EASY_GRINDER,
+                MiniumBlock.ADVANCED_GRINDER,
+                MiniumBlock.MINIUM_ARTIFICIAL_FLOWER,
+                MiniumBlock.POTTED_MINIUM_ARTIFICIAL_FLOWER,
+                MiniumBlock.MINIUM_LANTERN);
         LivingEntityFeatureRendererRegistrationCallback.EVENT
                 .register((entityType, entityRenderer, registrationHelper, context) -> {
                     registrationHelper
@@ -64,7 +72,21 @@ public class Minium_meClient implements ClientModInitializer {
                     lines.add(Text.translatable("item.minium_me.hide_tooltip.desc"));
                 }
             }
+            if (stack.getItem().equals(MiniumItem.IRIS_QUARTZ_ELYTRA) || stack.getItem().equals(MiniumItem.IRIS_QUARTZ_ELYTRA_CHESTPLATE)) {
+                if (hasShiftDown) {
+                    if(ClientIrisQuartzElytraBoostEvent.keyBoostIrisQuartzElytra.isUnbound()){
+
+                        lines.add(Text.translatable(MiniumItem.IRIS_QUARTZ_ELYTRA.getTranslationKey()+".desc.unbound"));
+                    }else{
+                        lines.add(Text.translatable(MiniumItem.IRIS_QUARTZ_ELYTRA.getTranslationKey()+".desc", ClientIrisQuartzElytraBoostEvent.keyBoostIrisQuartzElytra.getBoundKeyLocalizedText().getString(), IrisQuartzElytraBoostEvent.BOOST_COOL_TIME / 20.0).formatted(Formatting.WHITE));
+                    }
+                } else {
+                    lines.add(Text.translatable("item.minium_me.hide_tooltip.desc"));
+                }
+            }
         });
+        ClientIrisQuartzElytraBoostEvent.initialize();
+        LivingEntityEventTickClient.initialize();
 
 
     }

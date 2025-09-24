@@ -21,6 +21,7 @@ public abstract class AdditionEnchantment {
     private boolean EnchantmentInject(boolean original, ItemStack stack){
         if(stack.isIn(MiniumItemTag.SPEARS) || stack.isIn(MiniumItemTag.ENERGY_GUNS)){
             Enchantment enchantment = (Enchantment) (Object) this;
+
             if(!enchantment.getEffect(EnchantmentEffectComponentTypes.EQUIPMENT_DROPS).isEmpty()){//ドロップ数が増加するエンチャント
                 if(isAcceptableItem(Items.WOODEN_SWORD.getDefaultStack())){//木の剣が使用できるエンチャント
                     return true;//ドロップ数増加を追加

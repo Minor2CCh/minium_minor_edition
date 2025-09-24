@@ -27,14 +27,26 @@ repositories {
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
+
     maven {
-        name "REI"
-        url "https://maven.shedaniel.me/"
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
+    maven {
+        name = "Ladysnake Libs"
+        url = 'https://maven.ladysnake.org/releases'
+    }
+    maven {
+        name = "REI"
+        url = "https://maven.shedaniel.me/"
         content {
             includeGroup "me.shedaniel"
             includeGroup "me.shedaniel.cloth"
             includeGroup "dev.architectury"
         }
+    }
+    maven {
+        url = "https://cursemaven.com"
     }
     maven {
         name = "Greenhouse Maven"
@@ -45,7 +57,7 @@ repositories {
         url = 'https://repo.greenhouse.house/snapshots/'
     }
     maven {
-        url "https://jitpack.io/"
+        url = "https://jitpack.io/"
         content {
             excludeGroup "io.github.fabricators_of_create"
         }
@@ -64,6 +76,8 @@ dependencies {
     modImplementation("vectorwing:FarmersDelight:${project.fdfr_version}") {
         exclude(group: "net.fabricmc")
     }
+    modImplementation "dev.emi:trinkets:${trinkets_version}"
+    modImplementation "curse.maven:elytra-slot-317716:5770052"
     //compileOnly("vectorwing:FarmersDelight:${project.fdfr_version}") {
     //    exclude(group: "net.fabricmc")
     //}
@@ -73,7 +87,7 @@ processResources {
     inputs.property "version", project.version
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
-    filteringCharset "UTF-8"
+    filteringCharset = "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,

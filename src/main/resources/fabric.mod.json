@@ -33,6 +33,8 @@
     "minecraft": "1.21.1"
   },
   "suggests": {
-    "farmersdelight": "*"
+    "farmersdelight": "*",
+    "trinkets": "*",
+    "elytraslot": "*"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "minium_me:block/minium_lantern"
+    },
+    "hanging=true": {
+      "model": "minium_me:block/minium_lantern_hanging"
+    }
+  }
+}

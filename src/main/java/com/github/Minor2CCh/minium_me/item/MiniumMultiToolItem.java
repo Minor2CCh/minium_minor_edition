@@ -22,6 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -84,7 +85,12 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
     private boolean rangeStoneBreak(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
         BlockState blockState = world.getBlockState(blockPos);
         ItemStack itemStack = context.getStack();
-        if (itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL) && (blockState.isIn(ConventionalBlockTags.STONES) || blockState.isIn(ConventionalBlockTags.NETHERRACKS) || blockState.isIn(ConventionalBlockTags.END_STONES))) {//石系ブロックorネザーラック
+        if (itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL) &&
+                (blockState.isIn(ConventionalBlockTags.STONES)
+                || world.getBlockState(blockPos).isIn(BlockTags.STONE_ORE_REPLACEABLES)
+                || world.getBlockState(blockPos).isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
+                || blockState.isIn(ConventionalBlockTags.NETHERRACKS)
+                || blockState.isIn(ConventionalBlockTags.END_STONES))) {//石系ブロックorネザーラック
             if(playerEntity.isSneaking()){
                 if (!world.isClient() && DoubleClickHandler.doubleClicked(playerEntity)) {
                     stoneBreakDrop(world, blockPos, playerEntity, itemStack);
@@ -123,7 +129,9 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
             Random rand = new Random();
             if(rand.nextInt(20) == 0){
                 if(rand.nextInt(5) == 0){//1%の確率でランダムに鉱石を落とす
-                    if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.STONES)){
+                    if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.STONES)
+                            || world.getBlockState(blockPos).isIn(BlockTags.STONE_ORE_REPLACEABLES)
+                            || world.getBlockState(blockPos).isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES)){
                         Block.dropStacks(MiniumBlock.STONE_ALCHEMY_BREAK_STONE.getDefaultState(), world, blockPos, null, playerEntity, itemStack);
                         // loot_table/blocks/stone_alchemy_break_stone.json
                     }else if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.NETHERRACKS)){

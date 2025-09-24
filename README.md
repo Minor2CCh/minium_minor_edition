@@ -28,6 +28,8 @@ The performance is higher than that of Netherlight, and it has a Fireproof effec
 In addition, it grants Resistance Effect (Lv.2 for Peaceful-Easy, Lv.1 for Normal-Hard), Absorption Effect (Lv. decreases with increasing difficulty), and several other effects when equipped as a set.
 Note, however, that there is a side effect that the Trial Omen Effect is given when the difficulty level is Hard.
 In addition, six Iris Quartz ingots can be used to strengthen the elytra. In addition, by combining it with the Iris Quartz chest plate, the elytra can be used as a defensive elytra. Both regular chest plates and chest plates with elytra can get the above set of bonuses.
+Press the boost key (Default: G) while gliding to accelerate using an explosion. (Cooldown: 5 seconds)(After 1.5.0)
+If you have [Elytra Slot](https://modrinth.com/mod/elytra-slot) and [Trinkets](https://modrinth.com/mod/trinkets) installed, you can equip it in the Cape slot.
 
 ## New Alloy
 - Concentrated Minium
@@ -82,6 +84,7 @@ Gain Poison Heal Effect and Prevent fall damage and collision damage.
 When you die, you consume and revive, but a minute cooldown is imposed.
 If you fall into the void, in dimensions with a ceiling you will respawn at the spawn point, and in dimensions without a ceiling you will be granted Slow Falling and warped to a high location(Only Players).
 Some effects are enhanced, Reduce damage except for certain parts and Prevent wither damage when wearing a full set of Iris Quartz equipment.
+You can equip it in the Necklace slot of Trinkets only while [Trinkets](https://modrinth.com/mod/trinkets) are loaded.(After 1.5.0).
 
 ## New Block
 
@@ -102,6 +105,19 @@ This is a block that moves the Mob in the direction it is placed. Mob will not s
 - Farmer's Delight[(Fabric)](https://modrinth.com/mod/farmers-delight-refabricated)/[(NeoForge)](https://modrinth.com/mod/farmers-delight)
 
 You can craft knives from the ores added by this MOD.
+
+- [Trinkets](https://modrinth.com/mod/trinkets)
+
+You can equip Iris Quartz Pendant in the Necklace slot.
+
+- [Elytra Slot](https://modrinth.com/mod/elytra-slot)
+
+You can equip Iris Quartz Elytra in the Cape slot.
+
+## If you want to use the Accessory Slot in NeoForge(Sinytra Connector)
+
+You simultaneously install [Accessories](https://modrinth.com/mod/accessories), [Trinkets](https://modrinth.com/mod/trinkets), [Curios API](https://modrinth.com/mod/curios) , and the [Accessories Compatibility Layer](https://modrinth.com/mod/accessories-compat-layer).
+This allows you to benefit from the Elytra Slot in NeoForge and equip the Iris Quartz Pendant in the Necklace slot.
 
 # このMODについて
 これはオリジナルの鉱石を追加するシンプルなMODです。
@@ -133,6 +149,8 @@ You can craft knives from the ores added by this MOD.
 また、追加効果として、一式装備時に耐性(Peaceful-Easyの場合はLv.2、Normal-Hardの場合はLv.1)と衝撃吸収(Lvは難易度が上がると減少)、その他複数のエフェクトを付与します。
 ただし、難易度がHardの場合試練の予感が付与される副作用があるので注意。
 また、虹水晶インゴットを6個使用することにより、エリトラを強化することができます。さらに虹水晶のチェストプレートと合わせることにより防御力を確保したエリトラとして使うことができます。普通のチェストプレートでもエリトラ付きのチェストプレートでも上記の一式ボーナスを得ることができます。
+滑空中にブーストキー(Default:G)を押すことで爆風により加速することができます。(CoolTime:5 seconds)
+[Elytra Slot](https://modrinth.com/mod/elytra-slotとTrinketsをインストールしている場合にはCapeスロットに装備することができます。
 
 ## 追加される合金
 - 濃縮マイニウム
@@ -184,6 +202,7 @@ You can craft knives from the ores added by this MOD.
 死ぬと消費して蘇生するが1分のクールタイムが課せられます。
 プレイヤー限定で奈落に落ちた場合、天井があるディメンションではリスポーン地点に戻り、天井がないディメンションでは落下速度低下を付与し、高いところにワープします。
 虹水晶装備を一式でつけている場合は付与される効果が強化され、一部以外のダメージを軽減し、衰弱ダメージは無効化します。
+[Trinkets](https://modrinth.com/mod/trinkets)ロード時に限りTrinketsのNecklaceスロットに装備することができます。(1.5.0以降より)
 
 
 ## 新しいブロック
@@ -200,8 +219,21 @@ You can craft knives from the ores added by this MOD.
 
 設置した時の方向にMobを移動させるブロックです。このブロックの上にMobがスポーンすることはありません。
 
-# 互換性のあるMOD
+## 互換性のあるMOD
 
 - Farmer's Delight[(Fabric)](https://modrinth.com/mod/farmers-delight-refabricated)/[(NeoForge)](https://modrinth.com/mod/farmers-delight)
 
 このMODで追加される鉱石からナイフを作ることができます。
+
+- [Trinkets](https://modrinth.com/mod/trinkets)
+
+Necklaceスロットに虹水晶のペンダントを装備できるようになります。
+
+- [Elytra Slot](https://modrinth.com/mod/elytra-slot)
+
+Capeスロットに虹水晶エリトラを装備できるようになります。
+
+## NeoForgeでアクセサリスロットに虹水晶のペンダントや虹水晶エリトラに装備したい場合
+
+[Accessories](https://modrinth.com/mod/accessories)と[Trinkets](https://modrinth.com/mod/trinkets)と[Curios API](https://modrinth.com/mod/curios)と[Accessories Compatibility Layer](https://modrinth.com/mod/accessories-compat-layer)を同時にインストールしてください。
+そうすることでNeoForgeでも上記の装備をアクセサリスロットに適用することができます。

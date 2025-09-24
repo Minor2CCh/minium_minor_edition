@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "minium_me:block/minium_chain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "minium_me:block/minium_chain"
+    },
+    "axis=z": {
+      "model": "minium_me:block/minium_chain",
+      "x": 90
+    }
+  }
+}

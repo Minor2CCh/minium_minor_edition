@@ -79,14 +79,17 @@ public class ElytraChestplateItem extends ArmorItem implements FabricElytraItem 
         return ArmorItem.Type.CHESTPLATE;
     }
 
+    @Override
     public int getProtection() {
         return this.material.value().getProtection(ArmorItem.Type.CHESTPLATE);
     }
 
+    @Override
     public float getToughness() {
         return this.material.value().toughness();
     }
 
+    @Override
     public EquipmentSlot getSlotType() {
         return EquipmentSlot.CHEST;
     }

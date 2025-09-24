@@ -9,9 +9,10 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
-
+@SuppressWarnings("unused")
 public class MiniumEnchantments {
     public static final RegistryKey<Enchantment> STONE_ALCHEMY = of("stone_alchemy");
     public static final RegistryKey<Enchantment> ENERGY_BOOST = of("energy_boost");
@@ -26,6 +27,15 @@ public class MiniumEnchantments {
             return;
         }
         RegistryEntry<Enchantment> entry = player.getWorld()
+                .getRegistryManager()
+                .get(RegistryKeys.ENCHANTMENT)
+                .getEntry(enchantmentKey)
+                .orElseThrow();
+        System.out.println(entry);
+        stack.addEnchantment(entry, level);
+    }
+    public static void giveCustomEnchantment(ServerWorld world, ItemStack stack, int level, RegistryKey<Enchantment> enchantmentKey) {
+        RegistryEntry<Enchantment> entry = world
                 .getRegistryManager()
                 .get(RegistryKeys.ENCHANTMENT)
                 .getEntry(enchantmentKey)

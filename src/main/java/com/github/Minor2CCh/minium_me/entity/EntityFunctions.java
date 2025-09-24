@@ -1,5 +1,6 @@
 package com.github.Minor2CCh.minium_me.entity;
 
+import com.github.Minor2CCh.minium_me.Minium_me;
 import com.github.Minor2CCh.minium_me.item.MiniumItemTag;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +16,11 @@ public class EntityFunctions {
         if(entity instanceof PlayerEntity playerEntity){
             if(playerEntity.getOffHandStack().getItem() == item){
                 return true;
+            }
+            if(Minium_me.ACCESSORY_PLATFORM.enableTrinkets()){
+                if(Minium_me.ACCESSORY_PLATFORM.getTrinketsStackNecklace(playerEntity, item) != null){
+                    return true;
+                }
             }
             for (int i = 0; i < playerEntity.getInventory().size(); i++) {
                 ItemStack stack = playerEntity.getInventory().getStack(i);
@@ -33,6 +39,13 @@ public class EntityFunctions {
             if(playerEntity.getOffHandStack().getItem() == item){
                 playerEntity.getOffHandStack().decrement(1);
                 return true;
+            }
+            if(Minium_me.ACCESSORY_PLATFORM.enableTrinkets()){
+                ItemStack necklaceStack = Minium_me.ACCESSORY_PLATFORM.getTrinketsStackNecklace(playerEntity, item);
+                if(necklaceStack != null && necklaceStack.getCount() > 0){
+                    necklaceStack.decrement(1);
+                    return true;
+                }
             }
             for (int i = 0; i < playerEntity.getInventory().size(); i++) {
                 ItemStack stack = playerEntity.getInventory().getStack(i);

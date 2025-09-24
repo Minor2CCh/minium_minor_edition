@@ -59,6 +59,7 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumItem.IRIS_QUARTZ_ELYTRA);
             itemGroup.add(MiniumItem.IRIS_QUARTZ_ELYTRA_CHESTPLATE);
             itemGroup.add(MiniumItem.MINIUM_INGOT);
+            itemGroup.add(MiniumItem.MINIUM_NUGGET);
             itemGroup.add(MiniumItem.C_MINIUM_INGOT);
             itemGroup.add(MiniumItem.R_MINIUM);
             itemGroup.add(MiniumItem.MINIUM_UPGRADE_SMITHING_TEMPLATE);
@@ -72,6 +73,7 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumBlock.RAW_MINIUM_BLOCK);
             itemGroup.add(MiniumBlock.MINIUM_GRATE);
             itemGroup.add(MiniumBlock.MINIUM_BULB);
+            itemGroup.add(MiniumBlock.MINIUM_CHAIN);
             itemGroup.add(MiniumItem.IRIS_QUARTZ);
             itemGroup.add(MiniumItem.IRIS_QUARTZ_INGOT);
             itemGroup.add(MiniumBlock.IRIS_QUARTZ_ORE);
@@ -102,6 +104,9 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumBlock.EASY_CONVEYOR);
             itemGroup.add(MiniumBlock.MINIUM_ARTIFICIAL_FLOWER);
             itemGroup.add(MiniumItem.IRIS_QUARTZ_PENDANT);
+            itemGroup.add(MiniumBlock.IRIS_QUARTZ_CORE);
+            itemGroup.add(MiniumItem.IRIS_QUARTZ_MACE);
+            itemGroup.add(MiniumBlock.MINIUM_LANTERN);
 
 
             //from mekanism

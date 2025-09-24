@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
+  "group": "minium",
   "ingredients": [
     {
       "tag": "c:storage_blocks/minium"

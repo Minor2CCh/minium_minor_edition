@@ -74,14 +74,12 @@ public class PendantProtectionEvent {
                             }else{
                                 // 天井がある場合は初期スポーン地点に移動
                                 ServerWorld currentWorld = serverPlayerEntity.getServerWorld();
-                                TeleportTarget target = serverPlayerEntity.getRespawnTarget(false, TeleportTarget.NO_OP);
-                                if (target == null) {
-                                    // リスポーン地点の生成に失敗した場合はオーバーワールド初期位置へ
-                                    target = new TeleportTarget(currentWorld,
-                                            new Vec3d(currentWorld.getSpawnPos().getX() + 0.5, currentWorld.getSpawnPos().getY(), currentWorld.getSpawnPos().getZ() + 0.5),
-                                            Vec3d.ZERO, 0f, 0f, TeleportTarget.NO_OP
-                                    );
-                                }
+                                TeleportTarget respawnTarget = serverPlayerEntity.getRespawnTarget(false, TeleportTarget.NO_OP);
+                                TeleportTarget target = respawnTarget == null ?
+                                        new TeleportTarget(currentWorld,
+                                                new Vec3d(currentWorld.getSpawnPos().getX() + 0.5, currentWorld.getSpawnPos().getY(), currentWorld.getSpawnPos().getZ() + 0.5),
+                                                Vec3d.ZERO, 0f, 0f, TeleportTarget.NO_OP)
+                                        : respawnTarget;
 
                                 serverPlayerEntity.teleportTo(target);
                                 serverPlayerEntity.onTeleportationDone();

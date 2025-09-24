@@ -16,7 +16,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRe
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

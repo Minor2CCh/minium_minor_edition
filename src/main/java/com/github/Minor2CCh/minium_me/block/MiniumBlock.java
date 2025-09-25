@@ -12,6 +12,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
@@ -124,7 +125,7 @@ public class MiniumBlock{
     public static final Block MINIUM_CHAIN = register(
             new ChainBlock(Block.Settings.create().solid().requiresTool().strength(5.0F, 20.0F).sounds(BlockSoundGroup.CHAIN).nonOpaque()), "minium_chain", defaultBlockItemSettings());
     public static final Block IRIS_QUARTZ_CORE = register(
-            new HeavyCoreBlock(Block.Settings.create().solid().requiresTool().strength(30.0F, 12000.0F).sounds(BlockSoundGroup.HEAVY_CORE).mapColor(MapColor.WHITE).instrument(NoteBlockInstrument.SNARE).pistonBehavior(PistonBehavior.NORMAL)), "iris_quartz_core", (b) -> new BlockItem(b, new Item.Settings().fireproof()));
+            new HeavyCoreBlock(Block.Settings.create().solid().requiresTool().strength(30.0F, 12000.0F).sounds(BlockSoundGroup.HEAVY_CORE).mapColor(MapColor.WHITE).instrument(NoteBlockInstrument.SNARE).pistonBehavior(PistonBehavior.NORMAL)), "iris_quartz_core", (b) -> new BlockItem(b, new Item.Settings().fireproof().rarity(Rarity.EPIC)));
 
     public static final Block MINIUM_LANTERN = register(
             new LanternBlock(Block.Settings.create().mapColor(MapColor.CYAN).solid().requiresTool().strength(3.5F, 20.0F).sounds(BlockSoundGroup.LANTERN).luminance(state -> 15).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)), "minium_lantern", defaultBlockItemSettings());
@@ -152,7 +153,7 @@ public class MiniumBlock{
     private static Function<Block, BlockItem> defaultBlockItemSettings() {
         return (b) -> new BlockItem(b, new Item.Settings());
     }
-
+    @SuppressWarnings("all")
     private static Function<BlockState, MapColor> createMapColorFromWaterloggedBlockState(MapColor mapColor) {
         return state -> state.get(Properties.WATERLOGGED) ? MapColor.WATER_BLUE : mapColor;
     }

@@ -26,6 +26,7 @@ public class MaceAdvancementEvent {
         });
 
     }
+    @SuppressWarnings("unused")
     public static void doneAdvancement(ServerPlayerEntity player, DamageSource source, float amount){
         if(amount >= 100 && player.getMainHandStack().isOf(MiniumItem.IRIS_QUARTZ_MACE)){
             Identifier advancementId = Identifier.ofVanilla("adventure/overoverkill");

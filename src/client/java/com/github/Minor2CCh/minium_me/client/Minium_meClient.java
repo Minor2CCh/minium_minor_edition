@@ -41,11 +41,9 @@ public class Minium_meClient implements ClientModInitializer {
                 MiniumBlock.POTTED_MINIUM_ARTIFICIAL_FLOWER,
                 MiniumBlock.MINIUM_LANTERN);
         LivingEntityFeatureRendererRegistrationCallback.EVENT
-                .register((entityType, entityRenderer, registrationHelper, context) -> {
-                    registrationHelper
-                            .register(new IrisQuartzElytraFeatureRenderer<>(entityRenderer,
-                                    context.getModelLoader()));
-                });
+                .register((entityType, entityRenderer, registrationHelper, context) -> registrationHelper
+                        .register(new IrisQuartzElytraFeatureRenderer<>(entityRenderer,
+                                context.getModelLoader())));
         ModelPredicateProviderRegistry.register(MiniumItem.IRIS_QUARTZ_ELYTRA.asItem(),
                 Identifier.of("broken"),
                 (itemStack, clientWorld, livingEntity, seed) -> IrisQuartzElytraItem.isUsable(itemStack) ? 0.0F : 1.0F);

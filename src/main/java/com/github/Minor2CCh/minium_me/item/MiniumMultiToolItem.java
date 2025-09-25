@@ -28,6 +28,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -40,7 +41,9 @@ import java.util.*;
 public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTooltip{
     private final ShovelItem internalShovel;
     private final AxeItem internalAxe;
+    @SuppressWarnings("all")
     protected static final Map<Block, BlockState> PATH_STATES = ShovelItemAccessor.getPathStates();
+    @SuppressWarnings("all")
     protected static final Map<Block, Block> STRIPPED_BLOCKS = AxeItemAccessor.getStrippedBlocks();
 
 
@@ -85,12 +88,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
     private boolean rangeStoneBreak(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
         BlockState blockState = world.getBlockState(blockPos);
         ItemStack itemStack = context.getStack();
-        if (itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL) &&
-                (blockState.isIn(ConventionalBlockTags.STONES)
-                || world.getBlockState(blockPos).isIn(BlockTags.STONE_ORE_REPLACEABLES)
-                || world.getBlockState(blockPos).isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
-                || blockState.isIn(ConventionalBlockTags.NETHERRACKS)
-                || blockState.isIn(ConventionalBlockTags.END_STONES))) {//石系ブロックorネザーラック
+        if (itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL) && isRangeBreakableBlock(blockState)) {//石系ブロックorネザーラック
             if(playerEntity.isSneaking()){
                 if (!world.isClient() && DoubleClickHandler.doubleClicked(playerEntity)) {
                     stoneBreakDrop(world, blockPos, playerEntity, itemStack);
@@ -99,7 +97,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
                             for(int k = 0;k < 7;k++) {
                                 Direction direction = context.getSide();
                                 BlockPos tempBlockPos = blockPos.add(i + (direction == Direction.EAST ? -6 : (direction == Direction.WEST ? 0 : -3)), j - 3, k + (direction == Direction.SOUTH ? -6 : (direction == Direction.NORTH ? 0 : -3)));
-                                if (world.getBlockState(tempBlockPos).isIn(ConventionalBlockTags.STONES) || world.getBlockState(tempBlockPos).isIn(ConventionalBlockTags.NETHERRACKS) || world.getBlockState(tempBlockPos).isIn(ConventionalBlockTags.END_STONES)){
+                                if (isRangeBreakableBlock(world.getBlockState(tempBlockPos))){
                                     stoneBreakDrop(world, tempBlockPos, playerEntity, itemStack);
                                     if(Math.random() < 0.25F){
                                         context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
@@ -123,21 +121,36 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
         }
         return false;
     }
+    private static boolean isRangeBreakableBlock(BlockState blockState){
+        return isStoneBlock(blockState) || isNetherrackBlock(blockState) || isEndStoneBlock(blockState);
+    }
+    private static boolean isStoneBlock(BlockState blockState){
+        if(blockState.getBlock().getHardness() < 0){
+            return false;
+        }
+        return blockState.isIn(ConventionalBlockTags.STONES)
+                || blockState.isIn(BlockTags.STONE_ORE_REPLACEABLES)
+                || blockState.isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+    }
+    private static boolean isNetherrackBlock(BlockState blockState){
+        return blockState.isIn(ConventionalBlockTags.NETHERRACKS);
+    }
+    private static boolean isEndStoneBlock(BlockState blockState){
+        return blockState.isIn(ConventionalBlockTags.END_STONES);
+    }
     private void stoneBreakDrop(World world, BlockPos blockPos, PlayerEntity playerEntity, ItemStack itemStack){
         BlockState blockState = world.getBlockState(blockPos);
         if(EnchantmentHelper.hasAnyEnchantmentsIn(itemStack, MiniumEnchantmentTags.TRANSFORMER_STONE)){
             Random rand = new Random();
             if(rand.nextInt(20) == 0){
                 if(rand.nextInt(5) == 0){//1%の確率でランダムに鉱石を落とす
-                    if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.STONES)
-                            || world.getBlockState(blockPos).isIn(BlockTags.STONE_ORE_REPLACEABLES)
-                            || world.getBlockState(blockPos).isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES)){
+                    if(isStoneBlock(blockState)){
                         Block.dropStacks(MiniumBlock.STONE_ALCHEMY_BREAK_STONE.getDefaultState(), world, blockPos, null, playerEntity, itemStack);
                         // loot_table/blocks/stone_alchemy_break_stone.json
-                    }else if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.NETHERRACKS)){
+                    }else if(isNetherrackBlock(blockState)){
                         Block.dropStacks(MiniumBlock.STONE_ALCHEMY_BREAK_NETHERRACK.getDefaultState(), world, blockPos, null, playerEntity, itemStack);
                         // loot_table/blocks/stone_alchemy_break_netherrack.json
-                    }else if(world.getBlockState(blockPos).isIn(ConventionalBlockTags.END_STONES)){
+                    }else if(isEndStoneBlock(blockState)){
                         Block.dropStacks(MiniumBlock.STONE_ALCHEMY_BREAK_END_STONE.getDefaultState(), world, blockPos, null, playerEntity, itemStack);
                         // loot_table/blocks/stone_alchemy_break_end_stone.json
                     }
@@ -205,7 +218,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
 
     private boolean accelerateTrialSpawner(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
         BlockState blockState = world.getBlockState(blockPos);
-        if (blockState.getBlock() instanceof TrialSpawnerBlock trialSpawnerBlock) {
+        if (blockState.getBlock() instanceof TrialSpawnerBlock) {
             // && trialSpawnerBlock.TRIAL_SPAWNER_STATE.equals(TrialSpawnerState.COOLDOWN)
             if(blockState.get(TrialSpawnerBlock.TRIAL_SPAWNER_STATE).equals(TrialSpawnerState.COOLDOWN)){
                 TrialSpawnerBlockEntity trialSpawnerBlockEntity = (TrialSpawnerBlockEntity) world.getBlockEntity(blockPos);
@@ -307,6 +320,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
         }
     }
 
+    @SuppressWarnings("unused")
     private void dropItemFromBlock(World world, BlockPos blockPos, Item lootItem, int count){
         ItemStack dropStack = lootItem.getDefaultStack();
         dropStack.setCount(count);
@@ -362,8 +376,16 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
     }
     @Override
     public void customTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType type, boolean hasShiftDown) {
-        if (Objects.equals(this, MiniumItem.IRIS_QUARTZ_MULTITOOL)) {
-            HasCustomTooltip.super.customTooltip(itemStack, context, tooltip, type, hasShiftDown);
+        if (hasShiftDown) {
+            if (Objects.equals(this, MiniumItem.IRIS_QUARTZ_MULTITOOL)) {
+                tooltip.add(Text.translatable(MiniumItem.IRIS_QUARTZ_MULTITOOL.getTranslationKey()+".desc").formatted(Formatting.WHITE));
+            }
+            for(int i=0;i<6;i++){
+                tooltip.add(Text.translatable(MiniumItem.MINIUM_MULTITOOL.getTranslationKey()+".desc."+i).formatted(Formatting.WHITE));
+
+            }
+        } else {
+            tooltip.add(Text.translatable("item.minium_me.hide_tooltip.desc"));
         }
 
     }

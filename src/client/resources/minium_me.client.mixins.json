@@ -2,8 +2,10 @@
   "required": false,
   "minVersion": "0.8",
   "package": "com.github.Minor2CCh.minium_me.client.mixin",
+  "plugin":  "com.github.Minor2CCh.minium_me.client.mixin.MiniumMixinClientPlugin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "compat.PlatformUtilMixin"
   ],
   "injectors": {
     "defaultRequire": 1

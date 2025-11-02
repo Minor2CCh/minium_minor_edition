@@ -26,7 +26,7 @@ public class MiniumOres {
 
 
     public static RegistryKey<PlacedFeature> register(String id) {
-        Identifier oreID = Identifier.of(Minium_me.MOD_ID, id);
+        Identifier oreID = Minium_me.of(id);
 
         return RegistryKey.of(RegistryKeys.PLACED_FEATURE, oreID);
     }

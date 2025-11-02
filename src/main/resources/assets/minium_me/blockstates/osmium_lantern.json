@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "minium_me:block/osmium_lantern"
+    },
+    "hanging=true": {
+      "model": "minium_me:block/osmium_lantern_hanging"
+    }
+  }
+}

@@ -78,6 +78,8 @@ dependencies {
     }
     modImplementation "dev.emi:trinkets:${trinkets_version}"
     modImplementation "curse.maven:elytra-slot-317716:5770052"
+    modImplementation "curse.maven:ftb-ultimine-fabric-448231:7025218"
+    modImplementation "curse.maven:ftb-library-fabric-438495:7029001"
     //compileOnly("vectorwing:FarmersDelight:${project.fdfr_version}") {
     //    exclude(group: "net.fabricmc")
     //}

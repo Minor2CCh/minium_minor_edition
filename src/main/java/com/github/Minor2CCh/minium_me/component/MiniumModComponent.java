@@ -13,7 +13,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.dynamic.Codecs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +30,9 @@ public class MiniumModComponent {
     private static final HashMap<String, TagKey<Item>> ENERGY_MATERIAL_SB = new HashMap<>();
     private static final HashMap<String, Integer> ENERGY_REMAIN_SB = new HashMap<>();
     public static final List<String> ENERGY_LIST = new ArrayList<>();
+    public static final HashMap<String, Integer> ENERGY_INDEX = new HashMap<>();
+    public static final HashMap<Integer, String> ENERGY_INDEX_REVERSE = new HashMap<>();
+    public static int indexCount = 0;
     public static final String ENERGY_EMPTY = register("energy_empty", 0xFFFFFF, DamageTypes.OUT_OF_WORLD, 0.0F, null, null, 0);
     public static final String ENERGY_COAL = register("energy_coal", 0x555555, MiniumDamageType.ENERGY_FIRE, 0.5F, MiniumItemTag.ENERGY_COAL, MiniumItemTag.ENERGY_COAL_STORAGE_BLOCKS, 10);
     public static final String ENERGY_IRON = register("energy_iron", 0xBFC9C8, MiniumDamageType.ENERGY_DEFAULT, 1.0F, MiniumItemTag.ENERGY_IRON, MiniumItemTag.ENERGY_IRON_STORAGE_BLOCKS, 10);
@@ -77,8 +80,13 @@ public class MiniumModComponent {
     ).apply(builder, EnergyComponent::new));
     public static final ComponentType<EnergyComponent> REMAIN_ENERGY = Registry.register(
             Registries.DATA_COMPONENT_TYPE,
-            Identifier.of(Minium_me.MOD_ID, "energy_profile"),
+            Minium_me.of("energy_profile"),
             ComponentType.<EnergyComponent>builder().codec(CODEC).build()
+    );
+    public static final ComponentType<Integer> TEMPORALLY_REMAIN = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Minium_me.of("temporally_remain"),
+            ComponentType.<Integer>builder().codec(Codecs.NONNEGATIVE_INT).build()
     );
 
     public static int getEnergyColor(String type) {
@@ -92,6 +100,12 @@ public class MiniumModComponent {
     }
     public static String getEnergyKey(String type) {
         return ENERGY_KEY.getOrDefault(type, "item.minium_me.energy.type.error");
+    }
+    public static int getEnergyIndex(String type) {
+        return ENERGY_INDEX.getOrDefault(type, -1);
+    }
+    public static String getEnergyTypeFromIndex(int typeIndex) {
+        return ENERGY_INDEX_REVERSE.getOrDefault(typeIndex, "energy_error");
     }
     public static TagKey<Item> getEnergyMaterial(String type) {
         return ENERGY_MATERIAL.getOrDefault(type, null);
@@ -117,6 +131,9 @@ public class MiniumModComponent {
         if(!Objects.equals(type, "energy_empty")){
             ENERGY_LIST.add(type);
         }
+        ENERGY_INDEX.put(type, indexCount);
+        ENERGY_INDEX_REVERSE.put(indexCount, type);
+        indexCount++;
         return type;
     }
     public record EnergyComponent(int remain, String type) {

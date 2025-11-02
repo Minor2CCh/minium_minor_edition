@@ -4,7 +4,6 @@ import com.github.Minor2CCh.minium_me.Minium_me;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 
 public class MiniumBlockTag {
 
@@ -14,6 +13,6 @@ public class MiniumBlockTag {
 
 
     private static TagKey<Block> of(String id) {
-        return TagKey.of(RegistryKeys.BLOCK, Identifier.of(Minium_me.MOD_ID, id));
+        return TagKey.of(RegistryKeys.BLOCK, Minium_me.of(id));
     }
 }

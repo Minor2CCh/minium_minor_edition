@@ -24,8 +24,10 @@ import java.util.UUID;
 
 
 public class MiniumGunItem extends Item implements HasCustomTooltip{
-    private final HashMap<UUID, Item> prevStack = new HashMap<>();
+    private final HashMap<UUID, ItemStack> prevStack = new HashMap<>();
+    private final HashMap<UUID, ItemStack> prevStackClient = new HashMap<>();
     private final HashMap<UUID, Long> prevReloadTime = new HashMap<>();
+    private final HashMap<UUID, Long> prevReloadTimeClient = new HashMap<>();
     public MiniumGunItem(Settings settings) {
         super(settings);
     }
@@ -61,43 +63,40 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
             return TypedActionResult.success(itemStack, world.isClient());//itemStackの部分を変えるとアイテムがそれに化ける
         }
         //装填されている種類と同じ弾がオフハンドあるor空の場合は装填、ただしオフハンドで持っている場合は装填できない
-        boolean bl = (itemStack == user.getEquippedStack(EquipmentSlot.OFFHAND));//オフハンドのエネルギーガンか否か
-        if(!bl){
+        if(itemStack != user.getEquippedStack(EquipmentSlot.OFFHAND)){//オフハンドのエネルギーガンか否か
+            boolean bl = false;
             if(!user.getEquippedStack(EquipmentSlot.OFFHAND).isEmpty()){
-                prevStack.remove(user.getUuid());
-                prevReloadTime.remove(user.getUuid());
-                prevStack.put(user.getUuid(), user.getEquippedStack(EquipmentSlot.OFFHAND).getItem());
-                prevReloadTime.put(user.getUuid(), world.getTime());
+                setPrevReloadTimeAndStack(user);
                 bl = reloadEnergy(itemStack, user.getEquippedStack(EquipmentSlot.OFFHAND), user);
-            }else if(world.getTime() - prevReloadTime.getOrDefault(user.getUuid(), 0L) < 180){
+            }else if(world.getTime() - getPrevReloadTime(user) < 10){
                 PlayerInventory inventory = user.getInventory();
-
+                ItemStack preIngredient = getPrevStack(user);
                 for (int i = 0; i < inventory.size(); i++) {
                     ItemStack useStack = inventory.getStack(i);
-                    Item preIngredient = prevStack.getOrDefault(user.getUuid(), null);
                     if(preIngredient != null){
-                        if (!useStack.isEmpty() && useStack.getItem() == preIngredient) {
+                        if (!useStack.isEmpty() && ItemStack.areItemsAndComponentsEqual(useStack, preIngredient)) {
                             if(reloadEnergy(itemStack, useStack, user)){
                                 bl = true;
+                                removePrevReloadTimeAndStack(user);
                             }
                         }
                     }
 
                 }
             }
-        }
-        if(bl) {
-            world.playSound(
-                    null,
-                    user.getX(),
-                    user.getY(),
-                    user.getZ(),
-                    MiniumSoundsEvent.RELOAD_ENERGY_GUN_EVENT,
-                    SoundCategory.NEUTRAL,
-                    1.0F,
-                    1.0F//音を鳴らす
-            );
-            return TypedActionResult.success(itemStack, world.isClient());//itemStackの部分を変えるとアイテムがそれに化ける
+            if(bl) {
+                world.playSound(
+                        null,
+                        user.getX(),
+                        user.getY(),
+                        user.getZ(),
+                        MiniumSoundsEvent.RELOAD_ENERGY_GUN_EVENT,
+                        SoundCategory.NEUTRAL,
+                        1.0F,
+                        1.0F//音を鳴らす
+                );
+                return TypedActionResult.success(itemStack, world.isClient());//itemStackの部分を変えるとアイテムがそれに化ける
+            }
         }
 
 
@@ -144,6 +143,41 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
 
         return TypedActionResult.success(itemStack, world.isClient());//itemStackの部分を変えるとアイテムがそれに化ける
     }
+    private void setPrevReloadTimeAndStack(PlayerEntity player){
+        if(player.getWorld().isClient()){
+            prevReloadTimeClient.put(player.getUuid(), player.getWorld().getTime());
+            prevStackClient.put(player.getUuid(), player.getEquippedStack(EquipmentSlot.OFFHAND).copy());
+        }else{
+            prevReloadTime.put(player.getUuid(), player.getWorld().getTime());
+            prevStack.put(player.getUuid(), player.getEquippedStack(EquipmentSlot.OFFHAND).copy());
+        }
+    }
+    private void removePrevReloadTimeAndStack(PlayerEntity player){
+        if(player.getWorld().isClient()){
+            prevReloadTimeClient.remove(player.getUuid());
+            prevStackClient.remove(player.getUuid());
+        }else{
+            prevReloadTime.remove(player.getUuid());
+            prevStack.remove(player.getUuid());
+        }
+    }
+    private long getPrevReloadTime(PlayerEntity player){
+        if(player.getWorld().isClient()){
+            return prevReloadTimeClient.getOrDefault(player.getUuid(), 0L);
+        }else{
+            return prevReloadTime.getOrDefault(player.getUuid(), 0L);
+        }
+    }
+    private ItemStack getPrevStack(PlayerEntity player){
+        if(player.getWorld().isClient()){
+            return prevStackClient.getOrDefault(player.getUuid(), null);
+        }else{
+            return prevStack.getOrDefault(player.getUuid(), null);
+        }
+    }
+
+
+
     private boolean reloadEnergy(ItemStack itemStack, ItemStack consumeStack, PlayerEntity user){
         //System.out.println(consumeStack);
         MiniumModComponent.EnergyComponent EComp = itemStack.get(MiniumModComponent.REMAIN_ENERGY);
@@ -153,16 +187,18 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
         for (String energy : MiniumModComponent.ENERGY_LIST) {
             if(Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) || Objects.equals(energyType, energy)){
                 if(MiniumModComponent.getEnergyMaterial(energy) != null && consumeStack.isIn(MiniumModComponent.getEnergyMaterial(energy))){
-                    remain = addRemain(remain, consumeStack.getCount());
+                    int count = remainCount(remain, consumeStack.getCount(), 1);
+                    remain += count;
                     energyType = energy;
-                    consumeStack.decrementUnlessCreative(consumeStack.getCount(), user);
-                    bl = true;
+                    consumeStack.decrementUnlessCreative(count, user);
+                    bl = (count > 0);
                     break;
                 }else if(MiniumModComponent.getEnergyMaterialSB(energy) != null && consumeStack.isIn(MiniumModComponent.getEnergyMaterialSB(energy))){
-                    remain = addRemain(remain, consumeStack.getCount() * MiniumModComponent.getEnergyRemainSB(energy));
+                    int count = remainCount(remain, consumeStack.getCount(), MiniumModComponent.getEnergyRemainSB(energy));
+                    remain += count * MiniumModComponent.getEnergyRemainSB(energy);
                     energyType = energy;
-                    consumeStack.decrementUnlessCreative(consumeStack.getCount(), user);
-                    bl = true;
+                    consumeStack.decrementUnlessCreative(count, user);
+                    bl = (count > 0);
                     break;
                 }
             }
@@ -177,12 +213,14 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
         return energyType.equals(MiniumModComponent.ENERGY_EMPTY) || MiniumModComponent.ENERGY_LIST.contains(energyType);
 
     }
-    private int addRemain(int remain, int stackMaterial){
-        long calcRemain = (long) remain + (long) stackMaterial;
-        if(calcRemain > 2147483647){
-            return 2147483647;
+    private int remainCount(int baseRemain, int materialCount, int energyRemain){
+        for(int i=materialCount;i>0;i--){
+            long calcRemain = (long) baseRemain + ((long) i * energyRemain);
+            if(calcRemain <= 2147483647){
+                return i;
+            }
         }
-        return (remain + stackMaterial);
+        return 0;
     }
 
     protected int energyConsumption(String energyType){

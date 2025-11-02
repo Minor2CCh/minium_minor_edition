@@ -35,6 +35,7 @@
   "suggests": {
     "farmersdelight": "*",
     "trinkets": "*",
-    "elytraslot": "*"
+    "elytraslot": "*",
+    "ftbultimine": "*"
   }
 }

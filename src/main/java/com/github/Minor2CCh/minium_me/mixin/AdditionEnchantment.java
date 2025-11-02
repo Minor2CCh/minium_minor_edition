@@ -13,13 +13,11 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Enchantment.class)
 public abstract class AdditionEnchantment {
-    @Shadow public abstract boolean isPrimaryItem(ItemStack stack);
-
     @Shadow public abstract boolean isAcceptableItem(ItemStack stack);
 
     @ModifyReturnValue(method = "isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"))
     private boolean EnchantmentInject(boolean original, ItemStack stack){
-        if(stack.isIn(MiniumItemTag.SPEARS) || stack.isIn(MiniumItemTag.ENERGY_GUNS)){
+        if(stack.isIn(MiniumItemTag.SPEARS) || stack.isIn(MiniumItemTag.ENERGY_GUNS) || stack.isOf(MiniumItem.IRIS_QUARTZ_MACE)){
             Enchantment enchantment = (Enchantment) (Object) this;
 
             if(!enchantment.getEffect(EnchantmentEffectComponentTypes.EQUIPMENT_DROPS).isEmpty()){//ドロップ数が増加するエンチャント
@@ -27,16 +25,15 @@ public abstract class AdditionEnchantment {
                     return true;//ドロップ数増加を追加
                 }
             }
-        }
-        return original;
-    }
-    @ModifyReturnValue(method = "isPrimaryItem(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"))
-    private boolean PrimaryEnchantmentInject(boolean original, ItemStack stack){
-        if(stack.isIn(MiniumItemTag.SPEARS)) {
-            if (isPrimaryItem(Items.WOODEN_SWORD.getDefaultStack()) && isAcceptableItem(MiniumItem.MINIUM_SPEAR.getDefaultStack())) {
-                return true;
+        }else if(stack.isOf(MiniumItem.TEMPORALLY_BLOCK_PLACER)){
+            Enchantment enchantment = (Enchantment) (Object) this;
+            if(!enchantment.getEffect(EnchantmentEffectComponentTypes.ITEM_DAMAGE).isEmpty()){
+                if(isAcceptableItem(Items.WOODEN_PICKAXE.getDefaultStack())){//木のツルハシが使用できるエンチャント
+                    return true;
+                }
+
             }
         }
         return original;
-    }//剣で付与される攻撃系のエンチャントがエンチャントテーブルから出るように、(ただし、Sinytra Connectorを使用してNeoForgeで使用すると失敗する)
+    }
 }

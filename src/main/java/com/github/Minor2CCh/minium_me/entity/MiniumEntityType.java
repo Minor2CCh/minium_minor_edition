@@ -4,7 +4,6 @@ import com.github.Minor2CCh.minium_me.Minium_me;
 import net.minecraft.entity.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
 public class MiniumEntityType{
     public static final EntityType<EnergyBulletEntity> ENERGY_BULLET = register(
@@ -16,9 +15,9 @@ public class MiniumEntityType{
                     .trackingTickInterval(20)
                     .makeFireImmune()
     );
-
+    @SuppressWarnings("all")
     private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> type) {
-        return Registry.register(Registries.ENTITY_TYPE, Identifier.of(Minium_me.MOD_ID, id), type.build(id));
+        return Registry.register(Registries.ENTITY_TYPE, Minium_me.of(id), type.build(id));
     }
     public static void initialize() {
 

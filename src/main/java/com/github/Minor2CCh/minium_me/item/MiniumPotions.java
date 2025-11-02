@@ -10,14 +10,13 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
 public class MiniumPotions {
     public static final Potion POISON_HEAL = Registry.register(Registries.POTION,
-            Identifier.of(Minium_me.MOD_ID, "poison_heal"),
+            Minium_me.of("poison_heal"),
             new Potion(new StatusEffectInstance(MiniumStatusEffects.POISON_HEAL, 3600)));
     public static final Potion LONG_POISON_HEAL = Registry.register(Registries.POTION,
-            Identifier.of(Minium_me.MOD_ID, "long_poison_heal"),
+            Minium_me.of("long_poison_heal"),
             new Potion(new StatusEffectInstance(MiniumStatusEffects.POISON_HEAL, 9600)));
 
     public static void initialize() {

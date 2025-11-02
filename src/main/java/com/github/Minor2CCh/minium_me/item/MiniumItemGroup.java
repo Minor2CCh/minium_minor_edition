@@ -14,10 +14,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 public class MiniumItemGroup {
-    public static final RegistryKey<ItemGroup> MINIUM_ITEM_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(Minium_me.MOD_ID, "minium_item_group"));
+    public static final RegistryKey<ItemGroup> MINIUM_ITEM_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Minium_me.of("minium_item_group"));
     public static final ItemGroup MINIUM_ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(MiniumItem.MINIUM_INGOT))
             .displayName(Text.translatable(String.format("itemGroup.%s.%s", Minium_me.MOD_ID, "minium_item")))
@@ -101,13 +100,28 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumItem.IRIS_QUARTZ_SPEAR);
             itemGroup.add(MiniumBlock.EASY_GRINDER);
             itemGroup.add(MiniumBlock.ADVANCED_GRINDER);
+            itemGroup.add(MiniumBlock.IRIS_QUARTZ_GRINDER);
             itemGroup.add(MiniumBlock.EASY_CONVEYOR);
             itemGroup.add(MiniumBlock.MINIUM_ARTIFICIAL_FLOWER);
             itemGroup.add(MiniumItem.IRIS_QUARTZ_PENDANT);
             itemGroup.add(MiniumBlock.IRIS_QUARTZ_CORE);
             itemGroup.add(MiniumItem.IRIS_QUARTZ_MACE);
             itemGroup.add(MiniumBlock.MINIUM_LANTERN);
-
+            itemGroup.add(MiniumBlock.MINIUM_GLASS);
+            itemGroup.add(MiniumBlock.MINIUM_PASSABLE_GLASS);
+            itemGroup.add(MiniumBlock.MINIUM_TOUCHABLE_GLASS);
+            itemGroup.add(MiniumBlock.OSMIUM_CHAIN);
+            itemGroup.add(MiniumBlock.OSMIUM_LANTERN);
+            itemGroup.add(MiniumBlock.MINIUM_ANVIL);
+            itemGroup.add(MiniumBlock.CHIPPED_MINIUM_ANVIL);
+            itemGroup.add(MiniumBlock.DAMAGED_MINIUM_ANVIL);
+            itemGroup.add(MiniumBlock.MINIUM_BARS);
+            itemGroup.add(MiniumBlock.OSMIUM_BARS);
+            itemGroup.add(MiniumItem.MINIUM_SHIELD);
+            itemGroup.add(MiniumItem.TEMPORALLY_BLOCK_PLACER);
+            ItemStack stack = new ItemStack(MiniumItem.TEMPORALLY_BLOCK_PLACER);
+            stack.set(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(true));
+            itemGroup.add(stack);
 
             //from mekanism
             itemGroup.add(MiniumItem.OSMIUM_INGOT_FROM_MEKANISM);

@@ -15,25 +15,25 @@ import net.minecraft.util.Identifier;
 
 public class AddLootTable {
     //private static final Identifier END_CITY_ID = Identifier.ofVanilla("chests/end_city_treasure");
-    public static RegistryKey<LootTable> END_CITY_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/end_city_treasure"));
-    public static RegistryKey<LootTable> MINESHAFT_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/abandoned_mineshaft"));
-    public static RegistryKey<LootTable> BURIED_TREASURE_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/buried_treasure"));
-    public static RegistryKey<LootTable> DESERT_PYRAMID_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/desert_pyramid"));
-    public static RegistryKey<LootTable> JUNGLE_TEMPLATE_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/jungle_temple"));
-    public static RegistryKey<LootTable> PILLAGER_OUTPOST_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/pillager_outpost"));
-    public static RegistryKey<LootTable> SHIPWRECK_TREASURE_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/shipwreck_treasure"));
-    public static RegistryKey<LootTable> SIMPLE_DUNGEON_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/simple_dungeon"));
-    public static RegistryKey<LootTable> STRONGHOLD_CORRIDOR_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/stronghold_corridor"));
-    public static RegistryKey<LootTable> STRONGHOLD_CROSSING_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/stronghold_crossing"));
-    public static RegistryKey<LootTable> UNDERWATER_RUIN_BIG_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/underwater_ruin_big"));
-    public static RegistryKey<LootTable> UNDERWATER_RUIN_SMALL_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/underwater_ruin_small"));
-    public static RegistryKey<LootTable> TRIAL_SPAWNER_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spawners/trial_chamber/consumables"));
-    public static RegistryKey<LootTable> OMINOUS_TRIAL_SPAWNER_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spawners/ominous/trial_chamber/consumables"));
-    public static RegistryKey<LootTable> INJECT_MINESHAFT_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(Minium_me.MOD_ID,"chests/inject/inject_enchanted_book"));
-    public static RegistryKey<LootTable> INJECT_MINIUM_LITTLE_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(Minium_me.MOD_ID,"chests/inject/inject_custom_little"));
-    public static RegistryKey<LootTable> INJECT_MINIUM_MEDIUM_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(Minium_me.MOD_ID,"chests/inject/inject_custom_medium"));
-    public static RegistryKey<LootTable> INJECT_MINIUM_LARGE_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(Minium_me.MOD_ID,"chests/inject/inject_custom_large"));
-    public static RegistryKey<LootTable> INJECT_POTION_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(Minium_me.MOD_ID,"chests/inject/inject_potion"));
+    public static final RegistryKey<LootTable> END_CITY_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/end_city_treasure"));
+    public static final RegistryKey<LootTable> MINESHAFT_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/abandoned_mineshaft"));
+    public static final RegistryKey<LootTable> BURIED_TREASURE_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/buried_treasure"));
+    public static final RegistryKey<LootTable> DESERT_PYRAMID_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/desert_pyramid"));
+    public static final RegistryKey<LootTable> JUNGLE_TEMPLATE_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/jungle_temple"));
+    public static final RegistryKey<LootTable> PILLAGER_OUTPOST_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/pillager_outpost"));
+    public static final RegistryKey<LootTable> SHIPWRECK_TREASURE_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/shipwreck_treasure"));
+    public static final RegistryKey<LootTable> SIMPLE_DUNGEON_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/simple_dungeon"));
+    public static final RegistryKey<LootTable> STRONGHOLD_CORRIDOR_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/stronghold_corridor"));
+    public static final RegistryKey<LootTable> STRONGHOLD_CROSSING_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/stronghold_crossing"));
+    public static final RegistryKey<LootTable> UNDERWATER_RUIN_BIG_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/underwater_ruin_big"));
+    public static final RegistryKey<LootTable> UNDERWATER_RUIN_SMALL_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/underwater_ruin_small"));
+    public static final RegistryKey<LootTable> TRIAL_SPAWNER_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spawners/trial_chamber/consumables"));
+    public static final RegistryKey<LootTable> OMINOUS_TRIAL_SPAWNER_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spawners/ominous/trial_chamber/consumables"));
+    public static final RegistryKey<LootTable> INJECT_MINESHAFT_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Minium_me.of("chests/inject/inject_enchanted_book"));
+    public static final RegistryKey<LootTable> INJECT_MINIUM_LITTLE_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Minium_me.of("chests/inject/inject_custom_little"));
+    public static final RegistryKey<LootTable> INJECT_MINIUM_MEDIUM_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Minium_me.of("chests/inject/inject_custom_medium"));
+    public static final RegistryKey<LootTable> INJECT_MINIUM_LARGE_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Minium_me.of("chests/inject/inject_custom_large"));
+    public static final RegistryKey<LootTable> INJECT_POTION_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Minium_me.of("chests/inject/inject_potion"));
     public static void modifyLootTable(){
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             /*

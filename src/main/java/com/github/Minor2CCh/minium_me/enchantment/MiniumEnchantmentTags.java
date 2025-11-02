@@ -6,11 +6,13 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
+@SuppressWarnings("all")
 public class MiniumEnchantmentTags {
     public static final TagKey<Enchantment> TRANSFORMER_STONE = Modof("transformer_stone");
+    public static final TagKey<Enchantment> FREEZABLE_TEMPORALLY_BLOCK = Modof("freezable_temporally_block");
 
     private static TagKey<Enchantment> Modof(String id) {
-        return TagKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(Minium_me.MOD_ID, id));
+        return TagKey.of(RegistryKeys.ENCHANTMENT, Minium_me.of(id));
     }
     private static TagKey<Enchantment> Conventionalof(String id) {
         return TagKey.of(RegistryKeys.ENCHANTMENT, Identifier.of("c", id));

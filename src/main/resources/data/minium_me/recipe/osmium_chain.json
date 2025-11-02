@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/osmium"
+    },
+    "$": {
+      "tag": "c:nuggets/osmium"
+    }
+  },
+  "pattern": [
+    "$",
+    "#",
+    "$"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:osmium_chain"
+  }
+}

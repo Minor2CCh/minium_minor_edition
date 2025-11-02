@@ -97,7 +97,7 @@ public class MiniumItemTag {
     }
 
     private static TagKey<Item> modOf(String id) {
-        return TagKey.of(RegistryKeys.ITEM, Identifier.of(Minium_me.MOD_ID, id));
+        return TagKey.of(RegistryKeys.ITEM, Minium_me.of(id));
     }
     private static TagKey<Item> conventionalOf(String id) {
         return TagKey.of(RegistryKeys.ITEM, Identifier.of("c", id));

@@ -69,7 +69,7 @@ public class PendantProtectionEvent {
                     if(source.isOf(DamageTypes.OUT_OF_WORLD)){
                         if(serverPlayerEntity.getPos().getY() < serverPlayerEntity.getWorld().getDimension().minY() - 64){
                             if(!serverPlayerEntity.getWorld().getDimension().hasCeiling()){//天井がない場合はY座標の限界+64に移動
-                                serverPlayerEntity.teleport(serverPlayerEntity.getServerWorld(), entity.getPos().getX(), serverPlayerEntity.getWorld().getDimension().height() + 64 , entity.getPos().getZ(), entity.getYaw(), entity.getPitch());
+                                serverPlayerEntity.teleport(serverPlayerEntity.getServerWorld(), entity.getPos().getX(), (serverPlayerEntity.getWorld().getDimension().height() + serverPlayerEntity.getWorld().getDimension().minY()) + 64 , entity.getPos().getZ(), entity.getYaw(), entity.getPitch());
                                 entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOW_FALLING, 1200, 0));
                             }else{
                                 // 天井がある場合は初期スポーン地点に移動

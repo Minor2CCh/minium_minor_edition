@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_osmium_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minium_me:osmium_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:osmium_lantern"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_osmium_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:osmium_lantern"
+    ]
+  }
+}

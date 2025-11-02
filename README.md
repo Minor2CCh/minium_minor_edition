@@ -150,7 +150,7 @@ This allows you to benefit from the Elytra Slot in NeoForge and equip the Iris Q
 ただし、難易度がHardの場合試練の予感が付与される副作用があるので注意。
 また、虹水晶インゴットを6個使用することにより、エリトラを強化することができます。さらに虹水晶のチェストプレートと合わせることにより防御力を確保したエリトラとして使うことができます。普通のチェストプレートでもエリトラ付きのチェストプレートでも上記の一式ボーナスを得ることができます。
 滑空中にブーストキー(Default:G)を押すことで爆風により加速することができます。(CoolTime:5 seconds)
-[Elytra Slot](https://modrinth.com/mod/elytra-slotとTrinketsをインストールしている場合にはCapeスロットに装備することができます。
+[Elytra Slot](https://modrinth.com/mod/elytra-slot)とTrinketsをインストールしている場合にはCapeスロットに装備することができます。
 
 ## 追加される合金
 - 濃縮マイニウム

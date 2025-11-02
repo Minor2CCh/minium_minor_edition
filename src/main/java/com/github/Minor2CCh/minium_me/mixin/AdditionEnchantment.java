@@ -13,8 +13,6 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Enchantment.class)
 public abstract class AdditionEnchantment {
-    @Shadow public abstract boolean isPrimaryItem(ItemStack stack);
-
     @Shadow public abstract boolean isAcceptableItem(ItemStack stack);
 
     @ModifyReturnValue(method = "isAcceptableItem(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"))

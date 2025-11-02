@@ -4,7 +4,6 @@ import com.github.Minor2CCh.minium_me.Minium_me;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 
 public class MiniumBlockTag {
 

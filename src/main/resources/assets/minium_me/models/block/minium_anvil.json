@@ -1,0 +1,6 @@
+{
+  "parent": "minium_me:block/template_minium_anvil",
+  "textures": {
+    "top": "minium_me:block/minium_anvil_top"
+  }
+}

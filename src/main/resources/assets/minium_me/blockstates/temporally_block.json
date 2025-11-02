@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "freeze=false": {
+      "model": "minium_me:block/temporally_block"
+    },
+    "freeze=true": {
+      "model": "minium_me:block/temporally_block_freeze"
+    }
+  }
+}

@@ -14,6 +14,6 @@ public class MiniumBlockTag {
 
 
     private static TagKey<Block> of(String id) {
-        return TagKey.of(RegistryKeys.BLOCK, Identifier.of(Minium_me.MOD_ID, id));
+        return TagKey.of(RegistryKeys.BLOCK, Minium_me.of(id));
     }
 }

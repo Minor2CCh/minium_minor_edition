@@ -76,4 +76,5 @@ public enum MiniumToolMaterial implements ToolMaterial{
     public Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
+
 }

@@ -23,11 +23,11 @@ public final class MiniumArmorMaterial{
 
     public static RegistryEntry<ArmorMaterial> registerMaterial(String id, Map<ArmorItem.Type, Integer> defensePoints, int enchantability, RegistryEntry<SoundEvent> equipSound, Supplier<Ingredient> repairIngredientSupplier, float toughness, float knockbackResistance, boolean dyeable) {
         List<ArmorMaterial.Layer> layers = List.of(
-                new ArmorMaterial.Layer(Identifier.of(Minium_me.MOD_ID, id), "", dyeable)
+                new ArmorMaterial.Layer(Minium_me.of(id), "", dyeable)
         );
 
         ArmorMaterial material = new ArmorMaterial(defensePoints, enchantability, equipSound, repairIngredientSupplier, layers, toughness, knockbackResistance);
-        material = Registry.register(Registries.ARMOR_MATERIAL, Identifier.of(Minium_me.MOD_ID, id), material);
+        material = Registry.register(Registries.ARMOR_MATERIAL, Minium_me.of(id), material);
         return RegistryEntry.of(material);
     }
     public static final RegistryEntry<ArmorMaterial> MINIUM = registerMaterial("minium",

@@ -13,7 +13,7 @@ public class MiniumSoundsEvent {
     public static SoundEvent HIT_ENERGY_BULLET_EVENT = register("item.minium_me.energy_gun.hit");
 
     private static SoundEvent register(String id){
-        Identifier soundId = Identifier.of(Minium_me.MOD_ID, id);
+        Identifier soundId = Minium_me.of(id);
         return Registry.register(Registries.SOUND_EVENT, soundId, SoundEvent.of(soundId));
     }
     public static void initialize() {

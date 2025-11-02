@@ -1,8 +1,11 @@
 package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
+import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
+import net.minecraft.block.Blocks;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -18,39 +21,9 @@ public class MiniumItem{
     public static final Item MINIUM_INGOT = register(new Item(new Item.Settings()), "minium_ingot");
     public static final Item C_MINIUM_INGOT = register(new Item(new Item.Settings()), "concentrated_minium_ingot");
     public static final Item R_MINIUM = register(new Item(new Item.Settings()), "raw_minium");
-    public static final Item MINIUM_UPGRADE_SMITHING_TEMPLATE = register(new SmithingTemplateItem(
-            Text.translatable(Util.createTranslationKey("item", Identifier.of(Minium_me.MOD_ID, "smithing_template.minium_upgrade.applies_to"))).formatted(Formatting.BLUE),
-            Text.translatable(Util.createTranslationKey("item", Identifier.of(Minium_me.MOD_ID, "smithing_template.minium_upgrade.ingredients"))).formatted(Formatting.BLUE),
-            Text.translatable(Util.createTranslationKey("upgrade", Identifier.of(Minium_me.MOD_ID, "minium_upgrade"))).formatted(Formatting.GRAY),
-            Text.translatable(Util.createTranslationKey("item", Identifier.of(Minium_me.MOD_ID, "smithing_template.minium_upgrade.base_slot_description"))),
-            Text.translatable(Util.createTranslationKey("item", Identifier.of(Minium_me.MOD_ID, "smithing_template.minium_upgrade.additions_slot_description"))),
-            List.of(Identifier.ofVanilla("item/empty_armor_slot_helmet"),
-                    Identifier.ofVanilla("item/empty_armor_slot_chestplate"),
-                    Identifier.ofVanilla("item/empty_armor_slot_leggings"),
-                    Identifier.ofVanilla("item/empty_armor_slot_boots"),
-                    Identifier.ofVanilla("item/empty_slot_hoe"),
-                    Identifier.ofVanilla("item/empty_slot_axe"),
-                    Identifier.ofVanilla("item/empty_slot_sword"),
-                    Identifier.ofVanilla("item/empty_slot_shovel"),
-                    Identifier.ofVanilla("item/empty_slot_pickaxe")),
-            List.of(Identifier.ofVanilla("item/empty_slot_ingot"))),"minium_upgrade_smithing_template");
+    public static final Item MINIUM_UPGRADE_SMITHING_TEMPLATE = register(smithingBase("minium"),"minium_upgrade_smithing_template");
 
-    public static final Item IRIS_QUARTZ_UPGRADE_SMITHING_TEMPLATE = register(new SmithingTemplateItem(
-            Text.translatable(Util.createTranslationKey("item", Identifier.of(Minium_me.MOD_ID, "smithing_template.iris_quartz_upgrade.applies_to"))).formatted(Formatting.BLUE),
-            Text.translatable(Util.createTranslationKey("item", Identifier.of(Minium_me.MOD_ID, "smithing_template.iris_quartz_upgrade.ingredients"))).formatted(Formatting.BLUE),
-            Text.translatable(Util.createTranslationKey("upgrade", Identifier.of(Minium_me.MOD_ID, "iris_quartz_upgrade"))).formatted(Formatting.GRAY),
-            Text.translatable(Util.createTranslationKey("item", Identifier.of(Minium_me.MOD_ID, "smithing_template.iris_quartz_upgrade.base_slot_description"))),
-            Text.translatable(Util.createTranslationKey("item", Identifier.of(Minium_me.MOD_ID, "smithing_template.iris_quartz_upgrade.additions_slot_description"))),
-            List.of(Identifier.ofVanilla("item/empty_armor_slot_helmet"),
-                    Identifier.ofVanilla("item/empty_armor_slot_chestplate"),
-                    Identifier.ofVanilla("item/empty_armor_slot_leggings"),
-                    Identifier.ofVanilla("item/empty_armor_slot_boots"),
-                    Identifier.ofVanilla("item/empty_slot_hoe"),
-                    Identifier.ofVanilla("item/empty_slot_axe"),
-                    Identifier.ofVanilla("item/empty_slot_sword"),
-                    Identifier.ofVanilla("item/empty_slot_shovel"),
-                    Identifier.ofVanilla("item/empty_slot_pickaxe")),
-            List.of(Identifier.ofVanilla("item/empty_slot_ingot"))),"iris_quartz_upgrade_smithing_template");
+    public static final Item IRIS_QUARTZ_UPGRADE_SMITHING_TEMPLATE = register(smithingBase("iris_quartz"),"iris_quartz_upgrade_smithing_template");
 
     //tool
     public static final Item MINIUM_SWORD = register(new SwordItem(MiniumToolMaterial.MINIUM_TOOL, new Item.Settings().attributeModifiers(SwordItem.createAttributeModifiers(MiniumToolMaterial.MINIUM_TOOL, 3, -2.4f))), "minium_sword");
@@ -107,16 +80,37 @@ public class MiniumItem{
             .maxDamage(7716)
             .component(DataComponentTypes.TOOL, IrisQuartzMaceItem.createToolComponent())
             .attributeModifiers(IrisQuartzMaceItem.createAttributeModifiers())), "iris_quartz_mace");
+    public static final Item MINIUM_SHIELD = register(new MiniumShieldItem(new Item.Settings().maxDamage(504).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT).attributeModifiers(MiniumShieldItem.createAttributeModifiers(2, 1))), "minium_shield");
+    public static final Item TEMPORALLY_BLOCK_PLACER = register(new TemporallyBlockPlacerItem(new Item.Settings().maxCount(1).component(MiniumModComponent.TEMPORALLY_REMAIN, 15),15, MiniumBlock.TEMPORALLY_BLOCK), "temporally_block_placer");
     //from mekanism
     public static final Item OSMIUM_INGOT_FROM_MEKANISM = register(new Item(new Item.Settings()), "osmium_ingot");
     public static final Item OSMIUM_NUGGET_FROM_MEKANISM = register(new Item(new Item.Settings()), "osmium_nugget");
     public static final Item RAW_OSMIUM_FROM_MEKANISM = register(new Item(new Item.Settings()), "raw_osmium");
 
 
-
+    @SuppressWarnings("all")
     public static Item register(Item item, String id) {
-        Identifier itemID = Identifier.of(Minium_me.MOD_ID, id);
+        Identifier itemID = Minium_me.of(id);
         return Registry.register(Registries.ITEM, itemID, item);
+    }
+    private static SmithingTemplateItem smithingBase(String upgradeId){
+        String upgradeName = "smithing_template."+upgradeId+"_upgrade.";
+        return new SmithingTemplateItem(
+                Text.translatable(Util.createTranslationKey("item", Minium_me.of(upgradeName+"applies_to"))).formatted(Formatting.BLUE),
+                Text.translatable(Util.createTranslationKey("item", Minium_me.of(upgradeName+"ingredients"))).formatted(Formatting.BLUE),
+                Text.translatable(Util.createTranslationKey("upgrade", Minium_me.of(upgradeId+"_upgrade"))).formatted(Formatting.GRAY),
+                Text.translatable(Util.createTranslationKey("item", Minium_me.of(upgradeName+"base_slot_description"))),
+                Text.translatable(Util.createTranslationKey("item", Minium_me.of(upgradeName+"additions_slot_description"))),
+                List.of(Identifier.ofVanilla("item/empty_armor_slot_helmet"),
+                        Identifier.ofVanilla("item/empty_armor_slot_chestplate"),
+                        Identifier.ofVanilla("item/empty_armor_slot_leggings"),
+                        Identifier.ofVanilla("item/empty_armor_slot_boots"),
+                        Identifier.ofVanilla("item/empty_slot_hoe"),
+                        Identifier.ofVanilla("item/empty_slot_axe"),
+                        Identifier.ofVanilla("item/empty_slot_sword"),
+                        Identifier.ofVanilla("item/empty_slot_shovel"),
+                        Identifier.ofVanilla("item/empty_slot_pickaxe")),
+                List.of(Identifier.ofVanilla("item/empty_slot_ingot")));
     }
 
     public static void initialize() {

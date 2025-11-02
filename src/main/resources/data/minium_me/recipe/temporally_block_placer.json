@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:ingots/concentrated_minium"
+    },
+    "$": {
+      "tag": "c:storage_blocks/minium"
+    },
+    "W": {
+      "tag": "minium_me:functional_glass_blocks"
+    }
+  },
+  "pattern": [
+    " W$",
+    " #W",
+    "#  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:temporally_block_placer"
+  }
+}

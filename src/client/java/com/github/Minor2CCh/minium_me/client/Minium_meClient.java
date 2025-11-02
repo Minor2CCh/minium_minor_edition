@@ -3,15 +3,20 @@ package com.github.Minor2CCh.minium_me.client;
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.client.event.LivingEntityEventTickClient;
 import com.github.Minor2CCh.minium_me.client.keybinds.ClientIrisQuartzElytraBoostEvent;
+import com.github.Minor2CCh.minium_me.client.particle.EnergyHitParticle;
+import com.github.Minor2CCh.minium_me.client.render.DynamicMiniumShieldRenderer;
+import com.github.Minor2CCh.minium_me.client.render.IrisQuartzElytraFeatureRenderer;
+import com.github.Minor2CCh.minium_me.client.render.MiniumEntityRenderers;
 import com.github.Minor2CCh.minium_me.event.IrisQuartzElytraBoostEvent;
 import com.github.Minor2CCh.minium_me.item.HasCustomTooltip;
 import com.github.Minor2CCh.minium_me.item.IrisQuartzElytraItem;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
-import com.github.Minor2CCh.minium_me.particle.MiniumParticle;
+import com.github.Minor2CCh.minium_me.particle.MiniumParticles;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
@@ -33,13 +38,24 @@ public class Minium_meClient implements ClientModInitializer {
                 MiniumBlock.MINIUM_GRATE,
                 MiniumBlock.REDSTONE_ENERGY_BLOCK,
                 MiniumBlock.GLOWSTONE_ENERGY_BLOCK,
-                MiniumBlock.MINIUM_CHAIN);
+                MiniumBlock.MINIUM_CHAIN,
+                MiniumBlock.OSMIUM_CHAIN,
+                MiniumBlock.MINIUM_BARS,
+                MiniumBlock.OSMIUM_BARS);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 MiniumBlock.EASY_GRINDER,
                 MiniumBlock.ADVANCED_GRINDER,
+                MiniumBlock.IRIS_QUARTZ_GRINDER,
                 MiniumBlock.MINIUM_ARTIFICIAL_FLOWER,
                 MiniumBlock.POTTED_MINIUM_ARTIFICIAL_FLOWER,
-                MiniumBlock.MINIUM_LANTERN);
+                MiniumBlock.MINIUM_LANTERN,
+                MiniumBlock.OSMIUM_LANTERN);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+                MiniumBlock.MINIUM_GLASS,
+                MiniumBlock.MINIUM_PASSABLE_GLASS,
+                MiniumBlock.MINIUM_TOUCHABLE_GLASS,
+                MiniumBlock.TEMPORALLY_BLOCK);
+
         LivingEntityFeatureRendererRegistrationCallback.EVENT
                 .register((entityType, entityRenderer, registrationHelper, context) -> registrationHelper
                         .register(new IrisQuartzElytraFeatureRenderer<>(entityRenderer,
@@ -47,9 +63,15 @@ public class Minium_meClient implements ClientModInitializer {
         ModelPredicateProviderRegistry.register(MiniumItem.IRIS_QUARTZ_ELYTRA.asItem(),
                 Identifier.of("broken"),
                 (itemStack, clientWorld, livingEntity, seed) -> IrisQuartzElytraItem.isUsable(itemStack) ? 0.0F : 1.0F);
+
+        BuiltinItemRendererRegistry.INSTANCE.register(MiniumItem.MINIUM_SHIELD, new DynamicMiniumShieldRenderer());
+        ModelPredicateProviderRegistry.register(MiniumItem.MINIUM_SHIELD,
+                Identifier.of("blocking"),
+                (itemStack, clientWorld, livingEntity, seed) ->
+                        livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F);
         MiniumEntityRenderers.initialize();
-        ParticleFactoryRegistry.getInstance().register(MiniumParticle.ENERGY_HIT_PARTICLE, EnergyHitParticle.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(MiniumParticle.ENERGY_HIT_PARTICLE2, EnergyHitParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(MiniumParticles.ENERGY_HIT_PARTICLE, EnergyHitParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(MiniumParticles.ENERGY_HIT_PARTICLE2, EnergyHitParticle.Factory::new);
         ItemTooltipCallback.EVENT.register((ItemStack stack, Item.TooltipContext context, TooltipType tooltipType, java.util.List<Text> lines) -> {
             boolean hasShiftDown = Screen.hasShiftDown();
             if (stack.getItem() instanceof HasCustomTooltip tooltipItem) {

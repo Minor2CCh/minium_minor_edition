@@ -3,7 +3,6 @@ package com.github.Minor2CCh.minium_me.item;
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantmentTags;
-import com.github.Minor2CCh.minium_me.handler.DoubleClickHandler;
 import com.github.Minor2CCh.minium_me.mixin.TrialSpawnerAccessor;
 import com.google.common.collect.BiMap;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.annotation.Nullable;
@@ -41,6 +40,7 @@ import java.util.*;
 public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTooltip{
     private final ShovelItem internalShovel;
     private final AxeItem internalAxe;
+    private final HashMap<UUID, Long> prevUseTime = new HashMap<>();
     @SuppressWarnings("all")
     protected static final Map<Block, BlockState> PATH_STATES = ShovelItemAccessor.getPathStates();
     @SuppressWarnings("all")
@@ -90,7 +90,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
         ItemStack itemStack = context.getStack();
         if (itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL) && isRangeBreakableBlock(blockState)) {//石系ブロックorネザーラック
             if(playerEntity.isSneaking()){
-                if (!world.isClient() && DoubleClickHandler.doubleClicked(playerEntity)) {
+                if (!world.isClient() && isDoubleClicked(playerEntity)) {
                     stoneBreakDrop(world, blockPos, playerEntity, itemStack);
                     loopStart:for(int i = 0;i < 7;i++){
                         for(int j = 0;j < 7;j++){
@@ -120,6 +120,23 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
 
         }
         return false;
+    }
+    private boolean isDoubleClicked(PlayerEntity player){
+        UUID uuid = player.getUuid();
+        World world = player.getWorld();
+        if(world.isClient()){
+            return false;
+        }
+        if(!prevUseTime.containsKey(uuid)){
+            prevUseTime.put(uuid, world.getTime());
+            return false;
+        }else if(world.getTime() - prevUseTime.getOrDefault(uuid, 0L) < 4){
+            prevUseTime.remove(uuid);
+            return true;
+        }else{
+            prevUseTime.replace(uuid, world.getTime());
+            return false;
+        }
     }
     private static boolean isRangeBreakableBlock(BlockState blockState){
         return isStoneBlock(blockState) || isNetherrackBlock(blockState) || isEndStoneBlock(blockState);
@@ -372,7 +389,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
 
     private boolean shouldCancelStripAttempt(ItemUsageContext context) {
         PlayerEntity playerEntity = context.getPlayer();
-        return context.getHand().equals(Hand.MAIN_HAND) && Objects.requireNonNull(playerEntity).getOffHandStack().isOf(Items.SHIELD) && !playerEntity.shouldCancelInteraction();
+        return context.getHand().equals(Hand.MAIN_HAND) && (Objects.requireNonNull(playerEntity).getOffHandStack().getItem() instanceof ShieldItem) && !playerEntity.shouldCancelInteraction();
     }
     @Override
     public void customTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType type, boolean hasShiftDown) {

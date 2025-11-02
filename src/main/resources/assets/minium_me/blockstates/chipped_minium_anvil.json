@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "minium_me:block/chipped_minium_anvil",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "minium_me:block/chipped_minium_anvil",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "minium_me:block/chipped_minium_anvil"
+    },
+    "facing=west": {
+      "model": "minium_me:block/chipped_minium_anvil",
+      "y": 90
+    }
+  }
+}

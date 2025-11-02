@@ -35,9 +35,10 @@ public class GrindingBlock extends Block implements Waterloggable, HasCustomTool
     public static final MapCodec<GrindingBlock> CODEC = createCodec(GrindingBlock::new);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 7.0, 16.0);
-    protected static final float GRIND_DAMAGE = 5.0F;
+    protected float GRIND_DAMAGE;
     public GrindingBlock(Settings settings) {
         super(settings);
+        GRIND_DAMAGE = 5.0F;
         this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, Boolean.FALSE));
     }
     @Override
@@ -85,38 +86,16 @@ public class GrindingBlock extends Block implements Waterloggable, HasCustomTool
     }
 
     protected void damageEntity(World world, LivingEntity livingEntity, BlockPos pos) {
-        if(!world.isClient()){
-            int playerHitTime = ((LivingEntityAccessor)(livingEntity)).playerHitTimer();
-            if(playerHitTime == 0){
-                ((LivingEntityAccessor)(livingEntity)).setPlayerHitTimer(10);
-            }
-            DamageSource damageSource = new DamageSource(
-                    world.getRegistryManager()
-                            .get(RegistryKeys.DAMAGE_TYPE)
-                            .entryOf(MiniumDamageType.MINIUM_GRINDING));
-            livingEntity.damage(damageSource, GRIND_DAMAGE);
+        int playerHitTime = ((LivingEntityAccessor)(livingEntity)).playerHitTimer();
+        if(playerHitTime == 0){
+            ((LivingEntityAccessor)(livingEntity)).setPlayerHitTimer(10);
         }
+        DamageSource damageSource = new DamageSource(
+                world.getRegistryManager()
+                        .get(RegistryKeys.DAMAGE_TYPE)
+                        .entryOf(MiniumDamageType.MINIUM_GRINDING));
+        livingEntity.damage(damageSource, GRIND_DAMAGE);
     }
-
-    /*
-    @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
-
-    @Override
-    protected VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
-        return SHAPE;
-    }*/
-    /*
-    @Override
-    protected boolean hasSidedTransparency(BlockState state) {
-        return true;
-    }*//*
-    @Override
-    protected BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }*/
     @Override
     protected float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
         return 1.0F;

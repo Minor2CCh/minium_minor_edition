@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "minium_me:entity/minium_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "minium_me:entity/minium_shield_base_nopattern"
+    }
+  ]
+}

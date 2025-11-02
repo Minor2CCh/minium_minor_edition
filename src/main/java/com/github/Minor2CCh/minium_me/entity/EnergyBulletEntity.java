@@ -3,7 +3,7 @@ package com.github.Minor2CCh.minium_me.entity;
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantments;
-import com.github.Minor2CCh.minium_me.particle.MiniumParticle;
+import com.github.Minor2CCh.minium_me.particle.MiniumParticles;
 import com.github.Minor2CCh.minium_me.sound.MiniumSoundsEvent;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import com.google.common.base.MoreObjects;
@@ -15,6 +15,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
@@ -23,6 +25,7 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.EntityTypeTags;
@@ -37,20 +40,18 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
-import java.util.UUID;
 
 
 public class EnergyBulletEntity extends ProjectileEntity {
     private int existTime = 0;
     private String EnergyType = MiniumModComponent.ENERGY_EMPTY;
-    public static int color = 0xFFFFFF;
     public static int particleColor = 0xFFFFFF;
-    //public int renderColor = 0xFFFFFF;
-    public ItemStack attackStack;
-    private static final HashMap<UUID, Integer> clientRenderColor = new HashMap<>();
+    private int gunBoost;
+    private static final TrackedData<Integer> ENERGY_INDEX = DataTracker.registerData(EnergyBulletEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> GUN_BOOST = DataTracker.registerData(EnergyBulletEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> EXIST_TIME = DataTracker.registerData(EnergyBulletEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public EnergyBulletEntity(EntityType<? extends EnergyBulletEntity> entityType, World world) {
         super(entityType, world);
         this.noClip = true;
@@ -69,22 +70,44 @@ public class EnergyBulletEntity extends ProjectileEntity {
         this.setPosition(this.getX() + vel3d.x * 2, owner.getEyeY() - 0.1F + vel3d.y * 2, this.getZ() + vel3d.z * 2);
         MiniumModComponent.EnergyComponent EComp = itemStack.get(MiniumModComponent.REMAIN_ENERGY);
         EnergyType = EComp != null ? EComp.type() : MiniumModComponent.ENERGY_EMPTY;
-        attackStack = itemStack;
-        color = MiniumModComponent.getEnergyColor(EnergyType);
-            //renderColor = color;
-        //System.out.println(this.getUuidAsString());
-        clientRenderColor.put(uuid, color);
+        int energyIndex = MiniumModComponent.getEnergyIndex(EnergyType);
+        gunBoost = MiniumEnchantments.getEnchantmentLevel(this, itemStack, MiniumEnchantments.ENERGY_BOOST);
+        this.getDataTracker().set(ENERGY_INDEX, energyIndex);
+        this.getDataTracker().set(GUN_BOOST, gunBoost);
 
     }
-    /*
-    public EnergyBulletEntity(World world, LivingEntity owner, ItemStack stack) {
-        super(EntityType.ARROW, owner, world, stack);
-    }*/
-    public static int getRenderColor(UUID uuid){
-        return clientRenderColor.getOrDefault(uuid, 0xFFFFFF);
+    public String getEnergyType(){
+        return MiniumModComponent.getEnergyTypeFromIndex(this.getDataTracker().get(ENERGY_INDEX));
     }
-    public static void removeRenderColor(UUID uuid){
-        clientRenderColor.remove(uuid);
+    public int getEnergyColor(){
+        return MiniumModComponent.getEnergyColor(this.getEnergyType());
+    }
+    public int getGunBoostLevel(){
+        return this.getDataTracker().get(GUN_BOOST);
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("EnergyIndex", MiniumModComponent.getEnergyIndex(EnergyType));
+        nbt.putInt("GunBoost", this.gunBoost);
+        nbt.putInt("ExistTime", this.existTime);
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.EnergyType = MiniumModComponent.getEnergyTypeFromIndex(nbt.getInt("EnergyIndex"));
+        this.gunBoost = (nbt.getInt("GunBoost"));
+        this.existTime = nbt.getInt("ExistTime");
+        this.getDataTracker().set(ENERGY_INDEX, MiniumModComponent.getEnergyIndex(EnergyType));
+        this.getDataTracker().set(GUN_BOOST, gunBoost);
+        this.getDataTracker().set(EXIST_TIME, existTime);
+    }
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(ENERGY_INDEX, 0);
+        builder.add(GUN_BOOST, 0);
+        builder.add(EXIST_TIME, 0);
     }
     @Override
     protected void onCollision(HitResult hitResult) {
@@ -160,10 +183,9 @@ public class EnergyBulletEntity extends ProjectileEntity {
 
 
         boolean bl = false;
-        int lv = MiniumEnchantments.getEnchantmentLevel(this, attackStack, MiniumEnchantments.ENERGY_BOOST);
+        int lv = getGunBoostLevel();
         if(lv > 0)
             resultDamage *= (1 + 0.25F * lv);
-        //resultDamage = EnchantmentHelper.getDamage((ServerWorld) this.getWorld(), attackStack, entity, damageSource, resultDamage);
         if(!(entity instanceof TameableEntity tameableEntity) || !tameableEntity.isOwner(livingEntity)){
             if(Objects.equals(EnergyType, MiniumModComponent.ENERGY_STEEL)){
                 entity.setFireTicks(120);
@@ -285,20 +307,16 @@ public class EnergyBulletEntity extends ProjectileEntity {
         hitParticles();
     }
     protected void hitParticles() {
-        particleColor = getRenderColor(this.getUuid());
+        particleColor = this.getEnergyColor();
         if(Objects.equals(this.EnergyType, MiniumModComponent.ENERGY_IRIS_QUARTZ)){
-            ((ServerWorld) this.getWorld()).spawnParticles(MiniumParticle.ENERGY_HIT_PARTICLE2, this.getX(), this.getY(), this.getZ(), 1, 0.2, 0.2, 0.2, 0.0);
+            ((ServerWorld) this.getWorld()).spawnParticles(MiniumParticles.ENERGY_HIT_PARTICLE2, this.getX(), this.getY(), this.getZ(), 1, 0.2, 0.2, 0.2, 0.0);
         }else {
-            ((ServerWorld) this.getWorld()).spawnParticles(MiniumParticle.ENERGY_HIT_PARTICLE, this.getX(), this.getY(), this.getZ(), 1, 0.2, 0.2, 0.2, 0.0);
+            ((ServerWorld) this.getWorld()).spawnParticles(MiniumParticles.ENERGY_HIT_PARTICLE, this.getX(), this.getY(), this.getZ(), 1, 0.2, 0.2, 0.2, 0.0);
         }
         this.playSound(MiniumSoundsEvent.HIT_ENERGY_BULLET_EVENT, 1.0F, 0.6F);
 
     }
-    @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-    }
     private void destroy() {
-        removeRenderColor(this.getUuid());
         this.discard();
         this.getWorld().emitGameEvent(GameEvent.ENTITY_DAMAGE, this.getPos(), GameEvent.Emitter.of(this));
         //System.out.println("Destroy EnergyBullet.");
@@ -342,18 +360,9 @@ public class EnergyBulletEntity extends ProjectileEntity {
             }
         }
         this.checkBlockCollision();
-        //destroy();
     }
     @Override//ダメージを受けたときの処理
     public boolean damage(DamageSource source, float amount) {
-        /*
-        if (!this.getWorld().isClient) {
-            this.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HURT, 1.0F, 1.0F);
-            ((ServerWorld)this.getWorld()).spawnParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2, 0.2, 0.2, 0.0);
-            this.destroy();
-        }*/
-
-
         return true;
     }
 

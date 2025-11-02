@@ -1,0 +1,29 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ],
+  "type": "techreborn:assembling_machine",
+  "ingredients": [
+    {
+      "count": 10,
+      "item": "minecraft:torch"
+    },
+    {
+      "count": 8,
+      "tag": "c:ingots/osmium"
+    }
+  ],
+  "outputs": [
+    {
+      "count": 10,
+      "id": "minium_me:osmium_lantern"
+    }
+  ],
+  "power": 20,
+  "time": 200
+}

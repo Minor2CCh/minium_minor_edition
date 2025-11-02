@@ -6,17 +6,18 @@ import com.github.Minor2CCh.minium_me.damage_type.MiniumDamageType;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantments;
 import com.github.Minor2CCh.minium_me.entity.MiniumEntityType;
 import com.github.Minor2CCh.minium_me.event.*;
-import com.github.Minor2CCh.minium_me.handler.DoubleClickHandler;
 import com.github.Minor2CCh.minium_me.item.*;
-import com.github.Minor2CCh.minium_me.particle.MiniumParticle;
+import com.github.Minor2CCh.minium_me.particle.MiniumParticles;
 import com.github.Minor2CCh.minium_me.platform.AccessoryPlatform;
 import com.github.Minor2CCh.minium_me.platform.DisableAccessoryPlatform;
 import com.github.Minor2CCh.minium_me.platform.EnableAccessoryPlatform;
+import com.github.Minor2CCh.minium_me.registry.MiniumBlockEntityTypes;
 import com.github.Minor2CCh.minium_me.sound.MiniumSoundsEvent;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import com.github.Minor2CCh.minium_me.worldgen.MiniumOres;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.Identifier;
 
 public class Minium_me implements ModInitializer {
 
@@ -35,17 +36,24 @@ public class Minium_me implements ModInitializer {
         AddLootTable.initialize();
         MiniumModComponent.initialize();
         MiniumEntityType.initialize();
-        MiniumParticle.initialize();
+        MiniumParticles.initialize();
         MiniumDamageType.initialize();
         MiniumStatusEffects.initialize();
         MiniumSoundsEvent.initialize();
         MiniumPotions.initialize();
         MiniumEnchantments.initialize();
-        DoubleClickHandler.initialize();
         PicklingSaltReduceEvent.initialize();
         PendantProtectionEvent.initialize();
         IrisQuartzElytraBoostEvent.initialize();
         LivingEntityTickEvent.initialize();
         MaceAdvancementEvent.initialize();
+        ProtectionIntoWallDamage.initialize();
+        MiniumSpecialRecipes.initialize();
+        ShieldDamageEvent.initialize();
+        MiniumBlockEntityTypes.initialize();
+        EnchantmentAllowEvents.initialize();
+    }
+    public static Identifier of(String id){
+        return Identifier.of(Minium_me.MOD_ID, id);
     }
 }

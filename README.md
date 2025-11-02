@@ -86,6 +86,14 @@ If you fall into the void, in dimensions with a ceiling you will respawn at the 
 Some effects are enhanced, Reduce damage except for certain parts and Prevent wither damage when wearing a full set of Iris Quartz equipment.
 You can equip it in the Necklace slot of Trinkets only while [Trinkets](https://modrinth.com/mod/trinkets) are loaded.(After 1.5.0).
 
+ - Minium Shield
+
+Crafted using one Minium Ingot and any six slabs. Holding it in your off-hand slightly increases your defense.
+
+- Iris Quartz Mace
+
+In addition to having enhanced parameters compared to a regular mace, right-clicking and releasing it toward blocks or entities creates a powerful blast that knocks them back.
+
 ## New Block
 
 - Easy Grinder
@@ -96,9 +104,29 @@ This block is capable of damaging the Mob it is on. The mobs that fall due to th
 
 It is more powerful than Easy Grinder, and mobs that fall due to this damage drop loot from player kills, such as blazes.
 
+- Iris Quartz Grinder
+
+Deals the same damage as the Advanced Grinder, but Looting X is always applied. When Farmer's Delight is installed, damage is treated as if caused by a knife.
+
 - Easy Conveyor
 
 This is a block that moves the Mob in the direction it is placed. Mob will not spawn on this block.
+
+- Minium Passable Glass
+
+A block that players can pass through, but other mobs and entities recognize as a wall.
+
+- Minium Touchable Glass
+
+A block that players can touch, but other mobs and entities pass through. Rain also passes through it.
+
+- Temporally Block
+
+A block that can be placed using the Temporally Block Placer. Enchanting the Temporally Block Placer allows you to control how long the block persists or whether it disappears at all.
+
+- Minium Anvil
+
+Its effects are the same as the vanilla anvil.
 
 ## Compatible MOD
 
@@ -204,6 +232,13 @@ This allows you to benefit from the Elytra Slot in NeoForge and equip the Iris Q
 虹水晶装備を一式でつけている場合は付与される効果が強化され、一部以外のダメージを軽減し、衰弱ダメージは無効化します。
 [Trinkets](https://modrinth.com/mod/trinkets)ロード時に限りTrinketsのNecklaceスロットに装備することができます。(1.5.0以降より)
 
+ - マイニウムの盾
+
+マイニウムインゴット1つと任意の板材6つでクラフトすることができる。オフハンドに持つことで僅かに防御力が上がる。
+
+- 虹水晶のメイス
+
+普通のメイスよりパラメータが強化されている他、右クリックを押してブロックやエンティティに向けて離すことで強い爆風を起こしてエンティティをふっとばすことができる。
 
 ## 新しいブロック
 
@@ -215,9 +250,29 @@ This allows you to benefit from the Elytra Slot in NeoForge and equip the Iris Q
 
 乗っているMobにダメージを与えることができるブロックです。簡易グラインダーより威力が上がっており、このダメージで倒れたMobからは経験値の他にブレイズロッドのようなプレイヤーが倒さないといけないアイテムもドロップします。
 
+- 虹水晶グラインダー
+
+ダメージは改良型グラインダーと同じだが、常にドロップ増加 Xが適用される。Farmer's Delightをインストールしている際はナイフによるダメージ扱いになる。
+
 - 簡易コンベアー
 
 設置した時の方向にMobを移動させるブロックです。このブロックの上にMobがスポーンすることはありません。
+
+- マイニウムの可通ガラス
+
+プレイヤーは通過することができるが、他のMobやエンティティは壁として認識するブロック。
+
+- マイニウムの可触ガラス
+
+プレイヤーは触れることができるが、他のMobやエンティティはすり抜けるブロック。雨もすり抜ける。
+
+- 仮ブロック
+
+仮ブロック設置器を使用して置くことができるブロック。Temporally Block Placerにエンチャントをすることでどれくらいの時間で消えるか、消えないようにできるかを制御可能。
+
+- マイニウムの金床
+
+効果はバニラの金床と同じ。
 
 ## 互換性のあるMOD
 

@@ -15,8 +15,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.function.Supplier;
+
 public class IrisQuartzGrindingBlock extends GrindingBlock{
-    private final ItemStack ATTACK_STACK = FabricLoader.getInstance().isModLoaded("farmersdelight") ? new ItemStack(FDItems.IRIS_QUARTZ_KNIFE.get()) : new ItemStack(MiniumItem.IRIS_QUARTZ_SWORD);
+    private final Supplier<ItemStack> ATTACK_STACK = () -> FabricLoader.getInstance().isModLoaded("farmersdelight") ? new ItemStack(FDItems.IRIS_QUARTZ_KNIFE.get()) : new ItemStack(MiniumItem.IRIS_QUARTZ_SWORD);
     public IrisQuartzGrindingBlock(Settings settings) {
         super(settings);
         GRIND_DAMAGE = 15.0F;
@@ -24,10 +26,10 @@ public class IrisQuartzGrindingBlock extends GrindingBlock{
     @Override
     protected void damageEntity(World world, LivingEntity livingEntity, BlockPos pos) {
         FakePlayer fakePlayer = FakePlayer.get((ServerWorld) world);
-        if(!ATTACK_STACK.hasEnchantments() && world instanceof ServerWorld){
-            MiniumEnchantments.giveCustomEnchantment((ServerWorld) world, ATTACK_STACK, 10, Enchantments.LOOTING);
+        if(!ATTACK_STACK.get().hasEnchantments() && world instanceof ServerWorld){
+            MiniumEnchantments.giveCustomEnchantment((ServerWorld) world, ATTACK_STACK.get(), 10, Enchantments.LOOTING);
         }
-        fakePlayer.setStackInHand(Hand.MAIN_HAND, ATTACK_STACK.copy());
+        fakePlayer.setStackInHand(Hand.MAIN_HAND, ATTACK_STACK.get().copy());
         fakePlayer.setPos(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
         DamageSource damageSource = fakePlayer.getDamageSources().create(MiniumDamageTypes.MINIUM_GRINDING, fakePlayer);
         livingEntity.damage(damageSource, GRIND_DAMAGE);

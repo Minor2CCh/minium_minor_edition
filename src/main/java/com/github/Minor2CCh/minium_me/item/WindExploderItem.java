@@ -1,5 +1,6 @@
 package com.github.Minor2CCh.minium_me.item;
 
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.WindChargeEntity;
@@ -19,12 +20,13 @@ import net.minecraft.world.explosion.ExplosionBehavior;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class WindExploderItem extends Item implements HasCustomTooltip{
+public class WindExploderItem extends Item implements HasCustomTooltip {
     private static final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
             true, false, Optional.of(1.22F), Registries.BLOCK.getEntryList(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity()));
     public WindExploderItem(Settings settings) {
         super(settings);
     }
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
 

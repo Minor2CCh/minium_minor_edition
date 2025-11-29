@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "minium_me",
   "version": "${version}",
-  "name": "minium_minor_edition",
+  "name": "Minium Minor Edition",
   "description": "This mod is that adds original ores, Minium.",
   "authors": ["Minor2CCh"],
   "contact": {
@@ -18,6 +18,15 @@
     ],
     "main": [
       "com.github.Minor2CCh.minium_me.Minium_me"
+    ],
+    "jade": [
+      "com.github.Minor2CCh.minium_me.compat.JadePlugin"
+    ],
+    "jei_mod_plugin": [
+      "com.github.Minor2CCh.minium_me.client.compat.jei.JEIPlugin"
+    ],
+    "rei_client": [
+      "com.github.Minor2CCh.minium_me.client.compat.ClientREIPlugin"
     ]
   },
   "mixins": [
@@ -36,6 +45,9 @@
     "farmersdelight": "*",
     "trinkets": "*",
     "elytraslot": "*",
-    "ftbultimine": "*"
+    "ftbultimine": "*",
+    "jei": "*",
+    "roughlyenoughitems": "*"
+
   }
 }

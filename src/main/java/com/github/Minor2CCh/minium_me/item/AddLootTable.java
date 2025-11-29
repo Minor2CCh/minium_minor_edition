@@ -28,6 +28,19 @@ public class AddLootTable {
     public static final RegistryKey<LootTable> UNDERWATER_RUIN_BIG_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/underwater_ruin_big"));
     public static final RegistryKey<LootTable> UNDERWATER_RUIN_SMALL_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/underwater_ruin_small"));
     public static final RegistryKey<LootTable> TRIAL_SPAWNER_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spawners/trial_chamber/consumables"));
+    public static final RegistryKey<LootTable> ANCIENT_CITY_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/ancient_city"));
+    public static final RegistryKey<LootTable> ANCIENT_CITY_ICE_BOX_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/ancient_city_ice_box"));
+    public static final RegistryKey<LootTable> BASTION_BRIDGE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/bastion_bridge"));
+    public static final RegistryKey<LootTable> BASTION_HOGLIN_STABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/bastion_hoglin_stable"));
+    public static final RegistryKey<LootTable> BASTION_OTHER = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/bastion_other"));
+    public static final RegistryKey<LootTable> BASTION_TREASURE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/bastion_treasure"));
+    public static final RegistryKey<LootTable> NETHER_BRIDGE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/nether_bridge"));
+    public static final RegistryKey<LootTable> WOODLAND_MANSION = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/woodland_mansion"));
+    public static final RegistryKey<LootTable> VIlLAGE_ARMORER = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/village/village_armorer"));
+    public static final RegistryKey<LootTable> TRIAL_CHAMBERS_REWARD = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/trial_chambers/reward"));
+    public static final RegistryKey<LootTable> TRIAL_CHAMBERS_REWARD_OMINOUS = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("chests/trial_chambers/reward_ominous"));
+
+
     public static final RegistryKey<LootTable> OMINOUS_TRIAL_SPAWNER_ID = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.ofVanilla("spawners/ominous/trial_chamber/consumables"));
     public static final RegistryKey<LootTable> INJECT_MINESHAFT_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Minium_me.of("chests/inject/inject_enchanted_book"));
     public static final RegistryKey<LootTable> INJECT_MINIUM_LITTLE_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Minium_me.of("chests/inject/inject_custom_little"));
@@ -37,7 +50,7 @@ public class AddLootTable {
     public static void modifyLootTable(){
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             /*
-            // If the loot table is for the cobblestone block and it is not overridden by a user:
+            // If the loot table is for the cobblestone block, and it is not overridden by a user:
             if (Blocks.COBBLESTONE.getLootTableKey() == key && source.isBuiltin()) {
                 // Create a new loot pool that will hold the diamonds.
                 LootPool.Builder pool = LootPool.builder()
@@ -56,10 +69,7 @@ public class AddLootTable {
                         .rolls(ConstantLootNumberProvider.create(1.0f))//抽選回数
                         .with(ItemEntry.builder(MiniumItem.IRIS_QUARTZ_UPGRADE_SMITHING_TEMPLATE).weight(1)
                                 .conditionally(RandomChanceLootCondition.builder(1 / 6.0F)))//抽選アイテム
-
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)));//スタック個数
-
-                // Add the loot pool to the loot table
                 tableBuilder.pool(pool);
             }
             if (MINESHAFT_ID == key && source.isBuiltin()) {
@@ -102,6 +112,34 @@ public class AddLootTable {
                         .rolls(ConstantLootNumberProvider.create(1.0f))//抽選回数
                         .conditionally(RandomChanceLootCondition.builder(6 / 100.0F))
                         .with(LootTableEntry.builder(INJECT_POTION_LOOT_TABLE).build());
+                tableBuilder.pool(pool);
+            }
+            if (source.isBuiltin() && (
+                    ANCIENT_CITY_ID == key || ANCIENT_CITY_ICE_BOX_ID == key || BASTION_BRIDGE == key || BASTION_HOGLIN_STABLE == key
+                     || BASTION_OTHER == key || NETHER_BRIDGE == key || VIlLAGE_ARMORER == key || TRIAL_CHAMBERS_REWARD_OMINOUS == key
+            )) {
+                LootPool.Builder pool = LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1.0f))//抽選回数
+                        .with(ItemEntry.builder(MiniumItem.MINIUM_UPGRADE_SMITHING_TEMPLATE).weight(1)
+                                .conditionally(RandomChanceLootCondition.builder(1 / 50.0F)))//2%
+
+                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)));
+                tableBuilder.pool(pool);
+            }
+            if (source.isBuiltin() && (TRIAL_CHAMBERS_REWARD == key)) {
+                LootPool.Builder pool = LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1.0f))//抽選回数
+                        .with(ItemEntry.builder(MiniumItem.MINIUM_UPGRADE_SMITHING_TEMPLATE).weight(1)
+                                .conditionally(RandomChanceLootCondition.builder(1 / 100.0F)))//1%
+                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)));
+                tableBuilder.pool(pool);
+            }
+            if (source.isBuiltin() && (BASTION_TREASURE == key || WOODLAND_MANSION == key)) {
+                LootPool.Builder pool = LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1.0f))//抽選回数
+                        .with(ItemEntry.builder(MiniumItem.MINIUM_UPGRADE_SMITHING_TEMPLATE).weight(1)
+                                .conditionally(RandomChanceLootCondition.builder(15 / 100.0F)))//15%
+                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)));
                 tableBuilder.pool(pool);
             }
         });

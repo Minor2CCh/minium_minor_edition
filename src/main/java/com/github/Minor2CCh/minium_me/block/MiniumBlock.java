@@ -38,7 +38,7 @@ public class MiniumBlock{
             new GrateBlock(Block.Settings.create()
                     .strength(5f, 20.0f)
                     .sounds(BlockSoundGroup.COPPER_GRATE)
-                    .mapColor(MapColor.CYAN).nonOpaque().requiresTool().allowsSpawning(Blocks::never)
+                    .mapColor(MINIUM_BLOCK.getDefaultMapColor()).nonOpaque().requiresTool().allowsSpawning(Blocks::never)
                     .solidBlock(Blocks::never)
                     .suffocates(Blocks::never)
                     .blockVision(Blocks::never)),
@@ -47,7 +47,7 @@ public class MiniumBlock{
     public static final Block MINIUM_BULB = register(
             new MiniumBulbBlock(
                     Block.Settings.create()
-                            .mapColor(MapColor.CYAN)
+                            .mapColor(MINIUM_BLOCK.getDefaultMapColor())
                             .strength(5.0F, 20.0F)
                             .sounds(BlockSoundGroup.COPPER_BULB)
                             .requiresTool()
@@ -61,13 +61,10 @@ public class MiniumBlock{
     public static final Block REDSTONE_ENERGY_BLOCK = register(new RedStoneEnergyBlock(Block.Settings.create()
             .replaceable()
             .mapColor(createMapColorFromWaterloggedBlockState(MapColor.CLEAR))
-            //.solidBlock(Blocks::never)
             .strength(0F, 3600000.8F)
-            //.suffocates(Blocks::never)
             .dropsNothing()
             .nonOpaque()
             .noCollision()
-            //.blockVision(Blocks::never)
             ), "redstone_energy_block");
     public static final Block GLOWSTONE_ENERGY_BLOCK = register(new GlowStoneEnergyBlock(Block.Settings.create()
             .mapColor(createMapColorFromWaterloggedBlockState(MapColor.CLEAR))
@@ -99,11 +96,11 @@ public class MiniumBlock{
             .sounds(BlockSoundGroup.STONE)
     ), "stone_alchemy_break_end_stone");
     public static final Block WIND_CHARGE_BLOCK = register(new WindChargeBlock(Block.Settings.create().strength(1.0f, 1.5f).mapColor(MapColor.LIGHT_BLUE_GRAY).sounds(BlockSoundGroup.WOOL).instrument(NoteBlockInstrument.GUITAR)), "wind_charge_block", defaultBlockItemSettings());
-    public static final Block EASY_GRINDER = register(new GrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.CYAN).sounds(BlockSoundGroup.COPPER_BULB)
+    public static final Block EASY_GRINDER = register(new GrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MINIUM_BLOCK.getDefaultMapColor()).sounds(BlockSoundGroup.COPPER_BULB)
             .suffocates(Blocks::never)
             .nonOpaque()
             .blockVision(Blocks::never)), "easy_grinder", defaultBlockItemSettings());
-    public static final Block ADVANCED_GRINDER = register(new AdvancedGrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.DIAMOND_BLUE).sounds(BlockSoundGroup.COPPER_BULB)
+    public static final Block ADVANCED_GRINDER = register(new AdvancedGrindingBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(CONCENTRATED_MINIUM_BLOCK.getDefaultMapColor()).sounds(BlockSoundGroup.COPPER_BULB)
             .suffocates(Blocks::never)
             .nonOpaque()
             .blockVision(Blocks::never)), "advanced_grinder", defaultBlockItemSettings());
@@ -111,7 +108,7 @@ public class MiniumBlock{
             .suffocates(Blocks::never)
             .nonOpaque()
             .blockVision(Blocks::never)), "iris_quartz_grinder", (b) -> new BlockItem(b, new Item.Settings().fireproof().rarity(Rarity.EPIC)));
-    public static final Block EASY_CONVEYOR = register(new ConveyorBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MapColor.CYAN).sounds(BlockSoundGroup.COPPER_BULB).allowsSpawning(Blocks::never)), "easy_conveyor", defaultBlockItemSettings());
+    public static final Block EASY_CONVEYOR = register(new ConveyorBlock(Block.Settings.create().strength(2.0f, 6.0f).mapColor(MINIUM_BLOCK.getDefaultMapColor()).sounds(BlockSoundGroup.COPPER_BULB).allowsSpawning(Blocks::never)), "easy_conveyor", defaultBlockItemSettings());
 
     public static final Block MINIUM_ARTIFICIAL_FLOWER = register(
 
@@ -119,7 +116,7 @@ public class MiniumBlock{
                     MiniumStatusEffects.POISON_HEAL,
                     8,
                     Block.Settings.create()
-                            .mapColor(MapColor.CYAN)
+                            .mapColor(MINIUM_BLOCK.getDefaultMapColor())
                             .noCollision()
                             .breakInstantly()
                             .sounds(BlockSoundGroup.GRASS)
@@ -134,12 +131,12 @@ public class MiniumBlock{
             new HeavyCoreBlock(Block.Settings.create().solid().requiresTool().strength(30.0F, 12000.0F).sounds(BlockSoundGroup.HEAVY_CORE).mapColor(MapColor.WHITE).instrument(NoteBlockInstrument.SNARE).pistonBehavior(PistonBehavior.NORMAL)), "iris_quartz_core", (b) -> new BlockItem(b, new Item.Settings().fireproof().rarity(Rarity.EPIC)));
 
     public static final Block MINIUM_LANTERN = register(
-            new LanternBlock(Block.Settings.create().mapColor(MapColor.CYAN).solid().requiresTool().strength(3.5F, 20.0F).sounds(BlockSoundGroup.LANTERN).luminance(state -> 15).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)), "minium_lantern", defaultBlockItemSettings());
+            new LanternBlock(Block.Settings.create().mapColor(MINIUM_BLOCK.getDefaultMapColor()).solid().requiresTool().strength(3.5F, 20.0F).sounds(BlockSoundGroup.LANTERN).luminance(state -> 15).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)), "minium_lantern", defaultBlockItemSettings());
     public static final Block MINIUM_GLASS = register(
             new TransparentBlock(Block.Settings.create().instrument(NoteBlockInstrument.HAT)
                     .strength(0.3F, 6.0F)
                     .sounds(BlockSoundGroup.GLASS)
-                    .mapColor(MapColor.CYAN)
+                    .mapColor(MINIUM_BLOCK.getDefaultMapColor())
                     .nonOpaque()
                     .allowsSpawning(Blocks::never)
                     .solidBlock(Blocks::never)
@@ -149,7 +146,7 @@ public class MiniumBlock{
             new PassableGlassBlock(Block.Settings.create().instrument(NoteBlockInstrument.HAT)
                     .strength(0.3F, 6.0F)
                     .sounds(BlockSoundGroup.GLASS)
-                    .mapColor(MapColor.CYAN)
+                    .mapColor(MINIUM_BLOCK.getDefaultMapColor())
                     .nonOpaque()
                     .allowsSpawning(Blocks::never)
                     .solidBlock(Blocks::never)
@@ -171,7 +168,7 @@ public class MiniumBlock{
             new LanternBlock(Block.Settings.create().mapColor(MapColor.LIGHT_BLUE_GRAY).solid().requiresTool().strength(7.5f, 12.0f).sounds(BlockSoundGroup.LANTERN).luminance(state -> 15).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)), "osmium_lantern", defaultBlockItemSettings());
     public static final Block MINIUM_ANVIL = register(
             new AnvilBlock(Block.Settings.create()
-                    .mapColor(MapColor.CYAN)
+                    .mapColor(MINIUM_BLOCK.getDefaultMapColor())
                     .requiresTool()
                     .strength(5.0F, 1200.0F)
                     .sounds(BlockSoundGroup.ANVIL)
@@ -186,7 +183,7 @@ public class MiniumBlock{
             new PaneBlock(AbstractBlock.Settings.create().requiresTool().strength(7.5f, 12.0f).sounds(BlockSoundGroup.METAL).nonOpaque()), "osmium_bars", defaultBlockItemSettings());
     public static final Block TEMPORALLY_BLOCK = register(
             new TemporallyBlock(AbstractBlock.Settings.create()
-                    .mapColor(createMapColorFromWaterloggedBlockState(MapColor.CLEAR))
+                    .mapColor(createMapColorFromWaterloggedBlockState(MINIUM_BLOCK.getDefaultMapColor()))
                     .dropsNothing()
                     .nonOpaque()
                     .strength(10.0f, 6.0f)
@@ -195,6 +192,13 @@ public class MiniumBlock{
                     .suffocates(Blocks::never)
                     .blockVision(Blocks::never)
             ), "temporally_block");
+    public static final Block MINIUM_HOPPER = register(
+            new MiniumHopperBlock(Block.Settings.copy(Blocks.HOPPER).strength(5.0F, 20.0F).mapColor(MINIUM_BLOCK.getDefaultMapColor())), "minium_hopper", defaultBlockItemSettings());
+    public static final Block MINIUM_TRAPDOOR = register(new TrapdoorBlock(BlockSetType.COPPER,
+                    AbstractBlock.Settings.create().mapColor(MINIUM_BLOCK.getDefaultMapColor()).strength(5.0F, 20.0F).requiresTool().nonOpaque().allowsSpawning(Blocks::never)), "minium_trapdoor", defaultBlockItemSettings());
+
+
+    public static final Block MINIUM_DOOR = register(new DoorBlock(BlockSetType.COPPER, AbstractBlock.Settings.create().mapColor(MINIUM_BLOCK.getDefaultMapColor()).strength(5.0F, 20.0F).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)), "minium_door", defaultBlockItemSettings());
     //from mekanism
     public static final Block OSMIUM_BLOCK_FROM_MEKANISM = register(new Block(Block.Settings.create().strength(7.5f, 12.0f).mapColor(MapColor.LIGHT_BLUE_GRAY).requiresTool()), "osmium_block", defaultBlockItemSettings());
     public static final Block RAW_OSMIUM_BLOCK_FROM_MEKANISM = register(new Block(Block.Settings.create().strength(7.5f, 12.0f).mapColor(MapColor.LIGHT_BLUE_GRAY).requiresTool()), "raw_osmium_block", defaultBlockItemSettings());
@@ -219,7 +223,6 @@ public class MiniumBlock{
     private static Function<Block, BlockItem> defaultBlockItemSettings() {
         return (b) -> new BlockItem(b, new Item.Settings());
     }
-    @SuppressWarnings("all")
     private static Function<BlockState, MapColor> createMapColorFromWaterloggedBlockState(MapColor mapColor) {
         return state -> state.get(Properties.WATERLOGGED) ? MapColor.WATER_BLUE : mapColor;
     }

@@ -2,7 +2,6 @@ package com.github.Minor2CCh.minium_me.client.render;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
 import com.github.Minor2CCh.minium_me.client.model.EnergyBulletEntityModel;
-import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.entity.EnergyBulletEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -41,8 +40,7 @@ public class EnergyBulletRenderer extends EntityRenderer<EnergyBulletEntity> {
         matrixStack.scale(-0.5F, -0.5F, 0.5F);
         this.model.setAngles(energyBulletEntity, 0.0F, 0.0F, 0.0F, h, j);
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.model.getLayer(TEXTURE));
-        int color = MiniumModComponent.getEnergyColor(energyBulletEntity.getEnergyType());
-        //System.out.println(energyBulletEntity.getEnergyType());
+        int color = energyBulletEntity.getEnergyType().getColor();
         this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, color);
         matrixStack.scale(1.5F, 1.5F, 1.5F);
         VertexConsumer vertexConsumer2 = vertexConsumerProvider.getBuffer(LAYER);

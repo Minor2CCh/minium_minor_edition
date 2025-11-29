@@ -14,9 +14,7 @@ public class LivingEntityEventTickClient {
                         LivingEntityTickEvent.endTickCommonEvents(livingEntity);
                     }
                 }
-
             }
-
         });
     }
 }

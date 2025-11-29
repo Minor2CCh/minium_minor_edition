@@ -1,7 +1,7 @@
 package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
-import com.github.Minor2CCh.minium_me.entity.EntityFunctions;
+import com.github.Minor2CCh.minium_me.util.EntityFunctions;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.advancement.AdvancementEntry;

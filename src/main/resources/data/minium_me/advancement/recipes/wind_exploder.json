@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minium_me:wind_charge_block"
+            "items": "#c:storage_blocks/wind_charge"
           }
         ]
       },

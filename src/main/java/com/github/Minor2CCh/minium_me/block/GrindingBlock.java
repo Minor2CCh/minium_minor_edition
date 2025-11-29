@@ -1,7 +1,7 @@
 package com.github.Minor2CCh.minium_me.block;
 
-import com.github.Minor2CCh.minium_me.damage_type.MiniumDamageType;
-import com.github.Minor2CCh.minium_me.item.HasCustomTooltip;
+import com.github.Minor2CCh.minium_me.registry.MiniumDamageTypes;
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import com.github.Minor2CCh.minium_me.mixin.LivingEntityAccessor;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -15,7 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -90,10 +89,7 @@ public class GrindingBlock extends Block implements Waterloggable, HasCustomTool
         if(playerHitTime == 0){
             ((LivingEntityAccessor)(livingEntity)).setPlayerHitTimer(10);
         }
-        DamageSource damageSource = new DamageSource(
-                world.getRegistryManager()
-                        .get(RegistryKeys.DAMAGE_TYPE)
-                        .entryOf(MiniumDamageType.MINIUM_GRINDING));
+        DamageSource damageSource = world.getDamageSources().create(MiniumDamageTypes.MINIUM_GRINDING);
         livingEntity.damage(damageSource, GRIND_DAMAGE);
     }
     @Override

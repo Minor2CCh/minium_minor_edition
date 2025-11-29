@@ -1,6 +1,6 @@
 package com.github.Minor2CCh.minium_me.event;
 
-import com.github.Minor2CCh.minium_me.entity.EntityFunctions;
+import com.github.Minor2CCh.minium_me.util.EntityFunctions;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.EntityStatuses;

@@ -1,8 +1,14 @@
 package com.github.Minor2CCh.minium_me.item;
 
+import com.github.Minor2CCh.minium_me.component.EnergyComponent;
+import com.github.Minor2CCh.minium_me.component.GunReloadComponent;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.entity.EnergyBulletEntity;
 import com.github.Minor2CCh.minium_me.sound.MiniumSoundsEvent;
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.DispenserBehavior;
+import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,79 +20,119 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 
-public class MiniumGunItem extends Item implements HasCustomTooltip{
-    private final HashMap<UUID, ItemStack> prevStack = new HashMap<>();
-    private final HashMap<UUID, ItemStack> prevStackClient = new HashMap<>();
-    private final HashMap<UUID, Long> prevReloadTime = new HashMap<>();
-    private final HashMap<UUID, Long> prevReloadTimeClient = new HashMap<>();
+public class MiniumGunItem extends Item implements HasCustomTooltip {
+    public static final DispenserBehavior DISPENSER_BEHAVIOR = new ItemDispenserBehavior() {
+        @Override
+        protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
+            dispenseGun(pointer, stack);
+            return stack;
+        }
+        @Override
+        protected void playSound(BlockPointer pointer) {
+        }
+    };
     public MiniumGunItem(Settings settings) {
         super(settings);
+        DispenserBlock.registerBehavior(this, DISPENSER_BEHAVIOR);
     }
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
 
-        MiniumModComponent.EnergyComponent EComp = itemStack.get(MiniumModComponent.REMAIN_ENERGY);
-        int remain = EComp != null ? EComp.remain() : 0;
-        String energyType = EComp != null ? EComp.type() : MiniumModComponent.ENERGY_EMPTY;
-        if(remain <= 0 && !Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY)){
-            energyType = MiniumModComponent.ENERGY_EMPTY;
-            itemStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(remain, energyType));
-            if(remain < -1){
-                remain = 0;
-            }
-        }
-        if(!isRightEnergy(itemStack)) {
-            remain = 0;
-            energyType = MiniumModComponent.ENERGY_EMPTY;
-            itemStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(remain, energyType));
+    public static void dispenseGun(BlockPointer pointer, ItemStack stack) {
+        EnergyComponent EComp = EnergyComponent.getEnergyComponent(stack);
+        int remain = EComp.remain();
+        EnergyComponent.EnergyType energyType = EComp.energyType();
+        World world = pointer.world();
+        if(EComp.isEmpty() || remain <= (energyConsumption(energyType) - 1)){
             world.playSound(
                     null,
-                    user.getX(),
-                    user.getY(),
-                    user.getZ(),
+                    pointer.pos().getX(),
+                    pointer.pos().getY(),
+                    pointer.pos().getZ(),
                     MiniumSoundsEvent.ENERGY_GUN_EMPTY_EVENT,
                     SoundCategory.NEUTRAL,
                     1.0F,
                     1.0F//音を鳴らす
             );
+        }else{
+            world.playSound(
+                    null,
+                    pointer.pos().getX(),
+                    pointer.pos().getY(),
+                    pointer.pos().getZ(),
+                    MiniumSoundsEvent.SHOOT_ENERGY_BULLET_EVENT,
+                    SoundCategory.NEUTRAL,
+                    1.0F,
+                    1.0F//音を鳴らす
+            );
+            if(!Objects.equals(EComp.energyType(), EnergyComponent.EnergyType.ENERGY_PLATINUM) || world.getRandom().nextInt(5) == 0){
+                remain -= energyConsumption(energyType);
+            }
+            stack.set(MiniumModComponent.REMAIN_ENERGY, new EnergyComponent(remain, energyType));
+            if (!world.isClient) {
+                EnergyBulletEntity energybulletEntity = new EnergyBulletEntity(world, stack, pointer.centerPos());
+                Direction dir = pointer.state().get(DispenserBlock.FACING);
+                Vec3i v = dir.getVector();
+                /*
+                double extraX = pointer.state().get(DispenserBlock.FACING) == Direction.EAST ? 0.5 : (pointer.state().get(DispenserBlock.FACING) == Direction.WEST ? -0.5 : 0);
+                double extraY = pointer.state().get(DispenserBlock.FACING) == Direction.UP ? 0.5 : (pointer.state().get(DispenserBlock.FACING) == Direction.DOWN ? -0.5 : 0);
+                double extraZ = pointer.state().get(DispenserBlock.FACING) == Direction.NORTH ? -0.5 : (pointer.state().get(DispenserBlock.FACING) == Direction.SOUTH ? 0.5 : 0);
+                Vec3d dispensePos = new Vec3d(pointer.centerPos().getX()+extraX, pointer.centerPos().getY()+extraY, pointer.centerPos().getZ()+extraZ);
+                 */
+                double x = v.getX();
+                double y = v.getY();
+                double z = v.getZ();
+                float yaw = (float) (Math.atan2(-x, z) * 180.0F / Math.PI);
+                float pitch = (float) (Math.atan2(-y, Math.sqrt(x * x + z * z)) * 180.0F / Math.PI);
+                energybulletEntity.setVelocity(energybulletEntity, pitch, yaw, 0.0F, 1.0F, 0.25F);
+                energybulletEntity.setPos(pointer.centerPos().getX(), pointer.centerPos().getY(), pointer.centerPos().getZ());
+                world.spawnEntity(energybulletEntity);
 
-            return TypedActionResult.success(itemStack, world.isClient());//itemStackの部分を変えるとアイテムがそれに化ける
+            }
+        }
+
+    }
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack itemStack = user.getStackInHand(hand);
+
+        EnergyComponent EComp = EnergyComponent.getEnergyComponent(itemStack);
+        int remain = EComp.remain();
+        EnergyComponent.EnergyType energyType = EComp.energyType();
+        if(remain <= 0 && energyType.isEmpty()){
+            itemStack.set(MiniumModComponent.REMAIN_ENERGY, new EnergyComponent(remain, energyType));
+            if(remain < -1){
+                remain = 0;
+            }
         }
         //装填されている種類と同じ弾がオフハンドあるor空の場合は装填、ただしオフハンドで持っている場合は装填できない
         if(itemStack != user.getEquippedStack(EquipmentSlot.OFFHAND)){//オフハンドのエネルギーガンか否か
             boolean bl = false;
+            ItemStack prevStack = GunReloadComponent.getPrevStack(itemStack);
+            long prevTime = GunReloadComponent.getPrevTime(itemStack);
             if(!user.getEquippedStack(EquipmentSlot.OFFHAND).isEmpty()){
-                setPrevReloadTimeAndStack(user);
+                setPrevReloadTimeAndStack(user, itemStack);
                 bl = reloadEnergy(itemStack, user.getEquippedStack(EquipmentSlot.OFFHAND), user);
-            }else if(world.getTime() - getPrevReloadTime(user) < 10){
+            }else if(world.getTime() - prevTime >= 0 && world.getTime() - prevTime < 10 && !prevStack.isEmpty()){
                 PlayerInventory inventory = user.getInventory();
-                ItemStack preIngredient = getPrevStack(user);
                 for (int i = 0; i < inventory.size(); i++) {
                     ItemStack useStack = inventory.getStack(i);
-                    if(preIngredient != null){
-                        if (!useStack.isEmpty() && ItemStack.areItemsAndComponentsEqual(useStack, preIngredient)) {
-                            if(reloadEnergy(itemStack, useStack, user)){
-                                bl = true;
-                                removePrevReloadTimeAndStack(user);
-                            }
+                    if (!useStack.isEmpty() && ItemStack.areItemsAndComponentsEqual(useStack, prevStack)) {
+                        if(reloadEnergy(itemStack, useStack, user)){
+                            bl = true;
                         }
                     }
+
 
                 }
             }
             if(bl) {
-                world.playSound(
-                        null,
+                world.playSound(null,
                         user.getX(),
                         user.getY(),
                         user.getZ(),
@@ -101,7 +147,7 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
 
 
 
-        if(Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) || remain <= (energyConsumption(energyType) - 1)){
+        if(EComp.isEmpty() || remain <= (energyConsumption(energyType) - 1)){
             world.playSound(
                     null,
                     user.getX(),
@@ -125,17 +171,17 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
                     1.0F//音を鳴らす
             );
             if(!user.isCreative()) {
-                remain -= energyConsumption(energyType);
+                if(!Objects.equals(EComp.energyType(), EnergyComponent.EnergyType.ENERGY_PLATINUM) || world.getRandom().nextInt(5) == 0){
+                    remain -= energyConsumption(energyType);
+                }
             }
-            itemStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(remain, energyType));
+            itemStack.set(MiniumModComponent.REMAIN_ENERGY, new EnergyComponent(remain, energyType));
             if (!world.isClient) {
                 EnergyBulletEntity energybulletEntity = new EnergyBulletEntity(world, user, itemStack);
-                energybulletEntity.setPitch(user.getPitch());
-                energybulletEntity.setYaw(user.getYaw());
-                energybulletEntity.setVelocity(0.0, 0.0, 0.0);
-                energybulletEntity.setVelocity(energybulletEntity, energybulletEntity.getPitch(), energybulletEntity.getYaw(), 0.0F, 1.5F, 1.0F);
+                energybulletEntity.setVelocity(energybulletEntity, user.getPitch(), user.getYaw(), 0.0F, 1.0F, 1.0F);
+                energybulletEntity.setPos(energybulletEntity.getX(), user.getEyeY() - 0.1F, energybulletEntity.getZ());
                 world.spawnEntity(energybulletEntity);
-                user.getItemCooldownManager().set(this, (Objects.equals(energyType, MiniumModComponent.ENERGY_REDSTONE) ? 7 : ((Objects.equals(energyType, MiniumModComponent.ENERGY_ALUMINIUM) ? 5 : 10))));
+                user.getItemCooldownManager().set(this, (Objects.equals(energyType, EnergyComponent.EnergyType.ENERGY_REDSTONE) ? 7 : ((Objects.equals(energyType, EnergyComponent.EnergyType.ENERGY_ALUMINIUM) ? 5 : 10))));
 
             }
         }
@@ -143,60 +189,32 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
 
         return TypedActionResult.success(itemStack, world.isClient());//itemStackの部分を変えるとアイテムがそれに化ける
     }
-    private void setPrevReloadTimeAndStack(PlayerEntity player){
-        if(player.getWorld().isClient()){
-            prevReloadTimeClient.put(player.getUuid(), player.getWorld().getTime());
-            prevStackClient.put(player.getUuid(), player.getEquippedStack(EquipmentSlot.OFFHAND).copy());
-        }else{
-            prevReloadTime.put(player.getUuid(), player.getWorld().getTime());
-            prevStack.put(player.getUuid(), player.getEquippedStack(EquipmentSlot.OFFHAND).copy());
-        }
-    }
-    private void removePrevReloadTimeAndStack(PlayerEntity player){
-        if(player.getWorld().isClient()){
-            prevReloadTimeClient.remove(player.getUuid());
-            prevStackClient.remove(player.getUuid());
-        }else{
-            prevReloadTime.remove(player.getUuid());
-            prevStack.remove(player.getUuid());
-        }
-    }
-    private long getPrevReloadTime(PlayerEntity player){
-        if(player.getWorld().isClient()){
-            return prevReloadTimeClient.getOrDefault(player.getUuid(), 0L);
-        }else{
-            return prevReloadTime.getOrDefault(player.getUuid(), 0L);
-        }
-    }
-    private ItemStack getPrevStack(PlayerEntity player){
-        if(player.getWorld().isClient()){
-            return prevStackClient.getOrDefault(player.getUuid(), null);
-        }else{
-            return prevStack.getOrDefault(player.getUuid(), null);
-        }
+    private void setPrevReloadTimeAndStack(PlayerEntity player, ItemStack stack){
+        stack.set(MiniumModComponent.GUN_RELOAD, new GunReloadComponent(player.getWorld().getTime(), player.getEquippedStack(EquipmentSlot.OFFHAND).copy()));
     }
 
 
 
     private boolean reloadEnergy(ItemStack itemStack, ItemStack consumeStack, PlayerEntity user){
         //System.out.println(consumeStack);
-        MiniumModComponent.EnergyComponent EComp = itemStack.get(MiniumModComponent.REMAIN_ENERGY);
-        int remain = EComp != null ? EComp.remain() : 0;
+        EnergyComponent EComp = EnergyComponent.getEnergyComponent(itemStack);
+        int remain = EComp.remain();
         boolean bl = false;
-        String energyType = (EComp != null && remain > 0) ? EComp.type() : MiniumModComponent.ENERGY_EMPTY;
-        for (String energy : MiniumModComponent.ENERGY_LIST) {
-            if(Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) || Objects.equals(energyType, energy)){
-                if(MiniumModComponent.getEnergyMaterial(energy) != null && consumeStack.isIn(MiniumModComponent.getEnergyMaterial(energy))){
+        EnergyComponent.EnergyType energyType = (remain > 0) ? EComp.energyType() : EnergyComponent.EnergyType.ENERGY_EMPTY;
+        for (EnergyComponent.EnergyType forType : EnergyComponent.EnergyType.values()) {
+            if(forType.isEmpty())continue;
+            if(energyType.isEmpty() || Objects.equals(energyType, forType)){
+                if(forType.getMaterial() != null && consumeStack.isIn(forType.getMaterial())){
                     int count = remainCount(remain, consumeStack.getCount(), 1);
                     remain += count;
-                    energyType = energy;
+                    energyType = forType;
                     consumeStack.decrementUnlessCreative(count, user);
                     bl = (count > 0);
                     break;
-                }else if(MiniumModComponent.getEnergyMaterialSB(energy) != null && consumeStack.isIn(MiniumModComponent.getEnergyMaterialSB(energy))){
-                    int count = remainCount(remain, consumeStack.getCount(), MiniumModComponent.getEnergyRemainSB(energy));
-                    remain += count * MiniumModComponent.getEnergyRemainSB(energy);
-                    energyType = energy;
+                }else if(forType.getMaterialSB() != null && consumeStack.isIn(forType.getMaterialSB())){
+                    int count = remainCount(remain, consumeStack.getCount(), forType.getRemainSB());
+                    remain += count * forType.getRemainSB();
+                    energyType = forType;
                     consumeStack.decrementUnlessCreative(count, user);
                     bl = (count > 0);
                     break;
@@ -204,14 +222,8 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
             }
 
         }
-        itemStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(remain, energyType));
+        EnergyComponent.setEnergyComponent(itemStack, new EnergyComponent(remain, energyType));
         return bl;
-    }
-    protected boolean isRightEnergy(ItemStack itemStack){
-        MiniumModComponent.EnergyComponent EComp = itemStack.get(MiniumModComponent.REMAIN_ENERGY);
-        String energyType = EComp != null ? EComp.type() : MiniumModComponent.ENERGY_EMPTY;
-        return energyType.equals(MiniumModComponent.ENERGY_EMPTY) || MiniumModComponent.ENERGY_LIST.contains(energyType);
-
     }
     private int remainCount(int baseRemain, int materialCount, int energyRemain){
         for(int i=materialCount;i>0;i--){
@@ -223,33 +235,28 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
         return 0;
     }
 
-    protected int energyConsumption(String energyType){
-        if(energyType.equals(MiniumModComponent.ENERGY_COPPER) || energyType.equals(MiniumModComponent.ENERGY_BRONZE)){
+    protected static int energyConsumption(EnergyComponent.EnergyType energyType){
+        if(energyType.equals(EnergyComponent.EnergyType.ENERGY_COPPER) || energyType.equals(EnergyComponent.EnergyType.ENERGY_BRONZE) || energyType.equals(EnergyComponent.EnergyType.ENERGY_BRASS)){
             return 2;
         }
         return 1;
     }
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
-        MiniumModComponent.EnergyComponent EComp = stack.get(MiniumModComponent.REMAIN_ENERGY);
-        //int remain = EComp != null ? EComp.remain() : 0;
-        String energyType = EComp != null ? EComp.type() : MiniumModComponent.ENERGY_EMPTY;
-        return !Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) && isRightEnergy(stack);
+        EnergyComponent EComp = EnergyComponent.getEnergyComponent(stack);
+        return !EComp.isEmpty();
     }
     @Override
     public int getItemBarStep(ItemStack stack) {
-        MiniumModComponent.EnergyComponent EComp = stack.get(MiniumModComponent.REMAIN_ENERGY);
-        int remain = EComp != null ? EComp.remain() : 0;
-        String energyType = EComp != null ? EComp.type() : MiniumModComponent.ENERGY_EMPTY;
+        EnergyComponent EComp = EnergyComponent.getEnergyComponent(stack);
 
-        return MathHelper.clamp(Math.round(remain / 64.0F * 13.0F) + (Objects.equals(energyType, MiniumModComponent.ENERGY_EMPTY) ? 13 : 0), 0, 13);
+        return MathHelper.clamp(Math.round(EComp.remain() / 64.0F * 13.0F) + (EComp.isEmpty() ? 13 : 0), 0, 13);
     }
     @Override
     public int getItemBarColor(ItemStack stack) {
         if(stack.contains(MiniumModComponent.REMAIN_ENERGY)){
-            MiniumModComponent.EnergyComponent EComp = stack.get(MiniumModComponent.REMAIN_ENERGY);
-            String energyType = EComp != null ? EComp.type() : MiniumModComponent.ENERGY_EMPTY;
-            return MiniumModComponent.getEnergyColor(energyType);
+            EnergyComponent EComp = EnergyComponent.getEnergyComponent(stack);
+            return EComp.getColor();
         }else{
             return 0;
         }
@@ -260,21 +267,20 @@ public class MiniumGunItem extends Item implements HasCustomTooltip{
     }
     @Override
     public void customTooltip(ItemStack itemStack, TooltipContext context, List<Text> tooltip, TooltipType type, boolean hasShiftDown) {
-        MiniumModComponent.EnergyComponent EComp = itemStack.get(MiniumModComponent.REMAIN_ENERGY);
-        int remain = EComp != null ? EComp.remain() : 0;
-        String energyType = EComp != null ? EComp.type() : MiniumModComponent.ENERGY_EMPTY;
+        EnergyComponent EComp = EnergyComponent.getEnergyComponent(itemStack);
+        int remain = EComp.remain();
         if(itemStack.contains(MiniumModComponent.REMAIN_ENERGY)){
             tooltip.add(Text.translatable("item.minium_me.energy.remain", remain).formatted(Formatting.GOLD));
-            int color = MiniumModComponent.getEnergyColor(energyType);
-            String energyName = MiniumModComponent.getEnergyKey(energyType);
+            int color = EComp.getColor();
+            String energyName = EComp.getEnergyKey();
             tooltip.add(Text.translatable("item.minium_me.energy.type", Text.translatable(energyName)).withColor(color));
 
 
             if (hasShiftDown) {
                 tooltip.add(Text.translatable(energyName +".desc").formatted(Formatting.WHITE));
-                var matchingItems = Registries.ITEM.iterateEntries(MiniumModComponent.getEnergyMaterial(energyType));
-                var matchingItemsSB = Registries.ITEM.iterateEntries(MiniumModComponent.getEnergyMaterialSB(energyType));
-                if(!matchingItems.iterator().hasNext() && !matchingItemsSB.iterator().hasNext() && MiniumModComponent.ENERGY_LIST.contains(energyType)){
+                var matchingItems = Registries.ITEM.iterateEntries(EComp.getMaterial());
+                var matchingItemsSB = Registries.ITEM.iterateEntries(EComp.getMaterialSB());
+                if(!matchingItems.iterator().hasNext() && !matchingItemsSB.iterator().hasNext() && !EComp.isEmpty()){
                     tooltip.add(Text.translatable("item.minium_me.energy.unusable"));
 
                 }

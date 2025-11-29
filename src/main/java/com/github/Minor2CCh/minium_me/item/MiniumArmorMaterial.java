@@ -1,6 +1,7 @@
 package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
+import com.github.Minor2CCh.minium_me.config.MiniumConfigLoader;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
@@ -31,46 +32,46 @@ public final class MiniumArmorMaterial{
     }
     public static final RegistryEntry<ArmorMaterial> MINIUM = registerMaterial("minium",
             Map.of(
-                    ArmorItem.Type.HELMET, 2,
-                    ArmorItem.Type.CHESTPLATE, 7,
-                    ArmorItem.Type.LEGGINGS, 5,
-                    ArmorItem.Type.BOOTS, 2
+                    ArmorItem.Type.HELMET, MiniumConfigLoader.getConfig().getArmorMaterialMinium().getHelmetValue(),
+                    ArmorItem.Type.CHESTPLATE, MiniumConfigLoader.getConfig().getArmorMaterialMinium().getChestplateValue(),
+                    ArmorItem.Type.LEGGINGS, MiniumConfigLoader.getConfig().getArmorMaterialMinium().getLeggingsValue(),
+                    ArmorItem.Type.BOOTS, MiniumConfigLoader.getConfig().getArmorMaterialMinium().getBootsValue()
             ),
-            15,
+            MiniumConfigLoader.getConfig().getArmorMaterialMinium().getEnchantability(),
             SoundEvents.ITEM_ARMOR_EQUIP_IRON,
             () -> Ingredient.fromTag(MiniumItemTag.MINIUM_INGOT),
-            1.0F,
-            0.0F,
+            MiniumConfigLoader.getConfig().getArmorMaterialMinium().getToughness(),
+            MiniumConfigLoader.getConfig().getArmorMaterialMinium().getKnockbackResistance(),
             false);
 
     public static final RegistryEntry<ArmorMaterial> C_MINIUM = registerMaterial("concentrated_minium",
             Map.of(
-                    ArmorItem.Type.HELMET, 3,
-                    ArmorItem.Type.CHESTPLATE, 8,
-                    ArmorItem.Type.LEGGINGS, 6,
-                    ArmorItem.Type.BOOTS, 3
+                    ArmorItem.Type.HELMET, MiniumConfigLoader.getConfig().getArmorMaterialConcentratedMinium().getHelmetValue(),
+                    ArmorItem.Type.CHESTPLATE, MiniumConfigLoader.getConfig().getArmorMaterialConcentratedMinium().getChestplateValue(),
+                    ArmorItem.Type.LEGGINGS, MiniumConfigLoader.getConfig().getArmorMaterialConcentratedMinium().getLeggingsValue(),
+                    ArmorItem.Type.BOOTS, MiniumConfigLoader.getConfig().getArmorMaterialConcentratedMinium().getBootsValue()
             ),
-            15,
+            MiniumConfigLoader.getConfig().getArmorMaterialConcentratedMinium().getEnchantability(),
             SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND,
             () -> Ingredient.fromTag(MiniumItemTag.C_MINIUM_INGOT),
-            2.0F,
-            0.05F,
+            MiniumConfigLoader.getConfig().getArmorMaterialConcentratedMinium().getToughness(),
+            MiniumConfigLoader.getConfig().getArmorMaterialConcentratedMinium().getKnockbackResistance(),
             false);
 
     public static final RegistryEntry<ArmorMaterial> IRIS_QUARTZ = registerMaterial("iris_quartz",
             Map.of(
-                    ArmorItem.Type.HELMET, 4,
-                    ArmorItem.Type.CHESTPLATE, 9,
-                    ArmorItem.Type.LEGGINGS, 7,
-                    ArmorItem.Type.BOOTS, 4
+                    ArmorItem.Type.HELMET, MiniumConfigLoader.getConfig().getArmorMaterialIrisQuartz().getHelmetValue(),
+                    ArmorItem.Type.CHESTPLATE, MiniumConfigLoader.getConfig().getArmorMaterialIrisQuartz().getChestplateValue(),
+                    ArmorItem.Type.LEGGINGS, MiniumConfigLoader.getConfig().getArmorMaterialIrisQuartz().getLeggingsValue(),
+                    ArmorItem.Type.BOOTS, MiniumConfigLoader.getConfig().getArmorMaterialIrisQuartz().getBootsValue()
             ),
-            25,
+            MiniumConfigLoader.getConfig().getArmorMaterialIrisQuartz().getEnchantability(),
             SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND,
             () -> Ingredient.fromTag(MiniumItemTag.IRIS_QUARTZ_INGOT),
-            5.0F,
-            0.1F,
+            MiniumConfigLoader.getConfig().getArmorMaterialIrisQuartz().getToughness(),
+            MiniumConfigLoader.getConfig().getArmorMaterialIrisQuartz().getKnockbackResistance(),
             false);
-    public static final int MINIUM_DURABILITY_MULTIPLIER = 15;
-    public static final int C_MINIUM_DURABILITY_MULTIPLIER = 45;
-    public static final int IRIS_QUARTZ_DURABILITY_MULTIPLIER = 100;
+    public static final int MINIUM_DURABILITY_MULTIPLIER = MiniumConfigLoader.getConfig().getArmorMaterialMinium().getBaseDurability();
+    public static final int C_MINIUM_DURABILITY_MULTIPLIER = MiniumConfigLoader.getConfig().getArmorMaterialConcentratedMinium().getBaseDurability();
+    public static final int IRIS_QUARTZ_DURABILITY_MULTIPLIER = MiniumConfigLoader.getConfig().getArmorMaterialIrisQuartz().getBaseDurability();
 }

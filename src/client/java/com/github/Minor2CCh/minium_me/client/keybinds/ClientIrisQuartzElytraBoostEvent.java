@@ -12,7 +12,7 @@ import org.lwjgl.glfw.GLFW;
 
 @SuppressWarnings("all")
 public class ClientIrisQuartzElytraBoostEvent {
-    public static final KeyBinding keyBoostIrisQuartzElytra = register("iris_quartz_elytra", GLFW.GLFW_KEY_G);
+    public static final KeyBinding KEY_BOOST_IRIS_QUARTZ_ELYTRA = register("iris_quartz_elytra", GLFW.GLFW_KEY_G);
 
     private static KeyBinding register(String id, int key) {
         return KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + Minium_me.MOD_ID + "." + id, key, "key.categories." + Minium_me.MOD_ID));
@@ -26,7 +26,7 @@ public class ClientIrisQuartzElytraBoostEvent {
         });*/
 
         ClientTickEvents.START_WORLD_TICK.register(world -> {
-            if (keyBoostIrisQuartzElytra.wasPressed()) {
+            if (KEY_BOOST_IRIS_QUARTZ_ELYTRA.wasPressed()) {
                 MinecraftClient client = MinecraftClient.getInstance();
                 if (client.player == null)
                     return;

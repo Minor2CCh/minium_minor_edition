@@ -2,7 +2,8 @@ package com.github.Minor2CCh.minium_me;
 
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
-import com.github.Minor2CCh.minium_me.damage_type.MiniumDamageType;
+import com.github.Minor2CCh.minium_me.config.MiniumConfigLoader;
+import com.github.Minor2CCh.minium_me.registry.*;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantments;
 import com.github.Minor2CCh.minium_me.entity.MiniumEntityType;
 import com.github.Minor2CCh.minium_me.event.*;
@@ -11,7 +12,6 @@ import com.github.Minor2CCh.minium_me.particle.MiniumParticles;
 import com.github.Minor2CCh.minium_me.platform.AccessoryPlatform;
 import com.github.Minor2CCh.minium_me.platform.DisableAccessoryPlatform;
 import com.github.Minor2CCh.minium_me.platform.EnableAccessoryPlatform;
-import com.github.Minor2CCh.minium_me.registry.MiniumBlockEntityTypes;
 import com.github.Minor2CCh.minium_me.sound.MiniumSoundsEvent;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import com.github.Minor2CCh.minium_me.worldgen.MiniumOres;
@@ -26,6 +26,7 @@ public class Minium_me implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        MiniumConfigLoader.load();
         MiniumItem.initialize();
         if(FabricLoader.getInstance().isModLoaded("farmersdelight")){
             FDItems.initialize();
@@ -37,21 +38,26 @@ public class Minium_me implements ModInitializer {
         MiniumModComponent.initialize();
         MiniumEntityType.initialize();
         MiniumParticles.initialize();
-        MiniumDamageType.initialize();
+        MiniumDamageTypes.initialize();
         MiniumStatusEffects.initialize();
         MiniumSoundsEvent.initialize();
         MiniumPotions.initialize();
         MiniumEnchantments.initialize();
         PicklingSaltReduceEvent.initialize();
-        PendantProtectionEvent.initialize();
         IrisQuartzElytraBoostEvent.initialize();
         LivingEntityTickEvent.initialize();
         MaceAdvancementEvent.initialize();
         ProtectionIntoWallDamage.initialize();
+        MiniumRecipeTypes.initialize();
         MiniumSpecialRecipes.initialize();
         ShieldDamageEvent.initialize();
         MiniumBlockEntityTypes.initialize();
         EnchantmentAllowEvents.initialize();
+        MultiToolDurabilityMultiplicationEvent.initialize();
+        ArmorReinforceEvent.initialize();
+        PendantProtectionEvent.initialize();
+        CopyNBTEvents.initialize();
+        MiniumCommands.initialize();
     }
     public static Identifier of(String id){
         return Identifier.of(Minium_me.MOD_ID, id);

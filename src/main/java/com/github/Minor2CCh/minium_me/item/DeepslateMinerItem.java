@@ -1,6 +1,7 @@
 package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 
 import static net.minecraft.block.Block.dropStacks;
 
-public class DeepslateMinerItem extends Item implements HasCustomTooltip{
+public class DeepslateMinerItem extends Item implements HasCustomTooltip {
     public DeepslateMinerItem(Item.Settings settings) {
         super(settings);
     }

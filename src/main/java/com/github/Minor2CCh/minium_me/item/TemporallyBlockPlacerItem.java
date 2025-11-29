@@ -5,6 +5,7 @@ import com.github.Minor2CCh.minium_me.block.TemporallyBlock;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantmentTags;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantments;
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -50,7 +51,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TemporallyBlockPlacerItem extends Item implements HasCustomTooltip{
+public class TemporallyBlockPlacerItem extends Item implements HasCustomTooltip {
     public final int maxCharge;
     private final Block placeBlock;
     public TemporallyBlockPlacerItem(Settings settings, int maxCharge, Block block) {
@@ -61,12 +62,13 @@ public class TemporallyBlockPlacerItem extends Item implements HasCustomTooltip{
     public static ToolComponent createToolComponent() {
         return new ToolComponent(
                 List.of(
-                        ToolComponent.Rule.of(List.of(MiniumBlock.TEMPORALLY_BLOCK), 1000.0F)
+                        ToolComponent.Rule.of(List.of(MiniumBlock.TEMPORALLY_BLOCK), 10000000.0F)
                 ),
                 1.0F,
-                1
+                0
         );
     }
+    @Override
     public float getMiningSpeed(ItemStack stack, BlockState state) {
         if(!(state.getBlock() instanceof TemporallyBlock
                 || state.getBlock().getHardness() == 0.0F)){

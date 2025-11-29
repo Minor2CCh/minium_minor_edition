@@ -13,7 +13,7 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 @Environment(EnvType.CLIENT)
 public class MiniumEntityRenderers{
 
-    public static EntityModelLayer ENERGY_BULLET = new EntityModelLayer(Minium_me.of("energy_bullet"), "main");
+    public static final EntityModelLayer ENERGY_BULLET = new EntityModelLayer(Minium_me.of("energy_bullet"), "main");
 
     public static void initialize() {
         EntityRendererRegistry.register(MiniumEntityType.ENERGY_BULLET, EnergyBulletRenderer::new);

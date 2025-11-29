@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "minium_me:block/minium_door_bottom",
+    "top": "minium_me:block/minium_door_top"
+  }
+}

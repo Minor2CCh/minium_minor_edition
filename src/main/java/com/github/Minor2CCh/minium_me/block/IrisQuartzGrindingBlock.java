@@ -1,6 +1,6 @@
 package com.github.Minor2CCh.minium_me.block;
 
-import com.github.Minor2CCh.minium_me.damage_type.MiniumDamageType;
+import com.github.Minor2CCh.minium_me.registry.MiniumDamageTypes;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantments;
 import com.github.Minor2CCh.minium_me.item.FDItems;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
@@ -10,7 +10,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -29,11 +28,8 @@ public class IrisQuartzGrindingBlock extends GrindingBlock{
             MiniumEnchantments.giveCustomEnchantment((ServerWorld) world, ATTACK_STACK, 10, Enchantments.LOOTING);
         }
         fakePlayer.setStackInHand(Hand.MAIN_HAND, ATTACK_STACK.copy());
-        fakePlayer.setPos(pos.getX(), pos.getY(), pos.getZ());
-        DamageSource damageSource = new DamageSource(
-                world.getRegistryManager()
-                        .get(RegistryKeys.DAMAGE_TYPE)
-                        .entryOf(MiniumDamageType.MINIUM_GRINDING), fakePlayer);
+        fakePlayer.setPos(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
+        DamageSource damageSource = fakePlayer.getDamageSources().create(MiniumDamageTypes.MINIUM_GRINDING, fakePlayer);
         livingEntity.damage(damageSource, GRIND_DAMAGE);
     }
 }

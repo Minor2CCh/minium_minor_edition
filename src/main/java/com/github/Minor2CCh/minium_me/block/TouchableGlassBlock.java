@@ -1,6 +1,6 @@
 package com.github.Minor2CCh.minium_me.block;
 
-import com.github.Minor2CCh.minium_me.item.HasCustomTooltip;
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.ShapeContext;

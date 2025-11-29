@@ -2,7 +2,7 @@ package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
-import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
+import com.github.Minor2CCh.minium_me.component.EnergyComponent;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
@@ -79,11 +79,13 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumBlock.DEEPSLATE_IRIS_QUARTZ_ORE);
             itemGroup.add(MiniumBlock.IRIS_QUARTZ_BLOCK);
             itemGroup.add(MiniumItem.ENERGY_GUN);
-            for (String s : MiniumModComponent.ENERGY_LIST) {
+            for (EnergyComponent.EnergyType forType : EnergyComponent.EnergyType.values()) {
+                if(forType.equals(EnergyComponent.EnergyType.ENERGY_EMPTY))continue;
                 ItemStack gunStack = MiniumItem.ENERGY_GUN.getDefaultStack();
-                gunStack.set(MiniumModComponent.REMAIN_ENERGY, new MiniumModComponent.EnergyComponent(2147483647, s));
+                EnergyComponent.setEnergyComponent(gunStack, new EnergyComponent(2147483647, forType));
                 itemGroup.add(gunStack);
             }
+
             itemGroup.add(MiniumBlock.WIND_CHARGE_BLOCK);
             itemGroup.add(MiniumItem.DEEPSLATE_MINER);
             itemGroup.add(MiniumItem.WIND_EXPLODER);
@@ -122,7 +124,10 @@ public class MiniumItemGroup {
             ItemStack stack = new ItemStack(MiniumItem.TEMPORALLY_BLOCK_PLACER);
             stack.set(DataComponentTypes.UNBREAKABLE, new UnbreakableComponent(true));
             itemGroup.add(stack);
-
+            itemGroup.add(MiniumBlock.MINIUM_HOPPER);
+            itemGroup.add(MiniumBlock.MINIUM_TRAPDOOR);
+            itemGroup.add(MiniumBlock.MINIUM_DOOR);
+            itemGroup.add(MiniumItem.IRIS_QUARTZ_APPLE);
             //from mekanism
             itemGroup.add(MiniumItem.OSMIUM_INGOT_FROM_MEKANISM);
             itemGroup.add(MiniumItem.RAW_OSMIUM_FROM_MEKANISM);

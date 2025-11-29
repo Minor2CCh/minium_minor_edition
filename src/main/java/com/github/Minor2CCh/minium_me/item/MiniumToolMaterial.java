@@ -1,8 +1,13 @@
 package com.github.Minor2CCh.minium_me.item;
+import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
+import com.github.Minor2CCh.minium_me.config.MiniumConfigLoader;
 import com.google.common.base.Suppliers;
+
+import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.block.Block;
+import net.minecraft.component.type.ToolComponent;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.BlockTags;
@@ -17,12 +22,9 @@ import net.minecraft.registry.tag.TagKey;
     NETHERITE(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2031, 9.0f, 4.0f, 15, () -> Ingredient.ofItems(Items.NETHERITE_INGOT));
 */
 public enum MiniumToolMaterial implements ToolMaterial{
-    MINIUM_TOOL(BlockTags.INCORRECT_FOR_IRON_TOOL, 375, 10.0f, 2.5f, 15, () -> Ingredient.fromTag(MiniumItemTag.MINIUM_INGOT)),
-    C_MINIUM_TOOL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 1949, 11.0f, 3.5f, 15, () -> Ingredient.fromTag(MiniumItemTag.C_MINIUM_INGOT)),
-    IRIS_QUARTZ_TOOL(MiniumBlockTag.INCORRECT_FOR_IRIS_QUARTZ_TOOL, 7716, 13.0f, 6f, 25, () -> Ingredient.fromTag(MiniumItemTag.IRIS_QUARTZ_INGOT)),
-    MINIUM_MULTITOOL(MINIUM_TOOL.inverseTag, MINIUM_TOOL.itemDurability*3, MINIUM_TOOL.miningSpeed, MINIUM_TOOL.attackDamage, MINIUM_TOOL.enchantability, MINIUM_TOOL.repairIngredient),
-    C_MINIUM_MULTITOOL(C_MINIUM_TOOL.inverseTag, C_MINIUM_TOOL.itemDurability*3, C_MINIUM_TOOL.miningSpeed, C_MINIUM_TOOL.attackDamage, C_MINIUM_TOOL.enchantability, C_MINIUM_TOOL.repairIngredient),
-    IRIS_QUARTZ_MULTITOOL(IRIS_QUARTZ_TOOL.inverseTag, IRIS_QUARTZ_TOOL.itemDurability*3, IRIS_QUARTZ_TOOL.miningSpeed, IRIS_QUARTZ_TOOL.attackDamage, IRIS_QUARTZ_TOOL.enchantability, IRIS_QUARTZ_TOOL.repairIngredient);
+    MINIUM_TOOL(BlockTags.INCORRECT_FOR_IRON_TOOL, MiniumConfigLoader.getConfig().getMaterialMinium().getDurability(), MiniumConfigLoader.getConfig().getMaterialMinium().getMiningSpeed(), MiniumConfigLoader.getConfig().getMaterialMinium().getAttackDamage(), MiniumConfigLoader.getConfig().getMaterialMinium().getEnchantability(), () -> Ingredient.fromTag(MiniumItemTag.MINIUM_INGOT)),
+    C_MINIUM_TOOL(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, MiniumConfigLoader.getConfig().getMaterialConcentratedMinium().getDurability(), MiniumConfigLoader.getConfig().getMaterialConcentratedMinium().getMiningSpeed(), MiniumConfigLoader.getConfig().getMaterialConcentratedMinium().getAttackDamage(), MiniumConfigLoader.getConfig().getMaterialConcentratedMinium().getEnchantability(), () -> Ingredient.fromTag(MiniumItemTag.C_MINIUM_INGOT)),
+    IRIS_QUARTZ_TOOL(MiniumBlockTag.INCORRECT_FOR_IRIS_QUARTZ_TOOL, MiniumConfigLoader.getConfig().getMaterialIrisQuartz().getDurability(), MiniumConfigLoader.getConfig().getMaterialIrisQuartz().getMiningSpeed(), MiniumConfigLoader.getConfig().getMaterialIrisQuartz().getAttackDamage(), MiniumConfigLoader.getConfig().getMaterialIrisQuartz().getEnchantability(), () -> Ingredient.fromTag(MiniumItemTag.IRIS_QUARTZ_INGOT));
 
     private final TagKey<Block> inverseTag;
     private final int itemDurability;
@@ -76,5 +78,17 @@ public enum MiniumToolMaterial implements ToolMaterial{
     public Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
+
+    @Override
+    public ToolComponent createComponent(TagKey<Block> tag) {
+        if(this.equals(MiniumToolMaterial.C_MINIUM_TOOL) && (tag.equals(BlockTags.PICKAXE_MINEABLE) || (tag.equals(MiniumBlockTag.MULTITOOL_MINEABLE)))){
+            return new ToolComponent(
+                    List.of(ToolComponent.Rule.ofAlwaysDropping(CONCENTRATED_MINIUM_WHITELIST, this.getMiningSpeedMultiplier()), ToolComponent.Rule.ofNeverDropping(this.getInverseTag()), ToolComponent.Rule.ofAlwaysDropping(tag, this.getMiningSpeedMultiplier())), 1.0F, 1
+            );
+
+        }
+        return ToolMaterial.super.createComponent(tag);
+    }
+    private static final List<Block> CONCENTRATED_MINIUM_WHITELIST = List.of(MiniumBlock.IRIS_QUARTZ_BLOCK, MiniumBlock.IRIS_QUARTZ_ORE, MiniumBlock.DEEPSLATE_IRIS_QUARTZ_ORE, MiniumBlock.IRIS_QUARTZ_CORE, MiniumBlock.IRIS_QUARTZ_GRINDER);
 
 }

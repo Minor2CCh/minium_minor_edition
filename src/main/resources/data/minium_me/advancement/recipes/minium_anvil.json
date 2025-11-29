@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minium_me:minium_block"
+            "items": "#c:storage_blocks/minium"
           }
         ]
       },

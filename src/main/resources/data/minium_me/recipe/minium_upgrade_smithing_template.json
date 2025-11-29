@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minium_me:minium_upgrade_smithing_template"
+    },
+    "X": {
+      "tag": "c:storage_blocks/osmium"
+    },
+    "Y": {
+      "tag": "c:storage_blocks/concentrated_minium"
+    }
+  },
+  "pattern": [
+    "X#X",
+    "XYX",
+    "XXX"
+  ],
+  "result": {
+    "count": 2,
+    "id": "minium_me:minium_upgrade_smithing_template"
+  }
+}

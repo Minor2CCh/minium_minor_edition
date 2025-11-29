@@ -1,6 +1,5 @@
 package com.github.Minor2CCh.minium_me.client.particle;
 
-import com.github.Minor2CCh.minium_me.entity.EnergyBulletEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
@@ -12,12 +11,10 @@ public class EnergyHitParticle extends SpriteBillboardParticle {
     private final SpriteProvider spriteProvider;
     protected EnergyHitParticle(ClientWorld world, double x, double y, double z, double d, SpriteProvider spriteProvider) {
         super(world, x, y, z, 0.0, 0.0, 0.0);
-        this.maxAge = 10;//6 + this.random.nextInt(4);
-        //float f = 1.0F;//this.random.nextFloat() * 0.6F + 0.4F;
-        int r = (EnergyBulletEntity.particleColor & 0xFF0000) >> 16;int g = (EnergyBulletEntity.particleColor & 0xFF00) >> 8;int b = (EnergyBulletEntity.particleColor & 0xFF);
-        this.red = (float)(r / 255.0);
-        this.green = (float)(g / 255.0);
-        this.blue = (float)(b / 255.0);
+        this.maxAge = 10;
+        this.red = (float)1;
+        this.green = (float)1;
+        this.blue = (float)1;
         this.scale = 2.0F * (1.0F - (float)d * 0.5F);
         this.spriteProvider = spriteProvider;
         this.setSpriteForAge(spriteProvider);

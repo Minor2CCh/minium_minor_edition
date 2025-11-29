@@ -39,7 +39,7 @@ public class MiniumEnchantments {
                 .get(RegistryKeys.ENCHANTMENT)
                 .getEntry(enchantmentKey)
                 .orElseThrow();
-        System.out.println(entry);
+        //System.out.println(entry);
         stack.addEnchantment(entry, level);
     }
     public static int getEnchantmentLevel(Entity entity, ItemStack stack, RegistryKey<Enchantment> enchantmentKey) {

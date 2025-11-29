@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "craft_iris_quartz": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/iris_quartz"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:iris_quartz_apple"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "craft_iris_quartz"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:iris_quartz_apple"
+    ]
+  }
+}

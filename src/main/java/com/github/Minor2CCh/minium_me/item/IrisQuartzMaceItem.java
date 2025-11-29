@@ -2,6 +2,7 @@ package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.entity.EntityRaycastUtil;
 import com.github.Minor2CCh.minium_me.mixin.MaceItemInvoker;
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -22,7 +23,6 @@ import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -45,7 +45,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 
-public class IrisQuartzMaceItem extends MaceItem implements HasCustomTooltip{
+public class IrisQuartzMaceItem extends MaceItem implements HasCustomTooltip {
     public IrisQuartzMaceItem(Settings settings) {
         super(settings);
     }
@@ -108,13 +108,10 @@ public class IrisQuartzMaceItem extends MaceItem implements HasCustomTooltip{
                 double blockReach = player.getAttributeValue(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE);
                 double entityReach = player.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE);
                 HitResult result = EntityRaycastUtil.raycastIncludingEntities(player, blockReach, entityReach, 0);
-                // System.out.println("block:"+player.getAttributeValue(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE));
-                // System.out.println("entity:"+player.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE));
                 if (result.getType() == HitResult.Type.BLOCK) {
                     if (result instanceof BlockHitResult blockHitResult) {
                         Vec3d pos = blockHitResult.getPos();
                         BlockState state = player.getWorld().getBlockState(blockHitResult.getBlockPos());
-                        //System.out.println("見ているブロック: " + state.getBlock());
                         if (!world.isClient()){
                             this.windExplosion(world, player, stack, pos, state);
                         } else {
@@ -132,11 +129,8 @@ public class IrisQuartzMaceItem extends MaceItem implements HasCustomTooltip{
                     if(result instanceof EntityHitResult entityHitResult){
                         if(!world.isClient()){
                             double attack = player.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-                            DamageSource damageSource = new DamageSource(
-                                    world.getRegistryManager()
-                                            .get(RegistryKeys.DAMAGE_TYPE)
-                                            .entryOf(DamageTypes.PLAYER_ATTACK)
-                                    ,user);
+                            DamageSource damageSource = player.getDamageSources().create(DamageTypes.PLAYER_ATTACK, player);
+
                             float bonusDamage = getBonusAttackDamage(entityHitResult.getEntity(), (float) attack, damageSource);
                             if(bonusDamage > 0){
                                 ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
@@ -144,8 +138,6 @@ public class IrisQuartzMaceItem extends MaceItem implements HasCustomTooltip{
                                 serverPlayer.setVelocity(serverPlayer.getVelocity().withAxis(Direction.Axis.Y, 0.01F));
                                 serverPlayer.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(serverPlayer));
                             }
-                            //System.out.println(attack);
-                            //System.out.println(bonusDamage);
                             entityHitResult.getEntity().damage(damageSource, (float) (attack+bonusDamage));
                             Vec3d knockBackVel = new Vec3d(-Math.sin(player.getYaw() * (Math.PI / 180F)), 1, Math.cos(player.getYaw() * (Math.PI / 180F)));
 
@@ -154,7 +146,6 @@ public class IrisQuartzMaceItem extends MaceItem implements HasCustomTooltip{
 
                             BlockPos blockPos = new BlockPos((int)entityHitResult.getEntity().getPos().x, (int)entityHitResult.getEntity().getPos().y-1, (int)entityHitResult.getEntity().getPos().z);
                             BlockState state = player.getWorld().getBlockState(blockPos);
-                            //System.out.println("見ているブロック: " + state.getBlock());
                             this.windExplosion(world, player, stack, pos, state);
                         } else {
                             if(player.getMainHandStack() == stack){

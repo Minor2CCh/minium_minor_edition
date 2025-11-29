@@ -22,8 +22,7 @@ public class MiniumMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         // Mixin名で分岐
-        if (mixinClassName.equals("com.github.Minor2CCh.minium_me.mixin.compat.SimpleCompatibilityProviderMixin")
-         || mixinClassName.equals("com.github.Minor2CCh.minium_me.mixin.compat.SimpleCompatibilityProviderAccessor")) {
+        if (mixinClassName.equals("com.github.Minor2CCh.minium_me.mixin.compat.SimpleCompatibilityProviderMixin")) {
             return FabricLoader.getInstance().isModLoaded("elytraslot");
 
         }

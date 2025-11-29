@@ -14,7 +14,7 @@
       "tag": "c:ingots/minium"
     },
     "s": {
-      "item": "minecraft:stick"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [

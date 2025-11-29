@@ -14,6 +14,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
@@ -46,9 +47,9 @@ public class WindChargeBlock extends Block {
                         windChargeEntity,
                         null,
                         EXPLOSION_BEHAVIOR,
-                        clampDouble(entity.getX(), pos.getX(), pos.getX()+1),
+                        MathHelper.clamp(entity.getX(), pos.getX(), pos.getX()+1),
                         pos.getY()+1.0,
-                        clampDouble(entity.getZ(), pos.getZ(), pos.getZ()+1),
+                        MathHelper.clamp(entity.getZ(), pos.getZ(), pos.getZ()+1),
                         1.4F,
                         false,
                         World.ExplosionSourceType.TRIGGER,
@@ -82,21 +83,4 @@ public class WindChargeBlock extends Block {
                         SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST);
         }
     }
-    private double clampDouble(double value, double minValue, double maxValue){
-        if(minValue > maxValue){
-            double temp = minValue;
-            minValue = maxValue;
-            maxValue = temp;
-
-        }if(minValue == maxValue){
-            return minValue;
-        }
-        if(value < minValue){
-            return minValue;
-        }else if(maxValue < value){
-            return maxValue;
-        }
-        return value;
-    }
-
 }

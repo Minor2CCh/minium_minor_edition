@@ -24,7 +24,7 @@ public class EnchantmentAllowEvents {
             return TriState.DEFAULT;
         });
 
-    }//剣で付与される攻撃系のエンチャントがエンチャントテーブルから出るように
-
+    }   // 剣で付与される攻撃系のエンチャントがエンチャントテーブルから出るように
+        // Mixinで許可するとConnector使用時に反映されなくなる
 
 }

@@ -7,10 +7,10 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class MiniumSoundsEvent {
-    public static SoundEvent SHOOT_ENERGY_BULLET_EVENT = register("item.minium_me.energy_gun.shoot");
-    public static SoundEvent ENERGY_GUN_EMPTY_EVENT = register("item.minium_me.energy_gun.empty");
-    public static SoundEvent RELOAD_ENERGY_GUN_EVENT = register("item.minium_me.energy_gun.reload");
-    public static SoundEvent HIT_ENERGY_BULLET_EVENT = register("item.minium_me.energy_gun.hit");
+    public static final SoundEvent SHOOT_ENERGY_BULLET_EVENT = register("item.minium_me.energy_gun.shoot");
+    public static final SoundEvent ENERGY_GUN_EMPTY_EVENT = register("item.minium_me.energy_gun.empty");
+    public static final SoundEvent RELOAD_ENERGY_GUN_EVENT = register("item.minium_me.energy_gun.reload");
+    public static final SoundEvent HIT_ENERGY_BULLET_EVENT = register("item.minium_me.energy_gun.hit");
 
     private static SoundEvent register(String id){
         Identifier soundId = Minium_me.of(id);

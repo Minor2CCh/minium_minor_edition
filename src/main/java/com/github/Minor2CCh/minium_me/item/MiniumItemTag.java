@@ -43,6 +43,8 @@ public class MiniumItemTag {
     public static final TagKey<Item> ENERGY_RUBY = modOf("energy/gems/ruby");
     public static final TagKey<Item> ENERGY_SAPPHIRE_STORAGE_BLOCKS = modOf("energy/storage_blocks/sapphire");//サファイア(MOD)
     public static final TagKey<Item> ENERGY_SAPPHIRE = modOf("energy/gems/sapphire");
+    public static final TagKey<Item> ENERGY_PERIDOT_STORAGE_BLOCKS = modOf("energy/storage_blocks/peridot");//ペリドット(MOD)
+    public static final TagKey<Item> ENERGY_PERIDOT = modOf("energy/gems/peridot");
     //Default:Ingots
     public static final TagKey<Item> ENERGY_MINIUM_STORAGE_BLOCKS = modOf("energy/storage_blocks/minium");//マイニウム(MOD)
     public static final TagKey<Item> ENERGY_MINIUM = modOf("energy/ingots/minium");
@@ -86,12 +88,36 @@ public class MiniumItemTag {
     public static final TagKey<Item> ENERGY_REFINED_OBSIDIAN = modOf("energy/ingots/refined_obsidian");
     public static final TagKey<Item> ENERGY_ELECTRUM_STORAGE_BLOCKS = modOf("energy/storage_blocks/electrum");//エレクトラム(MOD)
     public static final TagKey<Item> ENERGY_ELECTRUM = modOf("energy/ingots/electrum");
+    public static final TagKey<Item> ENERGY_BRASS_STORAGE_BLOCKS = modOf("energy/storage_blocks/brass");//真鍮(MOD)
+    public static final TagKey<Item> ENERGY_BRASS = modOf("energy/ingots/brass");
+    public static final TagKey<Item> ENERGY_ADVANCED_ALLOY_STORAGE_BLOCKS = modOf("energy/storage_blocks/advanced_alloy");//上級合金(MOD)
+    public static final TagKey<Item> ENERGY_ADVANCED_ALLOY = modOf("energy/ingots/advanced_alloy");
+    public static final TagKey<Item> ENERGY_INVAR_STORAGE_BLOCKS = modOf("energy/storage_blocks/invar");//不変鋼(MOD)
+    public static final TagKey<Item> ENERGY_INVAR = modOf("energy/ingots/invar");
+    public static final TagKey<Item> ENERGY_TITANIUM_STORAGE_BLOCKS = modOf("energy/storage_blocks/titanium");//チタン(MOD)
+    public static final TagKey<Item> ENERGY_TITANIUM = modOf("energy/ingots/titanium");
+    public static final TagKey<Item> ENERGY_CHROMIUM_STORAGE_BLOCKS = modOf("energy/storage_blocks/chromium");//クロム(MOD)
+    public static final TagKey<Item> ENERGY_CHROMIUM = modOf("energy/ingots/chromium");
+    public static final TagKey<Item> ENERGY_IRIDIUM_STORAGE_BLOCKS = modOf("energy/storage_blocks/iridium");//イリジウム(MOD)
+    public static final TagKey<Item> ENERGY_IRIDIUM = modOf("energy/ingots/iridium");
+    public static final TagKey<Item> ENERGY_PLATINUM_STORAGE_BLOCKS = modOf("energy/storage_blocks/platinum");//プラチナ(MOD)
+    public static final TagKey<Item> ENERGY_PLATINUM = modOf("energy/ingots/platinum");
 
 
 
     //Another source
     public static final TagKey<Item> ENERGY_COAL_STORAGE_BLOCKS = modOf("energy/storage_blocks/coal");//石炭or木炭
     public static final TagKey<Item> ENERGY_COAL = modOf("energy/others/coal");
+    // Armor Reinforced Ingredient
+    public static final TagKey<Item> REINFORCEABLE_ARMOR = modOf("reinforceable_armor");
+    public static final TagKey<Item> INGREDIENT_MATERIAL = modOf("reinforced/armor/ingredient_material");
+    public static final TagKey<Item> INGREDIENT_FIRE_IMMUNE = modOf("reinforced/armor/ingredient_fire_immune");
+    public static final TagKey<Item> INGREDIENT_FROZEN_IMMUNE = modOf("reinforced/armor/ingredient_frozen_immune");
+    public static final TagKey<Item> INGREDIENT_WATER_ADAPTION = modOf("reinforced/armor/ingredient_water_adaption");
+    public static final TagKey<Item> INGREDIENT_ALL_PROTECTION = modOf("reinforced/armor/ingredient_all_protection");
+    public static final TagKey<Item> INGREDIENT_UNDYING = modOf("reinforced/armor/ingredient_undying");
+    public static final TagKey<Item> INGREDIENT_MAGIC_IMMUNE = modOf("reinforced/armor/ingredient_magic_immune");
+
 
     private MiniumItemTag() {
     }

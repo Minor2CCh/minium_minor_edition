@@ -1,9 +1,10 @@
 package com.github.Minor2CCh.minium_me.block;
 
-import com.github.Minor2CCh.minium_me.item.HasCustomTooltip;
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -22,6 +23,10 @@ public class PassableGlassBlock extends TransparentBlock implements HasCustomToo
             if (entity != null) {
                 if (entity instanceof PlayerEntity) {
                     return VoxelShapes.empty();
+                }else if(entity instanceof ProjectileEntity projectileEntity){
+                    if(projectileEntity.getOwner() instanceof PlayerEntity){
+                        return VoxelShapes.empty();
+                    }
                 }
             }
         }

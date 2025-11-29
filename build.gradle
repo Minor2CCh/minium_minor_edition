@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom' version '1.13-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -49,6 +49,9 @@ repositories {
         url = "https://cursemaven.com"
     }
     maven {
+        url = "https://api.modrinth.com/maven"
+    }
+    maven {
         name = "Greenhouse Maven"
         url = 'https://repo.greenhouse.house/releases/'
     }
@@ -73,6 +76,7 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+    // modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"
     modImplementation("vectorwing:FarmersDelight:${project.fdfr_version}") {
         exclude(group: "net.fabricmc")
     }
@@ -80,9 +84,11 @@ dependencies {
     modImplementation "curse.maven:elytra-slot-317716:5770052"
     modImplementation "curse.maven:ftb-ultimine-fabric-448231:7025218"
     modImplementation "curse.maven:ftb-library-fabric-438495:7029001"
-    //compileOnly("vectorwing:FarmersDelight:${project.fdfr_version}") {
-    //    exclude(group: "net.fabricmc")
-    //}
+
+    modImplementation "maven.modrinth:jade:${project.jade_version}"
+    //modImplementation "curse.maven:jei-238222:7181663"
+    modCompileOnly("curse.maven:jei-238222:7181663")
+
 }
 
 processResources {

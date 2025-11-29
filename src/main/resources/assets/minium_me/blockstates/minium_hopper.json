@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "minium_me:block/minium_hopper"
+    },
+    "facing=east": {
+      "model": "minium_me:block/minium_hopper_side",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "minium_me:block/minium_hopper_side"
+    },
+    "facing=south": {
+      "model": "minium_me:block/minium_hopper_side",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minium_me:block/minium_hopper_side",
+      "y": 270
+    }
+  }
+}

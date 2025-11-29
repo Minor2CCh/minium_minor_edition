@@ -13,7 +13,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minium_me:concentrated_minium_ingot"
+            "items": "#c:ingots/concentrated_minium"
           }
         ]
       },

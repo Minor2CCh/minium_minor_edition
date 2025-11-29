@@ -2,8 +2,10 @@ package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
+import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.enchantment.MiniumEnchantmentTags;
 import com.github.Minor2CCh.minium_me.mixin.TrialSpawnerAccessor;
+import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import com.google.common.collect.BiMap;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
@@ -37,10 +39,9 @@ import net.minecraft.world.event.GameEvent;
 
 import java.util.*;
 
-public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTooltip{
+public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTooltip {
     private final ShovelItem internalShovel;
     private final AxeItem internalAxe;
-    private final HashMap<UUID, Long> prevUseTime = new HashMap<>();
     @SuppressWarnings("all")
     protected static final Map<Block, BlockState> PATH_STATES = ShovelItemAccessor.getPathStates();
     @SuppressWarnings("all")
@@ -90,7 +91,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
         ItemStack itemStack = context.getStack();
         if (itemStack.isOf(MiniumItem.IRIS_QUARTZ_MULTITOOL) && isRangeBreakableBlock(blockState)) {//石系ブロックorネザーラック
             if(playerEntity.isSneaking()){
-                if (!world.isClient() && isDoubleClicked(playerEntity)) {
+                if (isDoubleClicked(playerEntity, itemStack) && !world.isClient()) {
                     stoneBreakDrop(world, blockPos, playerEntity, itemStack);
                     loopStart:for(int i = 0;i < 7;i++){
                         for(int j = 0;j < 7;j++){
@@ -99,7 +100,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
                                 BlockPos tempBlockPos = blockPos.add(i + (direction == Direction.EAST ? -6 : (direction == Direction.WEST ? 0 : -3)), j - 3, k + (direction == Direction.SOUTH ? -6 : (direction == Direction.NORTH ? 0 : -3)));
                                 if (isRangeBreakableBlock(world.getBlockState(tempBlockPos))){
                                     stoneBreakDrop(world, tempBlockPos, playerEntity, itemStack);
-                                    if(Math.random() < 0.25F){
+                                    if(world.getRandom().nextInt(4) == 0){
                                         context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
                                         if(context.getStack().isEmpty()){
                                             break loopStart;
@@ -114,6 +115,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
                 return true;
 
             }else{
+
                 return false;
 
             }
@@ -121,22 +123,14 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
         }
         return false;
     }
-    private boolean isDoubleClicked(PlayerEntity player){
-        UUID uuid = player.getUuid();
-        World world = player.getWorld();
-        if(world.isClient()){
-            return false;
-        }
-        if(!prevUseTime.containsKey(uuid)){
-            prevUseTime.put(uuid, world.getTime());
-            return false;
-        }else if(world.getTime() - prevUseTime.getOrDefault(uuid, 0L) < 4){
-            prevUseTime.remove(uuid);
+    private boolean isDoubleClicked(PlayerEntity player, ItemStack itemStack){
+        long prevTime = itemStack.getOrDefault(MiniumModComponent.DOUBLE_CLICK_HANDLER, 0L);
+        if(player.getWorld().getTime() - prevTime >= 0 && player.getWorld().getTime() - prevTime < 10){
+            itemStack.remove(MiniumModComponent.DOUBLE_CLICK_HANDLER);
             return true;
-        }else{
-            prevUseTime.replace(uuid, world.getTime());
-            return false;
         }
+        itemStack.set(MiniumModComponent.DOUBLE_CLICK_HANDLER, player.getWorld().getTime());
+        return false;
     }
     private static boolean isRangeBreakableBlock(BlockState blockState){
         return isStoneBlock(blockState) || isNetherrackBlock(blockState) || isEndStoneBlock(blockState);
@@ -150,9 +144,15 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
                 || blockState.isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
     }
     private static boolean isNetherrackBlock(BlockState blockState){
+        if(blockState.getBlock().getHardness() < 0){
+            return false;
+        }
         return blockState.isIn(ConventionalBlockTags.NETHERRACKS);
     }
     private static boolean isEndStoneBlock(BlockState blockState){
+        if(blockState.getBlock().getHardness() < 0){
+            return false;
+        }
         return blockState.isIn(ConventionalBlockTags.END_STONES);
     }
     private void stoneBreakDrop(World world, BlockPos blockPos, PlayerEntity playerEntity, ItemStack itemStack){
@@ -246,11 +246,6 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
                     long newCooldown = (long)(remainCooldown * 0.9)+world.getTime();
                     if(!world.isClient()){
                         ((TrialSpawnerAccessor)(Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getData())).setCooldownEnd(newCooldown);
-                        /*
-                        System.out.println(((TrialSpawnerAccessor)(Objects.requireNonNull(trialSpawnerBlockEntity).getSpawner().getData())).cooldownEnd());
-                        System.out.println(oldCooldown);
-                        System.out.println(world.getTime());
-                        */
                     }
                     context.getStack().damage(10, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
                 }

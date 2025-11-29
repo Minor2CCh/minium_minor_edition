@@ -158,7 +158,7 @@ public class LivingEntityTickEvent {
                     }
 
                 }
-                livingEntity.setStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 200, 0, false, false, false), livingEntity);
+                livingEntity.setStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 300, 0, false, false, false), livingEntity);
                 livingEntity.setStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 0, false, false, false), livingEntity);
             }
         }

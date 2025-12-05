@@ -1,6 +1,7 @@
-package com.github.Minor2CCh.minium_me.item;
+package com.github.Minor2CCh.minium_me.util;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
+import com.github.Minor2CCh.minium_me.item.MiniumItem;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -64,6 +65,7 @@ public class AddLootTable {
             }
 
              */
+
             if (END_CITY_ID == key && source.isBuiltin()) {
                 LootPool.Builder pool = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1.0f))//抽選回数

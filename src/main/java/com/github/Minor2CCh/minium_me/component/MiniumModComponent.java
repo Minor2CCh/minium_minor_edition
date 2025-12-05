@@ -35,6 +35,11 @@ public class MiniumModComponent {
             Minium_me.of("double_click_handler"),
             ComponentType.<Long>builder().codec(Codec.LONG).packetCodec(PacketCodecs.VAR_LONG).build()
     );
+    public static final ComponentType<ToolReinforcedComponent> TOOL_REINFORCED = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Minium_me.of("tool_reinforced"),
+            ComponentType.<ToolReinforcedComponent>builder().codec(ToolReinforcedComponent.CODEC).packetCodec(ToolReinforcedComponent.PACKET_CODEC).build()
+    );
     public static void initialize() {
     }
 }

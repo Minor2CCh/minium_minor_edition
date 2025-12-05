@@ -16,20 +16,18 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 
-import java.util.Objects;
-
 public class PendantProtectionEvent {
     public static final int IRIS_QUARTZ_PENDANT_TOTEM_COOLDOWN = 1200;
     public static final int INVINCIBLE_TIME = 200;
     public static void initialize(){
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if(EntityFunctions.hasItem(entity, MiniumItem.IRIS_QUARTZ_PENDANT)){
-                if(Objects.requireNonNull(source).isOf(DamageTypes.WITHER)){
+                if(source.isOf(DamageTypes.WITHER)){
                     if(EntityFunctions.equipIrisQuartzArmors(entity, 4)){
                         return false;
                     }
                 }
-                return !Objects.requireNonNull(source).isOf(DamageTypes.FLY_INTO_WALL) && !Objects.requireNonNull(source).isIn(DamageTypeTags.IS_FALL);
+                return !source.isOf(DamageTypes.FLY_INTO_WALL) && !source.isIn(DamageTypeTags.IS_FALL);
             }
             return true;
         });

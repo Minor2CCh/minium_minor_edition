@@ -3,6 +3,7 @@ package com.github.Minor2CCh.minium_me.client.compat.jei.category;
 import com.github.Minor2CCh.minium_me.Minium_me;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.recipe.SmithingArmorReinforcedRecipe;
+import com.github.Minor2CCh.minium_me.recipe.SmithingToolReinforcedRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -18,12 +19,11 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 public class SmithingReinforcedCategory implements IRecipeCategory<SmithingRecipe> {
-    public static final RecipeType<SmithingRecipe> SMITHING_REINFORCED = RecipeType.create(Minium_me.MOD_ID, "smithing_reinforced", SmithingArmorReinforcedRecipe.class);
+    public static final RecipeType<SmithingRecipe> SMITHING_REINFORCED = RecipeType.create(Minium_me.MOD_ID, "smithing_reinforced", SmithingRecipe.class);
     private final IDrawable icon;
 
     public SmithingReinforcedCategory(IGuiHelper guiHelper) {
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Items.SMITHING_TABLE));
-        //guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 16, 0, 0).build();
     }
 
     @Override
@@ -54,26 +54,43 @@ public class SmithingReinforcedCategory implements IRecipeCategory<SmithingRecip
     public void setRecipe(IRecipeLayoutBuilder builder,
                           SmithingRecipe recipe,
                           IFocusGroup focuses) {
+        if(recipe instanceof SmithingArmorReinforcedRecipe reinforcedRecipe) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 1, 6)
+                    .addIngredients(reinforcedRecipe.template).setStandardSlotBackground();
 
-        SmithingArmorReinforcedRecipe reinforcedRecipe = (SmithingArmorReinforcedRecipe) recipe;
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 6)
-                .addIngredients(reinforcedRecipe.template).setStandardSlotBackground();
+            // Base
+            builder.addSlot(RecipeIngredientRole.INPUT, 19, 6)
+                    .addIngredients(reinforcedRecipe.base).setStandardSlotBackground();
 
-        // Base
-        builder.addSlot(RecipeIngredientRole.INPUT, 19, 6)
-                .addIngredients(reinforcedRecipe.base).setStandardSlotBackground();
+            // Addition
+            builder.addSlot(RecipeIngredientRole.INPUT, 37, 6)
+                    .addIngredients(reinforcedRecipe.addition).setStandardSlotBackground();
 
-        // Addition
-        builder.addSlot(RecipeIngredientRole.INPUT, 37, 6)
-                .addIngredients(reinforcedRecipe.addition).setStandardSlotBackground();
+            // ★ 動的 Output：自作する
+            ItemStack baseExample = reinforcedRecipe.base.getMatchingStacks()[0].copy();
+            ItemStack result = baseExample.copyWithCount(1);
+            result.set(MiniumModComponent.ARMOR_REINFORCED, reinforcedRecipe.reinforced);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 6)
+                    .addItemStack(result).setStandardSlotBackground();
+        }else if(recipe instanceof SmithingToolReinforcedRecipe reinforcedRecipe){
+            builder.addSlot(RecipeIngredientRole.INPUT, 1, 6)
+                    .addIngredients(reinforcedRecipe.template).setStandardSlotBackground();
 
-        // ★ 動的 Output：自作する
-        ItemStack baseExample = reinforcedRecipe.base.getMatchingStacks()[0].copy();
-        ItemStack result = baseExample.copyWithCount(1);
-        result.set(MiniumModComponent.ARMOR_REINFORCED, reinforcedRecipe.reinforced);
+            // Base
+            builder.addSlot(RecipeIngredientRole.INPUT, 19, 6)
+                    .addIngredients(reinforcedRecipe.base).setStandardSlotBackground();
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 6)
-                .addItemStack(result).setStandardSlotBackground();
+            // Addition
+            builder.addSlot(RecipeIngredientRole.INPUT, 37, 6)
+                    .addIngredients(reinforcedRecipe.addition).setStandardSlotBackground();
+
+            // ★ 動的 Output：自作する
+            ItemStack baseExample = reinforcedRecipe.base.getMatchingStacks()[0].copy();
+            ItemStack result = baseExample.copyWithCount(1);
+            result.set(MiniumModComponent.TOOL_REINFORCED, reinforcedRecipe.reinforced);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 6)
+                    .addItemStack(result).setStandardSlotBackground();
+        }
 
     }
     @Override

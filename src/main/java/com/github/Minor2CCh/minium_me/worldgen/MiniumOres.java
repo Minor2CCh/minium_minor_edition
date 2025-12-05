@@ -14,6 +14,7 @@ public class MiniumOres {
     public static final RegistryKey<PlacedFeature> MINIUM_ORE_PLACED_KEY = register("ore_minium");
     public static final RegistryKey<PlacedFeature> NETHER_MINIUM_ORE_PLACED_KEY = register("ore_minium_nether");
     public static final RegistryKey<PlacedFeature> END_MINIUM_ORE_PLACED_KEY = register("ore_minium_end");
+    public static final RegistryKey<PlacedFeature> MINIUM_ORE_HIGH_PLACED_KEY = register("ore_minium_high");
     public static final RegistryKey<PlacedFeature> IRIS_QUARTZ_ORE_PLACED_KEY = register("ore_iris_quartz");
 
     //from mekanism
@@ -35,6 +36,7 @@ public class MiniumOres {
         BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NETHER_MINIUM_ORE_PLACED_KEY);
         BiomeModifications.addFeature(BiomeSelectors.foundInTheEnd(), GenerationStep.Feature.UNDERGROUND_ORES, END_MINIUM_ORE_PLACED_KEY);
         BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, IRIS_QUARTZ_ORE_PLACED_KEY);
+        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, MINIUM_ORE_HIGH_PLACED_KEY);
         //from mekanism
         BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, OSMIUM_ORE_PLACED_KEY1);
         BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, OSMIUM_ORE_PLACED_KEY2);

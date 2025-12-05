@@ -24,7 +24,6 @@ public class GlowStoneEnergyBlock extends AbstractEnergyBlock{
     });
     public GlowStoneEnergyBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(WATERLOGGED, Boolean.FALSE));
     }
     @Override
     public MapCodec<GlowStoneEnergyBlock> getCodec() {

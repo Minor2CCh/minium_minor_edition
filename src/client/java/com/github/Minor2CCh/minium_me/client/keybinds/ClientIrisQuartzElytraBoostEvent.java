@@ -1,6 +1,7 @@
 package com.github.Minor2CCh.minium_me.client.keybinds;
 
 import com.github.Minor2CCh.minium_me.Minium_me;
+import com.github.Minor2CCh.minium_me.event.IrisQuartzElytraBoostEvent;
 import com.github.Minor2CCh.minium_me.payload.IrisQuartzElytraBoostPayLoad;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -30,6 +31,11 @@ public class ClientIrisQuartzElytraBoostEvent {
                 MinecraftClient client = MinecraftClient.getInstance();
                 if (client.player == null)
                     return;
+                ItemStack beltStack = IrisQuartzElytraBoostEvent.getWindExploderItem(client.player);
+                if(beltStack != null){
+                    ClientPlayNetworking.send(IrisQuartzElytraBoostPayLoad.INSTANCE);
+                    return;
+                }
                 ItemStack itemStack = Minium_me.ACCESSORY_PLATFORM.getIrisQuartzElytraStack(client.player);
                 if(itemStack == null)
                     return;

@@ -26,7 +26,8 @@ public enum ArmorReinforcedComponent implements StringIdentifiable {
     ALL_PROTECTION(4, "all_protection", noAttribute(), 0x7F7F7F, 5),
     UNDYING(5, "undying", noAttribute(), 0xFFDA26, 2),
     MAGIC_IMMUNE(6, "magic_immune", noAttribute(), 0xE730D0, 5),
-    DIS_HOSTILE(7, "dis_hostile", noAttribute(), 0xB11E00, 5);
+    DIS_HOSTILE(7, "dis_hostile", noAttribute(), 0xB11E00, 5),
+    WIND_AMULET(8, "wind_amulet", noAttribute(), 0xD3DBFF, 5);
     public static final Codec<ArmorReinforcedComponent> CODEC = StringIdentifiable.createBasicCodec(ArmorReinforcedComponent::values);
     private final int index;
     private final String name;
@@ -52,9 +53,8 @@ public enum ArmorReinforcedComponent implements StringIdentifiable {
             AttributeModifierSlot attributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(slot);
             Identifier identifier = Minium_me.of("reinforced.armor." + slot.asString());
             builder.add(EntityAttributes.GENERIC_OXYGEN_BONUS, new EntityAttributeModifier(identifier, 5, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot);
-            builder.add(
-                    EntityAttributes.GENERIC_WATER_MOVEMENT_EFFICIENCY, new EntityAttributeModifier(identifier, 5, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot
-            );
+            builder.add(EntityAttributes.GENERIC_WATER_MOVEMENT_EFFICIENCY, new EntityAttributeModifier(identifier, 0.25, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot);
+            builder.add(EntityAttributes.PLAYER_SUBMERGED_MINING_SPEED, new EntityAttributeModifier(identifier, 0.2, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot);
             return builder.build();
         };
     }

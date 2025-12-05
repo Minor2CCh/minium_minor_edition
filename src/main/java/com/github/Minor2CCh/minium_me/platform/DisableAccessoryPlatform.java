@@ -28,4 +28,8 @@ public class DisableAccessoryPlatform implements AccessoryPlatform{
             return entity.getEquippedStack(EquipmentSlot.CHEST);
         return null;
     }
+    @Override
+    public ItemStack getTrinketsStackBelt(LivingEntity entity, Item item) {
+        return null;
+    }
 }

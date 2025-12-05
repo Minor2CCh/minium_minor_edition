@@ -85,7 +85,7 @@ public class MiniumItem{
             .attributeModifiers(IrisQuartzMaceItem.createAttributeModifiers())), "iris_quartz_mace");
     public static final Item MINIUM_SHIELD = register(new MiniumShieldItem(new Item.Settings().maxDamage(MiniumConfigLoader.getConfig().getDurabilityMiniumShield()).component(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT).attributeModifiers(MiniumShieldItem.createAttributeModifiers(2, 1))), "minium_shield");
     public static final Item TEMPORALLY_BLOCK_PLACER = register(new TemporallyBlockPlacerItem(new Item.Settings().maxCount(1).component(MiniumModComponent.TEMPORALLY_REMAIN, 15),15, MiniumBlock.TEMPORALLY_BLOCK), "temporally_block_placer");
-    public static final Item IRIS_QUARTZ_APPLE = register(new IrisQuartzAppleItem(new Item.Settings().fireproof().food(new FoodComponent.Builder().nutrition(20).saturationModifier(0.5F).alwaysEdible().build())), "iris_quartz_apple");
+    public static final Item IRIS_QUARTZ_APPLE = register(new IrisQuartzAppleItem(new Item.Settings().fireproof().rarity(Rarity.EPIC).food(new FoodComponent.Builder().nutrition(20).saturationModifier(0.5F).alwaysEdible().build())), "iris_quartz_apple");
     //from mekanism
     public static final Item OSMIUM_INGOT_FROM_MEKANISM = register(new Item(new Item.Settings()), "osmium_ingot");
     public static final Item OSMIUM_NUGGET_FROM_MEKANISM = register(new Item(new Item.Settings()), "osmium_nugget");

@@ -117,6 +117,10 @@ public class MiniumItemTag {
     public static final TagKey<Item> INGREDIENT_ALL_PROTECTION = modOf("reinforced/armor/ingredient_all_protection");
     public static final TagKey<Item> INGREDIENT_UNDYING = modOf("reinforced/armor/ingredient_undying");
     public static final TagKey<Item> INGREDIENT_MAGIC_IMMUNE = modOf("reinforced/armor/ingredient_magic_immune");
+    public static final TagKey<Item> REINFORCEABLE_WEAPON = modOf("reinforceable_weapon");
+    public static final TagKey<Item> REINFORCEABLE_TOOL = modOf("reinforceable_tool");
+    public static final TagKey<Item> REINFORCEABLE_AXE = modOf("reinforceable_axe");
+    public static final TagKey<Item> REINFORCE_BLACKLIST = modOf("reinforce_blacklist");
 
 
     private MiniumItemTag() {
@@ -131,7 +135,7 @@ public class MiniumItemTag {
     private static TagKey<Item> vanillaOf(String id) {
         return TagKey.of(RegistryKeys.ITEM, Identifier.ofVanilla(id));
     }
-    private static TagKey<Item> otherModOf(String Modid, String id) {
-        return TagKey.of(RegistryKeys.ITEM, Identifier.of(Modid, id));
+    private static TagKey<Item> otherModOf(String modId, String id) {
+        return TagKey.of(RegistryKeys.ITEM, Identifier.of(modId, id));
     }
 }

@@ -6,6 +6,7 @@ import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -25,9 +26,12 @@ public class MaceAdvancementEvent {
         });
 
     }
-    @SuppressWarnings("unused")
     public static void doneAdvancement(ServerPlayerEntity player, DamageSource source, float amount){
-        if(amount >= 100 && player.getMainHandStack().isOf(MiniumItem.IRIS_QUARTZ_MACE)){
+        ItemStack attackStack = source.getWeaponStack();
+        if(attackStack == null || attackStack.isEmpty()){
+            return;
+        }
+        if(amount >= 100 && attackStack.isOf(MiniumItem.IRIS_QUARTZ_MACE)){
             Identifier advancementId = Identifier.ofVanilla("adventure/overoverkill");
             if(player.getServer() != null){
                 AdvancementEntry advancement = player.getServer().getAdvancementLoader().get(advancementId);

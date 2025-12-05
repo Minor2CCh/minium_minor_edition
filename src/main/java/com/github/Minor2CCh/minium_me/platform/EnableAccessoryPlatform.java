@@ -67,4 +67,8 @@ public class EnableAccessoryPlatform implements AccessoryPlatform{
         }
         return null;
     }
+    @Override
+    public ItemStack getTrinketsStackBelt(LivingEntity entity, Item item) {
+        return getTrinketsStack(entity, item, "legs", "belt");
+    }
 }

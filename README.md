@@ -72,6 +72,7 @@ It can be crafted with 4 Iron Ingot, 4 Minium Ingot and 1 RedStone Block.
 
 The item emits a blast at one's feet when used.
 There are two versions: a standard version and an advanced version, the latter of which can be enchanted with Unbreaking and Mending enchantments.
+When Trinkets are loaded, they can be equipped on the Belt and activated using the same command as the Iris Quartz Elytra boost. (After 1.8.0)
 
 - Spear
 
@@ -114,7 +115,7 @@ This is a block that moves the Mob in the direction it is placed. Mob will not s
 
 - Minium Passable Glass
 
-A block that players can pass through, but other mobs and entities recognize as a wall.
+A block that players or projectiles fired by the player can pass through, but other mobs and entities recognize as a wall.
 
 - Minium Touchable Glass
 
@@ -172,13 +173,13 @@ This allows you to benefit from the Elytra Slot in NeoForge and equip the Iris Q
 - マイニウム
 
 このMODで追加されるオリジナル鉱石の一つ。(Fuzs様の[Minium Stone](https://modrinth.com/mod/minium-stone)とは無関係です)
-オーバーワールドのY=-32~96の範囲に生成されます。
+オーバーワールドのY=-32~320の範囲に生成されます。
 バニラのレシピと同じようにツールや防具をクラフトすることができます。ツールは採掘速度が早く、耐久値は鉄の1.5倍です。鉄で採掘ができるブロックはドロップさせることができますが、ダイヤモンド以上のツールが必要なブロックはドロップしないので注意。
 防具の防御性能は鉄よりわずかに高い程度ですが、一式装備で耐性エフェクトを受けることができるので、実質的な防御力はより高いです。
 
 - オスミウム
 
-オーバーワールドのY=-64~96の範囲に生成されます。
+オーバーワールドのY=-64~320の範囲に生成されます。
 一部アイテムのレシピに使用される他、一部のオスミウムを使用する他MODのレシピに使用することができます。
 テクスチャは[Mekanism](https://modrinth.com/mod/mekanism)より借用させていただきました。
 
@@ -232,6 +233,7 @@ This allows you to benefit from the Elytra Slot in NeoForge and equip the Iris Q
 
 使用した時に自分の足元に爆風を発するアイテムです。
 通常版と改良版の２つがあり、後者は耐久力と修繕のエンチャントを施すことができます。
+Trinketsをロードしている場合、Beltスロットに装備することが出来、虹水晶エリトラのブーストと同じコマンドで発動することが出来ます。
 
 - 鎗
 
@@ -274,7 +276,7 @@ This allows you to benefit from the Elytra Slot in NeoForge and equip the Iris Q
 
 - マイニウムの可通ガラス
 
-プレイヤーは通過することができるが、他のMobやエンティティは壁として認識するブロック。
+プレイヤーおよびプレイヤーが放った飛び道具は通過することができるが、他のMobやエンティティは壁として認識するブロック。
 
 - マイニウムの可触ガラス
 

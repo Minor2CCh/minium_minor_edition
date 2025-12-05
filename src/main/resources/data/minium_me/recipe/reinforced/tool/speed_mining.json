@@ -1,0 +1,13 @@
+{
+  "type": "minium_me:smithing_tool_reinforced",
+  "addition": {
+    "tag": "minium_me:reinforced/tool/ingredient_speed_mining"
+  },
+  "base": {
+    "tag": "minium_me:reinforceable_tool"
+  },
+  "template": {
+    "item": "minium_me:minium_upgrade_smithing_template"
+  },
+  "reinforced": "speed_mining"
+}

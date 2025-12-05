@@ -16,8 +16,15 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import net.minecraft.world.explosion.AdvancedExplosionBehavior;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +33,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 
@@ -161,8 +170,35 @@ public class LivingEntityMixin{
             amount = amount * 8 / 10;
         }else if(EntityFunctions.numReinforcedComponent(entity, ArmorReinforcedComponent.ALL_PROTECTION) == 3){
             amount = amount * 7 / 10;
-        }if(EntityFunctions.numReinforcedComponent(entity, ArmorReinforcedComponent.ALL_PROTECTION) == 4){
+        }else if(EntityFunctions.numReinforcedComponent(entity, ArmorReinforcedComponent.ALL_PROTECTION) == 4){
             amount = amount / 2;
+        }
+        if(EntityFunctions.numReinforcedComponent(entity, ArmorReinforcedComponent.WIND_AMULET) > 2){
+            if(entity.hasStatusEffect(StatusEffects.WIND_CHARGED)){
+                amount = amount * 3 / 10;
+                entity.removeStatusEffect(StatusEffects.WIND_CHARGED);
+                entity.getWorld().createExplosion(
+                        entity,
+                        null,
+                        new AdvancedExplosionBehavior(
+                                true, false, Optional.of(0.0F), Registries.BLOCK.getEntryList(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())),
+                        entity.getX(),
+                        entity.getY()+entity.getEyeHeight(entity.getPose()) / 2,
+                        entity.getZ(),
+                        0.0F,
+                        false,
+                        World.ExplosionSourceType.TRIGGER,
+                        ParticleTypes.GUST_EMITTER_SMALL,
+                        ParticleTypes.GUST_EMITTER_LARGE,
+                        SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST
+                );
+                if(entity.getFireTicks() >= 0){
+                    entity.setFireTicks(-20);
+                    entity.getWorld().playSound(null, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.PLAYERS, 1.0F, (1.0F + entity.getWorld().getRandom().nextFloat() * 0.2F) * 0.7F);
+
+                }
+            }
+
         }
         return amount;
     }

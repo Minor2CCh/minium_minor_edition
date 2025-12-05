@@ -1,5 +1,6 @@
 package com.github.Minor2CCh.minium_me.client;
 
+import com.github.Minor2CCh.minium_me.Minium_me;
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.client.event.LivingEntityEventTickClient;
 import com.github.Minor2CCh.minium_me.client.keybinds.ClientIrisQuartzElytraBoostEvent;
@@ -10,8 +11,10 @@ import com.github.Minor2CCh.minium_me.client.render.IrisQuartzElytraFeatureRende
 import com.github.Minor2CCh.minium_me.client.render.MiniumEntityRenderers;
 import com.github.Minor2CCh.minium_me.component.ArmorReinforcedComponent;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
+import com.github.Minor2CCh.minium_me.component.ToolReinforcedComponent;
 import com.github.Minor2CCh.minium_me.config.MiniumConfigLoader;
 import com.github.Minor2CCh.minium_me.event.IrisQuartzElytraBoostEvent;
+import com.github.Minor2CCh.minium_me.item.WindExploderItem;
 import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import com.github.Minor2CCh.minium_me.item.IrisQuartzElytraItem;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
@@ -28,7 +31,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -127,19 +129,43 @@ public class Minium_meClient implements ClientModInitializer {
                     lines.add(Text.translatable("item.minium_me.hide_tooltip.desc"));
                 }
             }
-            if(stack.getItem() instanceof ArmorItem){
-                ArmorReinforcedComponent component = stack.get(MiniumModComponent.ARMOR_REINFORCED);
-                if(component != null){
-                    lines.add(Text.translatable("item.minium_me.armor_reinforced.type", Text.translatable("item.minium_me.armor_reinforced."+component.asString()).withColor(component.getColor())));
-                    if (hasShiftDown) {
-                        for(int i = 0; i< component.getTooltipLine(); i++){
-                            lines.add(Text.translatable("item.minium_me.armor_reinforced."+component.asString()+".desc."+i));
+            if (stack.getItem() instanceof WindExploderItem) {
+                if (hasShiftDown) {
+                    lines.add(Text.translatable(stack.getItem().getTranslationKey()+".desc"));
+                    if(Minium_me.ACCESSORY_PLATFORM.enableTrinkets()){
+                        if(ClientIrisQuartzElytraBoostEvent.KEY_BOOST_IRIS_QUARTZ_ELYTRA.isUnbound()){
+                            lines.add(Text.translatable(MiniumItem.IRIS_QUARTZ_ELYTRA.getTranslationKey()+".desc.unbound"));
+                        }else{
+                            lines.add(Text.translatable(MiniumItem.WIND_EXPLODER.getTranslationKey()+".desc.extra", ClientIrisQuartzElytraBoostEvent.KEY_BOOST_IRIS_QUARTZ_ELYTRA.getBoundKeyLocalizedText().getString()));
                         }
-                    } else {
-                        lines.add(Text.translatable("item.minium_me.armor_reinforced.hide"));
                     }
+                } else {
+                    lines.add(Text.translatable("item.minium_me.hide_tooltip.desc"));
                 }
             }
+            ArmorReinforcedComponent component = stack.get(MiniumModComponent.ARMOR_REINFORCED);
+            if(component != null){
+                lines.add(Text.translatable("item.minium_me.armor_reinforced.type", Text.translatable("item.minium_me.armor_reinforced."+component.asString()).withColor(component.getColor())));
+                if (hasShiftDown) {
+                    for(int i = 0; i< component.getTooltipLine(); i++){
+                        lines.add(Text.translatable("item.minium_me.armor_reinforced."+component.asString()+".desc."+i));
+                    }
+                } else {
+                    lines.add(Text.translatable("item.minium_me.armor_reinforced.hide"));
+                }
+            }
+            ToolReinforcedComponent toolComponent = stack.get(MiniumModComponent.TOOL_REINFORCED);
+            if(toolComponent != null){
+                lines.add(Text.translatable("item.minium_me.tool_reinforced.type", Text.translatable("item.minium_me.tool_reinforced."+toolComponent.asString()).withColor(toolComponent.getColor())));
+                if (hasShiftDown) {
+                    for(int i = 0; i< toolComponent.getTooltipLine(); i++){
+                        lines.add(Text.translatable("item.minium_me.tool_reinforced."+toolComponent.asString()+".desc."+i));
+                    }
+                } else {
+                    lines.add(Text.translatable("item.minium_me.armor_reinforced.hide"));
+                }
+            }
+
         });
         ClientIrisQuartzElytraBoostEvent.initialize();
         LivingEntityEventTickClient.initialize();

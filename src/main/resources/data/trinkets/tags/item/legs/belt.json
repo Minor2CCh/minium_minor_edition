@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minium_me:wind_exploder",
+      "required": false
+    },
+    {
+      "id": "minium_me:advanced_wind_exploder",
+      "required": false
+    }
+  ]
+}

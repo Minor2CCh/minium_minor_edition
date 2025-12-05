@@ -3,6 +3,7 @@ package com.github.Minor2CCh.minium_me.registry;
 import com.github.Minor2CCh.minium_me.Minium_me;
 import com.github.Minor2CCh.minium_me.recipe.SmithingArmorReinforcedRecipe;
 import com.github.Minor2CCh.minium_me.recipe.MiniumShieldDecorationRecipe;
+import com.github.Minor2CCh.minium_me.recipe.SmithingToolReinforcedRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialRecipeSerializer;
@@ -16,6 +17,9 @@ public class MiniumSpecialRecipes {
     );
     public static final RecipeSerializer<SmithingArmorReinforcedRecipe> SMITHING_ARMOR_REINFORCED = register(
             "smithing_armor_reinforced", new SmithingArmorReinforcedRecipe.Serializer()
+    );
+    public static final RecipeSerializer<SmithingToolReinforcedRecipe> SMITHING_TOOL_REINFORCED = register(
+            "smithing_tool_reinforced", new SmithingToolReinforcedRecipe.Serializer()
     );
     public static void initialize() {
     }

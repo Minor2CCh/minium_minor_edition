@@ -141,6 +141,11 @@ public class LivingEntityTickEvent {
                     livingEntity.heal(1);
                 }
             }
+            if(livingEntity instanceof PlayerEntity player){
+                if(player.isFallFlying() && player.isInLava()){
+                    player.stopFallFlying();
+                }
+            }
 
         }
         if(EntityFunctions.numReinforcedComponent(livingEntity, ArmorReinforcedComponent.WATER_ADAPTION) == 4){

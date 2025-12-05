@@ -19,6 +19,7 @@ public class MiniumCommands {
                     CommandManager.literal(Minium_me.MOD_ID)
                             .then(CommandManager.literal("resethealthboost")
                                     .then(CommandManager.argument("targets", EntityArgumentType.entities())
+                                            .requires(source -> source.hasPermissionLevel(2))
                                             .executes(ctx -> {
                                                 Collection<? extends Entity> targets =
                                                         EntityArgumentType.getEntities(ctx, "targets");

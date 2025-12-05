@@ -1,0 +1,13 @@
+{
+  "type": "minium_me:smithing_armor_reinforced",
+  "addition": {
+    "tag": "minium_me:reinforced/armor/ingredient_wind_amulet"
+  },
+  "base": {
+    "tag": "minium_me:reinforceable_armor"
+  },
+  "template": {
+    "item": "minium_me:minium_upgrade_smithing_template"
+  },
+  "reinforced": "wind_amulet"
+}

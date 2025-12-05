@@ -9,4 +9,5 @@ public interface AccessoryPlatform {
     ItemStack getTrinketsStackNecklace(LivingEntity entity, Item item);
     ItemStack getTrinketsStack(LivingEntity entity, Item item, String group1, String group2);
     ItemStack getIrisQuartzElytraStack(LivingEntity entity);
+    ItemStack getTrinketsStackBelt(LivingEntity entity, Item item);
 }

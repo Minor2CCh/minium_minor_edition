@@ -78,12 +78,6 @@ public class MiniumGunItem extends Item implements HasCustomTooltip {
                 EnergyBulletEntity energybulletEntity = new EnergyBulletEntity(world, stack, pointer.centerPos());
                 Direction dir = pointer.state().get(DispenserBlock.FACING);
                 Vec3i v = dir.getVector();
-                /*
-                double extraX = pointer.state().get(DispenserBlock.FACING) == Direction.EAST ? 0.5 : (pointer.state().get(DispenserBlock.FACING) == Direction.WEST ? -0.5 : 0);
-                double extraY = pointer.state().get(DispenserBlock.FACING) == Direction.UP ? 0.5 : (pointer.state().get(DispenserBlock.FACING) == Direction.DOWN ? -0.5 : 0);
-                double extraZ = pointer.state().get(DispenserBlock.FACING) == Direction.NORTH ? -0.5 : (pointer.state().get(DispenserBlock.FACING) == Direction.SOUTH ? 0.5 : 0);
-                Vec3d dispensePos = new Vec3d(pointer.centerPos().getX()+extraX, pointer.centerPos().getY()+extraY, pointer.centerPos().getZ()+extraZ);
-                 */
                 double x = v.getX();
                 double y = v.getY();
                 double z = v.getZ();

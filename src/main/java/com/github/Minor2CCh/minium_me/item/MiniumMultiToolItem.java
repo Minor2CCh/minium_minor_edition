@@ -58,7 +58,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
         World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos();
         PlayerEntity playerEntity = context.getPlayer();
-        if (ToggleBulb(context, world, blockPos, playerEntity)) {
+        if (toggleBulb(context, world, blockPos, playerEntity)) {
             return ActionResult.success(world.isClient);
         }
         if (accelerateTrialSpawner(context, world, blockPos, playerEntity)) {
@@ -264,7 +264,7 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
         return false;
     }
     //電球切り替え
-    private boolean ToggleBulb(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
+    private boolean toggleBulb(ItemUsageContext context, World world, BlockPos blockPos, PlayerEntity playerEntity){
         BlockState blockState = world.getBlockState(blockPos);
         if (blockState.getBlock() instanceof BulbBlock && !playerEntity.shouldCancelInteraction()) {
             world.playSound(playerEntity, blockPos, blockState.get(BulbBlock.LIT) ? SoundEvents.BLOCK_COPPER_BULB_TURN_OFF : SoundEvents.BLOCK_COPPER_BULB_TURN_ON, SoundCategory.BLOCKS, 1.0F, 1.0F);

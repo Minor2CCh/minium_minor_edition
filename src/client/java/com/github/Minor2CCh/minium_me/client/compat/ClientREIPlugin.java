@@ -4,9 +4,11 @@ import com.github.Minor2CCh.minium_me.block.MiniumBlock;
 import com.github.Minor2CCh.minium_me.client.compat.rei.categories.EnergyGunDisplayCategory;
 import com.github.Minor2CCh.minium_me.client.compat.rei.display.EnergyGunDisplay;
 import com.github.Minor2CCh.minium_me.client.compat.rei.display.SmithingReinforcedDisplay;
+import com.github.Minor2CCh.minium_me.client.compat.rei.display.SmithingReinforcedToolDisplay;
 import com.github.Minor2CCh.minium_me.component.EnergyComponent;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
 import com.github.Minor2CCh.minium_me.recipe.SmithingArmorReinforcedRecipe;
+import com.github.Minor2CCh.minium_me.recipe.SmithingToolReinforcedRecipe;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
@@ -31,6 +33,11 @@ public class ClientREIPlugin implements REIClientPlugin {
                 SmithingArmorReinforcedRecipe.class,
                 RecipeType.SMITHING,
                 SmithingReinforcedDisplay::new
+        );
+        registry.registerRecipeFiller(
+                SmithingToolReinforcedRecipe.class,
+                RecipeType.SMITHING,
+                SmithingReinforcedToolDisplay::new
         );
 
     }

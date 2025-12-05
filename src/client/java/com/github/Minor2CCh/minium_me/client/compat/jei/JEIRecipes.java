@@ -2,6 +2,7 @@ package com.github.Minor2CCh.minium_me.client.compat.jei;
 
 import com.github.Minor2CCh.minium_me.client.compat.jei.category.SmithingReinforcedCategory;
 import com.github.Minor2CCh.minium_me.recipe.SmithingArmorReinforcedRecipe;
+import com.github.Minor2CCh.minium_me.recipe.SmithingToolReinforcedRecipe;
 import com.google.common.collect.Lists;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.MinecraftClient;
@@ -28,7 +29,7 @@ public class JEIRecipes {
         List<RecipeEntry<SmithingRecipe>> specialRecipe = recipeManager.listAllOfType(RecipeType.SMITHING);
         List<SmithingRecipe> recipes = Lists.newArrayList();
         specialRecipe.forEach((recipe) -> {
-            if(recipe.value() instanceof SmithingArmorReinforcedRecipe){
+            if(recipe.value() instanceof SmithingArmorReinforcedRecipe || recipe.value() instanceof SmithingToolReinforcedRecipe){
                 //System.out.println(recipe);
                 recipes.add(recipe.value());
             }

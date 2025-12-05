@@ -14,6 +14,7 @@ import com.github.Minor2CCh.minium_me.platform.DisableAccessoryPlatform;
 import com.github.Minor2CCh.minium_me.platform.EnableAccessoryPlatform;
 import com.github.Minor2CCh.minium_me.sound.MiniumSoundsEvent;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
+import com.github.Minor2CCh.minium_me.util.AddLootTable;
 import com.github.Minor2CCh.minium_me.worldgen.MiniumOres;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -54,7 +55,7 @@ public class Minium_me implements ModInitializer {
         MiniumBlockEntityTypes.initialize();
         EnchantmentAllowEvents.initialize();
         MultiToolDurabilityMultiplicationEvent.initialize();
-        ArmorReinforceEvent.initialize();
+        ReinforceEvent.initialize();
         PendantProtectionEvent.initialize();
         CopyNBTEvents.initialize();
         MiniumCommands.initialize();

@@ -25,7 +25,6 @@ public class RedStoneEnergyBlock extends AbstractEnergyBlock{
     });
     public RedStoneEnergyBlock(Block.Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(WATERLOGGED, Boolean.FALSE));
     }
 
     @Override

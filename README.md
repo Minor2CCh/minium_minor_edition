@@ -9,13 +9,13 @@ This mod will add 3 ores.
 - Minium
 
 One of the original ores added by this mod. (Not related to [Minium Stone](https://modrinth.com/mod/minium-stone) by Fuzs)
-It is generated in the overworld Y=-32~96 range.
+It is generated in the overworld Y=-32~320 range.
 You can craft tools and armor in the same way as vanilla recipes. Tools are faster to mine and have a durability value 1.5 times that of iron. Note that blocks that can be mined with iron can be dropped, but blocks that require diamond or higher tools will not drop.
 The defensive performance of the armor is only slightly higher than that of iron, but since it is subject to the Effect of Resistance when equipped as a set, it has a higher real defensive value.
 
 - Osmium
 
-It is generated in the range of Y=-64~96 in the overworld.
+It is generated in the range of Y=-64~320 in the overworld.
 It is used in recipes for some items and can be used in recipes for other mods that use some osmium.
 Texture borrowed from [Mekanism](https://modrinth.com/mod/mekanism).
 
@@ -128,6 +128,12 @@ A block that can be placed using the Temporally Block Placer. Enchanting the Tem
 
 Its effects are the same as the vanilla anvil.
 
+## Other Item
+
+- Iris Quartz Apple
+
+Increases the maximum Health by 2. The default upper limit is 40.
+
 ## Compatible MOD
 
 - Farmer's Delight[(Fabric)](https://modrinth.com/mod/farmers-delight-refabricated)/[(NeoForge)](https://modrinth.com/mod/farmers-delight)
@@ -141,6 +147,14 @@ You can equip Iris Quartz Pendant in the Necklace slot.
 - [Elytra Slot](https://modrinth.com/mod/elytra-slot)
 
 You can equip Iris Quartz Elytra in the Cape slot.
+
+- [Just Enough Items (JEI)](https://modrinth.com/mod/jei)/[Roughly Enough Items (REI)](https://modrinth.com/mod/rei)
+
+Can preview recipes Energy Gun Convert.
+
+- [MaxHealthFix](https://modrinth.com/mod/max-health-fix)
+
+When loading a world, the health amplified by Iris Quartz Apple will no longer reset.
 
 ## If you want to use the Accessory Slot in NeoForge(Sinytra Connector)
 
@@ -274,6 +288,12 @@ This allows you to benefit from the Elytra Slot in NeoForge and equip the Iris Q
 
 効果はバニラの金床と同じ。
 
+## その他のアイテム
+
+- 虹水晶のリンゴ
+
+体力の最大値が2上がります。デフォルトの上限は40です。
+
 ## 互換性のあるMOD
 
 - Farmer's Delight[(Fabric)](https://modrinth.com/mod/farmers-delight-refabricated)/[(NeoForge)](https://modrinth.com/mod/farmers-delight)
@@ -287,6 +307,14 @@ Necklaceスロットに虹水晶のペンダントを装備できるようにな
 - [Elytra Slot](https://modrinth.com/mod/elytra-slot)
 
 Capeスロットに虹水晶エリトラを装備できるようになります。
+
+- [Just Enough Items (JEI)](https://modrinth.com/mod/jei)/[Roughly Enough Items (REI)](https://modrinth.com/mod/rei)
+
+エネルギーガンのエネルギー変換レシピを見ることが出来ます。
+
+- [MaxHealthFix](https://modrinth.com/mod/max-health-fix)
+
+虹水晶のリンゴによって増幅された体力がワールドをロードするごとにリセットされなくなります。
 
 ## NeoForgeでアクセサリスロットに虹水晶のペンダントや虹水晶エリトラに装備したい場合
 

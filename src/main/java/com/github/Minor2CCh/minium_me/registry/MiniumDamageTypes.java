@@ -5,7 +5,8 @@ import net.minecraft.entity.damage.DamageType;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 
-public class MiniumDamageTypes {
+public final class MiniumDamageTypes {
+    private MiniumDamageTypes() {}
     public static final RegistryKey<DamageType> ENERGY_DEFAULT = register("energy_default");
     public static final RegistryKey<DamageType> ENERGY_FIRE = register("energy_fire");
     public static final RegistryKey<DamageType> ENERGY_NOT_PROJECTILE = register("energy_not_projectile");

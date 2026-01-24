@@ -10,33 +10,36 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.PlacedFeature;
 
-public class MiniumOres {
-    public static final RegistryKey<PlacedFeature> MINIUM_ORE_PLACED_KEY = register("ore_minium");
-    public static final RegistryKey<PlacedFeature> NETHER_MINIUM_ORE_PLACED_KEY = register("ore_minium_nether");
-    public static final RegistryKey<PlacedFeature> END_MINIUM_ORE_PLACED_KEY = register("ore_minium_end");
-    public static final RegistryKey<PlacedFeature> MINIUM_ORE_HIGH_PLACED_KEY = register("ore_minium_high");
-    public static final RegistryKey<PlacedFeature> IRIS_QUARTZ_ORE_PLACED_KEY = register("ore_iris_quartz");
+public final class MiniumOres {
+    private static final RegistryKey<PlacedFeature> MINIUM_ORE_PLACED_KEY = register("ore_minium");
+    private static final RegistryKey<PlacedFeature> NETHER_MINIUM_ORE_PLACED_KEY = register("ore_minium_nether");
+    private static final RegistryKey<PlacedFeature> END_MINIUM_ORE_PLACED_KEY = register("ore_minium_end");
+    private static final RegistryKey<PlacedFeature> MINIUM_ORE_HIGH_PLACED_KEY = register("ore_minium_high");
+    private static final RegistryKey<PlacedFeature> IRIS_QUARTZ_ORE_PLACED_KEY = register("ore_iris_quartz");
+    private static final RegistryKey<PlacedFeature> JADESTONE_PLACED_KEY = register("ore_jadestone");
 
     //from mekanism
-    public static final RegistryKey<PlacedFeature> OSMIUM_ORE_PLACED_KEY1 = register("ore_osmium_wave1");
-    public static final RegistryKey<PlacedFeature> OSMIUM_ORE_PLACED_KEY2 = register("ore_osmium_wave2");
+    private static final RegistryKey<PlacedFeature> OSMIUM_ORE_PLACED_KEY1 = register("ore_osmium_wave1");
+    private static final RegistryKey<PlacedFeature> OSMIUM_ORE_PLACED_KEY2 = register("ore_osmium_wave2");
 
 
 
 
 
 
-    public static RegistryKey<PlacedFeature> register(String id) {
+    private static RegistryKey<PlacedFeature> register(String id) {
         Identifier oreID = Minium_me.of(id);
 
         return RegistryKey.of(RegistryKeys.PLACED_FEATURE, oreID);
     }
+    private MiniumOres() {}
     public static void initialize() {
         BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, MINIUM_ORE_PLACED_KEY);
         BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Feature.UNDERGROUND_ORES, NETHER_MINIUM_ORE_PLACED_KEY);
         BiomeModifications.addFeature(BiomeSelectors.foundInTheEnd(), GenerationStep.Feature.UNDERGROUND_ORES, END_MINIUM_ORE_PLACED_KEY);
         BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, IRIS_QUARTZ_ORE_PLACED_KEY);
         BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, MINIUM_ORE_HIGH_PLACED_KEY);
+        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, JADESTONE_PLACED_KEY);
         //from mekanism
         BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, OSMIUM_ORE_PLACED_KEY1);
         BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD), GenerationStep.Feature.UNDERGROUND_ORES, OSMIUM_ORE_PLACED_KEY2);

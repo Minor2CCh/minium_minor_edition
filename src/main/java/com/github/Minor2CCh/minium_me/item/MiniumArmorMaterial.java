@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public final class MiniumArmorMaterial{
-
+    private MiniumArmorMaterial() {}
 
 
 

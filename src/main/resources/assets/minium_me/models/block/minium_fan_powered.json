@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "minium_me:block/minium_fan_powered",
+    "side": "minium_me:block/minium_block",
+    "top": "minium_me:block/minium_block"
+  }
+}

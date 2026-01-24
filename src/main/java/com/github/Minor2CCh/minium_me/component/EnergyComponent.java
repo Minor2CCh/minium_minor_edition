@@ -73,7 +73,7 @@ public record EnergyComponent(int remain, EnergyType energyType){
         ENERGY_TITANIUM(41, "energy_titanium", 0xE0E0E6, MiniumDamageTypes.ENERGY_TITANIUM, 1.0F, MiniumItemTag.ENERGY_TITANIUM, MiniumItemTag.ENERGY_TITANIUM_STORAGE_BLOCKS, 10),//チタン
         ENERGY_CHROME(42, "energy_chrome", 0xF1EFEF, MiniumDamageTypes.ENERGY_DEFAULT, 1.0F, MiniumItemTag.ENERGY_CHROMIUM, MiniumItemTag.ENERGY_CHROMIUM_STORAGE_BLOCKS, 10),//クロム
         ENERGY_IRIDIUM(43, "energy_iridium", 0x91A09C, MiniumDamageTypes.ENERGY_NOT_PROJECTILE, 2.0F, MiniumItemTag.ENERGY_IRIDIUM, MiniumItemTag.ENERGY_IRIDIUM_STORAGE_BLOCKS, 10),//イリジウム
-        ENERGY_PLATINUM(44, "energy_platinum", 0xACBDC9, MiniumDamageTypes.ENERGY_NOT_PROJECTILE, 2.5F, MiniumItemTag.ENERGY_PLATINUM, MiniumItemTag.ENERGY_PLATINUM_STORAGE_BLOCKS, 10);//プラチナ
+        ENERGY_PLATINUM(44, "energy_platinum", 0xACBDC9, MiniumDamageTypes.ENERGY_NOT_PROJECTILE, 1.75F, MiniumItemTag.ENERGY_PLATINUM, MiniumItemTag.ENERGY_PLATINUM_STORAGE_BLOCKS, 10);//プラチナ
 
         final int index;
         final String type;
@@ -188,6 +188,7 @@ public record EnergyComponent(int remain, EnergyType energyType){
     public TagKey<Item> getMaterial(){
         return this.energyType().getMaterial();
     }
+    @Nullable
     public TagKey<Item> getMaterialSB(){
         return this.energyType().getMaterialSB();
     }

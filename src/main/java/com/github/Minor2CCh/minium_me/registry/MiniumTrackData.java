@@ -5,7 +5,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 
-public class MiniumTrackDatas {
+public class MiniumTrackData {
     // 注意！
     // このクラスは必ず初期化前に読み込まないこと
     // ワールドに入る際にクラッシュします

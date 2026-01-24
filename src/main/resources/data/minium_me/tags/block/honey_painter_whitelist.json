@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "supplementaries:way_sign",
+      "required": false
+    },
+    {
+      "id": "supplementaries:way_sign_wall",
+      "required": false
+    }
+  ]
+}

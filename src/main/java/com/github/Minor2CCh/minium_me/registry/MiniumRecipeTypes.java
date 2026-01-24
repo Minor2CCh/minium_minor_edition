@@ -7,7 +7,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
 @SuppressWarnings("all")
-public class MiniumRecipeTypes {
+public final class MiniumRecipeTypes {
     public static final RecipeType<SmithingArmorReinforcedRecipe> SMITHING_REINFORCED =
             register("smithing_reinforced");
     private static <T extends Recipe<?>> RecipeType<T> register(String id){
@@ -17,6 +17,7 @@ public class MiniumRecipeTypes {
             }
         });
     }
+    private MiniumRecipeTypes() {}
     public static void initialize() {
 
     }

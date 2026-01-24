@@ -11,10 +11,10 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 
 
 @Environment(EnvType.CLIENT)
-public class MiniumEntityRenderers{
+public final class MiniumEntityRenderers{
 
     public static final EntityModelLayer ENERGY_BULLET = new EntityModelLayer(Minium_me.of("energy_bullet"), "main");
-
+    private MiniumEntityRenderers() {}
     public static void initialize() {
         EntityRendererRegistry.register(MiniumEntityType.ENERGY_BULLET, EnergyBulletRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(ENERGY_BULLET, EnergyBulletEntityModel::getTexturedModelData);

@@ -5,7 +5,8 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class ProtectionIntoWallDamage {
+public final class ProtectionIntoWallDamage {
+    private ProtectionIntoWallDamage() {}
     // 虹水晶のメイスでのスマッシュ攻撃は衝突ダメージも無効化する
     public static void initialize(){
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {

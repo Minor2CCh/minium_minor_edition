@@ -11,15 +11,17 @@ import net.minecraft.util.Formatting;
 
 import java.util.Collection;
 
-public class MiniumCommands {
+public final class MiniumCommands {
+    private MiniumCommands(){}
     public static void initialize(){
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 
             dispatcher.register(
                     CommandManager.literal(Minium_me.MOD_ID)
+                            .requires(source -> source.hasPermissionLevel(2))
                             .then(CommandManager.literal("resethealthboost")
                                     .then(CommandManager.argument("targets", EntityArgumentType.entities())
-                                            .requires(source -> source.hasPermissionLevel(2))
+
                                             .executes(ctx -> {
                                                 Collection<? extends Entity> targets =
                                                         EntityArgumentType.getEntities(ctx, "targets");
@@ -64,7 +66,7 @@ public class MiniumCommands {
 
     private static boolean healthBoostReset(Entity entity) {
         if(entity instanceof LivingEntity livingEntity){
-            livingEntity.getDataTracker().set(MiniumTrackDatas.getMaxHealthBoostTracker(), 0);
+            livingEntity.getDataTracker().set(MiniumTrackData.getMaxHealthBoostTracker(), 0);
             return true;
         }
         return false;

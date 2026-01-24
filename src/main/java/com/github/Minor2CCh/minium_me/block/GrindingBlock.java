@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -78,13 +79,13 @@ public class GrindingBlock extends Block implements Waterloggable, HasCustomTool
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if(entity instanceof LivingEntity livingEntity){
-            if(!world.isClient()){
-                damageEntity(world, livingEntity, pos);
+            if(!world.isClient() && world instanceof ServerWorld serverWorld){
+                damageEntity(serverWorld, livingEntity, pos);
             }
         }
     }
 
-    protected void damageEntity(World world, LivingEntity livingEntity, BlockPos pos) {
+    protected void damageEntity(ServerWorld world, LivingEntity livingEntity, BlockPos pos) {
         int playerHitTime = ((LivingEntityAccessor)(livingEntity)).playerHitTimer();
         if(playerHitTime == 0){
             ((LivingEntityAccessor)(livingEntity)).setPlayerHitTimer(10);

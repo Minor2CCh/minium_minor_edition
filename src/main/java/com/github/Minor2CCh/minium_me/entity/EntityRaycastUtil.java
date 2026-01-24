@@ -4,7 +4,8 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.util.hit.*;
 import net.minecraft.util.math.*;
 
-public class EntityRaycastUtil {
+public final class EntityRaycastUtil {
+    private EntityRaycastUtil() {}
     public static HitResult raycastIncludingEntities(PlayerEntity player, double blockReach, double entityReach, float tickDelta) {
 
         // プレイヤーの視点ベクトル

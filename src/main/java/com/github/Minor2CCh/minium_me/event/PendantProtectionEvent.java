@@ -16,9 +16,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 
-public class PendantProtectionEvent {
+public final class PendantProtectionEvent {
     public static final int IRIS_QUARTZ_PENDANT_TOTEM_COOLDOWN = 1200;
     public static final int INVINCIBLE_TIME = 200;
+    private PendantProtectionEvent() {}
     public static void initialize(){
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if(EntityFunctions.hasItem(entity, MiniumItem.IRIS_QUARTZ_PENDANT)){

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_wind_charge_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:storage_blocks/wind_charge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:minium_fan"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wind_charge_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:minium_fan"
+    ]
+  }
+}

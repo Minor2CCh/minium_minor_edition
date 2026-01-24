@@ -6,7 +6,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
-public class MiniumSoundsEvent {
+public final class MiniumSoundsEvent {
     public static final SoundEvent SHOOT_ENERGY_BULLET_EVENT = register("item.minium_me.energy_gun.shoot");
     public static final SoundEvent ENERGY_GUN_EMPTY_EVENT = register("item.minium_me.energy_gun.empty");
     public static final SoundEvent RELOAD_ENERGY_GUN_EVENT = register("item.minium_me.energy_gun.reload");
@@ -16,6 +16,7 @@ public class MiniumSoundsEvent {
         Identifier soundId = Minium_me.of(id);
         return Registry.register(Registries.SOUND_EVENT, soundId, SoundEvent.of(soundId));
     }
+    private MiniumSoundsEvent() {}
     public static void initialize() {
     }
 

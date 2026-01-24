@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "minium_passable_glass_pane",
+  "key": {
+    "#": {
+      "item": "minecraft:ender_pearl"
+    },
+    "$": {
+      "item": "minium_me:minium_glass_pane"
+    }
+  },
+  "pattern": [
+    "$$$",
+    "$#$",
+    "$$$"
+  ],
+  "result": {
+    "count": 8,
+    "id": "minium_me:minium_passable_glass_pane"
+  }
+}

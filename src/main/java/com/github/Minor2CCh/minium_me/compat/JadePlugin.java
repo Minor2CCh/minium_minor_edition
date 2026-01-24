@@ -12,13 +12,11 @@ import snownee.jade.api.WailaPlugin;
 public class JadePlugin implements IWailaPlugin {
     @Override
     public void register(IWailaCommonRegistration registration) {
-        //TODO register data providers
         registration.registerBlockDataProvider(TemporallyBlockProvider.INSTANCE, TemporallyBlockEntity.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
-        //TODO register component providers, icon providers, callbacks, and config options here
         registration.registerBlockComponent(TemporallyBlockProvider.INSTANCE, TemporallyBlock.class);
     }
 }

@@ -7,7 +7,8 @@ import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Items;
 
-public class EnchantmentAllowEvents {
+public final class EnchantmentAllowEvents {
+    private EnchantmentAllowEvents() {}
     public static void initialize(){
         EnchantmentEvents.ALLOW_ENCHANTING.register((enchantment, stack, context) -> {
             Enchantment enchant = enchantment.value();
@@ -26,5 +27,4 @@ public class EnchantmentAllowEvents {
 
     }   // 剣で付与される攻撃系のエンチャントがエンチャントテーブルから出るように
         // Mixinで許可するとConnector使用時に反映されなくなる
-
 }

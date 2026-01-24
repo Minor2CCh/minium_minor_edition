@@ -6,7 +6,7 @@ import com.github.Minor2CCh.minium_me.config.MiniumConfigLoader;
 import com.github.Minor2CCh.minium_me.util.EntityFunctions;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
 import com.github.Minor2CCh.minium_me.item.MiniumItemTag;
-import com.github.Minor2CCh.minium_me.registry.MiniumTrackDatas;
+import com.github.Minor2CCh.minium_me.registry.MiniumTrackData;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.Entity;
@@ -24,8 +24,9 @@ import net.minecraft.world.Difficulty;
 
 import java.util.Objects;
 
-public class LivingEntityTickEvent {
+public final class LivingEntityTickEvent {
     private static final Identifier HEALTH_BOOST_ATTRIBUTE_KEY = Minium_me.of("health_boost");
+    private LivingEntityTickEvent() {}
     public static void initialize(){
         ServerTickEvents.START_WORLD_TICK.register((world) -> {
             for(Entity entity : world.iterateEntities()) {
@@ -34,7 +35,7 @@ public class LivingEntityTickEvent {
                         EntityAttributeInstance instance = livingEntity.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
                         if(instance != null){
                             final int boostLimit = MiniumConfigLoader.getConfig().getHealthBoostLimit();
-                            int healthValue = Math.min(boostLimit, livingEntity.getDataTracker().get(MiniumTrackDatas.getMaxHealthBoostTracker()));
+                            int healthValue = Math.min(boostLimit, livingEntity.getDataTracker().get(MiniumTrackData.getMaxHealthBoostTracker()));
                             if(instance.hasModifier(HEALTH_BOOST_ATTRIBUTE_KEY)){
                                 EntityAttributeModifier modifier = instance.getModifier(HEALTH_BOOST_ATTRIBUTE_KEY);
                                 if(modifier != null && modifier.value() != healthValue){
@@ -103,6 +104,28 @@ public class LivingEntityTickEvent {
         }else if (EntityFunctions.equipMiniumArmors(livingEntity, 4)) {
             livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 20, 0, false, false, false));
         }
+        if(EntityFunctions.numReinforcedComponent(livingEntity, ArmorReinforcedComponent.WATER_ADAPTION) == 4){
+            if(livingEntity.hasStatusEffect(StatusEffects.CONDUIT_POWER)){
+                if(!livingEntity.getWorld().isClient()){
+                    if(livingEntity.getWorld().getTime() % 40 == 0){
+                        if(livingEntity.isAlive()){
+                            livingEntity.heal(1);
+                        }
+                    }
+                    if(livingEntity.getWorld().getTime() % 400 == 0){
+                        if(livingEntity instanceof PlayerEntity player){
+                            player.getHungerManager().add(1, 1);
+                        }
+                    }
+
+                }
+                livingEntity.setStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 300, 0, false, false, false), livingEntity);
+                livingEntity.setStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 0, false, false, false), livingEntity);
+            }
+        }
+        if(livingEntity.getWorld().isClient()){
+            return;
+        }
         if(EntityFunctions.numReinforcedComponent(livingEntity, ArmorReinforcedComponent.WATER_ADAPTION) >= 3){
             if(livingEntity.isTouchingWaterOrRain()){
                 int conduitPowerTime;
@@ -126,17 +149,17 @@ public class LivingEntityTickEvent {
             }
         }
         if(EntityFunctions.numReinforcedComponent(livingEntity, ArmorReinforcedComponent.FIRE_IMMUNE) >= 3){
-            if(!livingEntity.isFireImmune() && livingEntity.getFireTicks() <= 0 && livingEntity.getFrozenTicks() > 0 && !livingEntity.isTouchingWaterOrRain() && !livingEntity.getWorld().isClient()){
+            if(!livingEntity.isFireImmune() && livingEntity.getFireTicks() <= 0 && livingEntity.getFrozenTicks() > 0 && !livingEntity.isTouchingWaterOrRain()){
                 livingEntity.setOnFireForTicks(80);
             }
         }
         if(EntityFunctions.numReinforcedComponent(livingEntity, ArmorReinforcedComponent.FIRE_IMMUNE) == 4){
-            if(livingEntity.getFireTicks() > 0 && livingEntity.getWorld().getTime() % 40 == 0 && !livingEntity.getWorld().isClient()){
+            if(livingEntity.getFireTicks() > 0 && livingEntity.getWorld().getTime() % 40 == 0){
                 if(livingEntity.isAlive()){
                     livingEntity.heal(1);
                 }
             }
-            if(livingEntity.getWorld().getDimension().ultrawarm() && livingEntity.getWorld().getTime() % 400 == 0 && !livingEntity.getWorld().isClient()){
+            if(livingEntity.getWorld().getDimension().ultrawarm() && livingEntity.getWorld().getTime() % 400 == 0){
                 if(livingEntity.isAlive()){
                     livingEntity.heal(1);
                 }
@@ -147,25 +170,6 @@ public class LivingEntityTickEvent {
                 }
             }
 
-        }
-        if(EntityFunctions.numReinforcedComponent(livingEntity, ArmorReinforcedComponent.WATER_ADAPTION) == 4){
-            if(livingEntity.hasStatusEffect(StatusEffects.CONDUIT_POWER)){
-                if(!livingEntity.getWorld().isClient()){
-                    if(livingEntity.getWorld().getTime() % 40 == 0){
-                        if(livingEntity.isAlive()){
-                            livingEntity.heal(1);
-                        }
-                    }
-                    if(livingEntity.getWorld().getTime() % 400 == 0){
-                        if(livingEntity instanceof PlayerEntity player){
-                            player.getHungerManager().add(1, 1);
-                        }
-                    }
-
-                }
-                livingEntity.setStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 300, 0, false, false, false), livingEntity);
-                livingEntity.setStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 20, 0, false, false, false), livingEntity);
-            }
         }
         if(EntityFunctions.numReinforcedComponent(livingEntity, ArmorReinforcedComponent.FROZEN_IMMUNE) >= 2){
             livingEntity.setFrozenTicks(0);

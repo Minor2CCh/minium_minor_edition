@@ -6,7 +6,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 @SuppressWarnings("unused")
-public class MiniumItemTag {
+public final class MiniumItemTag {
 
     public static final TagKey<Item> SPEARS = modOf("spears");
     public static final TagKey<Item> ENERGY_GUNS = modOf("energy_guns");
@@ -120,6 +120,7 @@ public class MiniumItemTag {
     public static final TagKey<Item> REINFORCEABLE_WEAPON = modOf("reinforceable_weapon");
     public static final TagKey<Item> REINFORCEABLE_TOOL = modOf("reinforceable_tool");
     public static final TagKey<Item> REINFORCEABLE_AXE = modOf("reinforceable_axe");
+    public static final TagKey<Item> REINFORCEABLE_BOTH = modOf("reinforceable_both");
     public static final TagKey<Item> REINFORCE_BLACKLIST = modOf("reinforce_blacklist");
 
 

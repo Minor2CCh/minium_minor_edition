@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.function.Supplier;
 
@@ -24,11 +23,11 @@ public class IrisQuartzGrindingBlock extends GrindingBlock{
         GRIND_DAMAGE = 15.0F;
     }
     @Override
-    protected void damageEntity(World world, LivingEntity livingEntity, BlockPos pos) {
-        FakePlayer fakePlayer = FakePlayer.get((ServerWorld) world);
-        if(!this.attackStack.get().hasEnchantments() && world instanceof ServerWorld){
+    protected void damageEntity(ServerWorld world, LivingEntity livingEntity, BlockPos pos) {
+        FakePlayer fakePlayer = FakePlayer.get(world);
+        if(!this.attackStack.get().hasEnchantments()){
             ItemStack tempStack = attackStack.get().copy();
-            MiniumEnchantments.giveCustomEnchantment((ServerWorld) world, tempStack, 10, Enchantments.LOOTING);
+            MiniumEnchantments.giveCustomEnchantment(world, tempStack, 10, Enchantments.LOOTING);
             attackStack = () -> tempStack;
         }
         fakePlayer.setStackInHand(Hand.MAIN_HAND, attackStack.get().copy());

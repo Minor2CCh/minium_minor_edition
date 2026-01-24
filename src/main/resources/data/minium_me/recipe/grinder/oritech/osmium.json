@@ -1,0 +1,32 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "oritech"
+      ]
+    }
+  ],
+  "type": "oritech:grinder",
+  "fluidInput": {
+    "amount": 0,
+    "fluid": "minecraft:empty"
+  },
+  "fluidOutputs": [],
+  "ingredients": [
+    {
+      "tag": "c:ores/osmium"
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "id": "minium_me:raw_osmium"
+    },
+    {
+      "count": 1,
+      "id": "oritech:raw_platinum"
+    }
+  ],
+  "time": 140
+}

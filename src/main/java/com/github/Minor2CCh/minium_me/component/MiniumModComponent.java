@@ -8,7 +8,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.dynamic.Codecs;
 
-public class MiniumModComponent {
+public final class MiniumModComponent {
+    private MiniumModComponent() {}
     public static final ComponentType<EnergyComponent> REMAIN_ENERGY = Registry.register(
             Registries.DATA_COMPONENT_TYPE,
             Minium_me.of("energy_profile"),

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "c:storage_blocks/wind_charge"
+    },
+    "$": {
+      "tag": "c:gems/lapis"
+    },
+    "R": {
+      "tag": "c:storage_blocks/minium"
+    },
+    "T": {
+      "tag": "c:ingots/concentrated_minium"
+    }
+  },
+  "pattern": [
+    "$#$",
+    "#R#",
+    "T$T"
+  ],
+  "result": {
+    "count": 8,
+    "id": "minium_me:minium_fan"
+  }
+}

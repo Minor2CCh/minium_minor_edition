@@ -12,12 +12,13 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 
 @SuppressWarnings("all")
-public class ClientIrisQuartzElytraBoostEvent {
+public final class ClientIrisQuartzElytraBoostEvent {
     public static final KeyBinding KEY_BOOST_IRIS_QUARTZ_ELYTRA = register("iris_quartz_elytra", GLFW.GLFW_KEY_G);
 
     private static KeyBinding register(String id, int key) {
         return KeyBindingHelper.registerKeyBinding(new KeyBinding("key." + Minium_me.MOD_ID + "." + id, key, "key.categories." + Minium_me.MOD_ID));
     }
+    private ClientIrisQuartzElytraBoostEvent() {}
     public static void initialize(){
         /*
         ClientTickEvents.END_CLIENT_TICK.register(client -> {

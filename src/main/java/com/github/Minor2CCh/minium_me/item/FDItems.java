@@ -20,10 +20,12 @@ import vectorwing.farmersdelight.common.registry.ModItems;
 import java.util.Objects;
 import java.util.function.Supplier;
 //Sinytra Connector環境での動作確認済み
-public class FDItems {
+public final class FDItems {
     public static final Supplier<Item> MINIUM_KNIFE = register(() -> new KnifeItem(MiniumToolMaterial.MINIUM_TOOL, ModItems.knifeItem(MiniumToolMaterial.MINIUM_TOOL)), "minium_knife");
     public static final Supplier<Item> C_MINIUM_KNIFE = register(() -> new KnifeItem(MiniumToolMaterial.C_MINIUM_TOOL, ModItems.knifeItem(MiniumToolMaterial.C_MINIUM_TOOL)), "concentrated_minium_knife");
     public static final Supplier<Item> IRIS_QUARTZ_KNIFE = register(() -> new KnifeItem(MiniumToolMaterial.IRIS_QUARTZ_TOOL, ModItems.knifeItem(MiniumToolMaterial.IRIS_QUARTZ_TOOL).rarity(Rarity.EPIC).fireproof()), "iris_quartz_knife");
+    private FDItems() {
+    }
     public static void initialize() {
         ServerTickEvents.END_WORLD_TICK.register(world -> {
             for(ServerPlayerEntity player : world.getPlayers()){

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "minium_me:block/jadestone_bricks",
+    "side": "minium_me:block/jadestone_bricks",
+    "top": "minium_me:block/jadestone_bricks"
+  }
+}

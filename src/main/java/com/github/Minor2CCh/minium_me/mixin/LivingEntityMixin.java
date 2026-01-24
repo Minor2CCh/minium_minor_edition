@@ -4,7 +4,7 @@ import com.github.Minor2CCh.minium_me.component.ArmorReinforcedComponent;
 import com.github.Minor2CCh.minium_me.config.MiniumConfigLoader;
 import com.github.Minor2CCh.minium_me.util.EntityFunctions;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
-import com.github.Minor2CCh.minium_me.registry.MiniumTrackDatas;
+import com.github.Minor2CCh.minium_me.registry.MiniumTrackData;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import com.google.common.base.Suppliers;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
@@ -203,7 +203,7 @@ public class LivingEntityMixin{
         return amount;
     }
     static {
-        MiniumTrackDatas.initialize();  // ← ココが超重要
+        MiniumTrackData.initialize();  // ← ココが超重要
     }
     @Unique
     private static final String PREV_DAMAGE_TYPE_NBT = "MiniumPrevDamageTime";
@@ -211,14 +211,14 @@ public class LivingEntityMixin{
     private static final String HEALTH_BOOST_VALUE_NBT = "MiniumHealthBoostValue";
     @Inject(method = "initDataTracker", at = @At("RETURN"))
     private void initTrackedData(DataTracker.Builder builder, CallbackInfo ci) {
-        builder.add(MiniumTrackDatas.getPrevDamageTimeTracker(), 0L);
-        builder.add(MiniumTrackDatas.getMaxHealthBoostTracker(), 0);
+        builder.add(MiniumTrackData.getPrevDamageTimeTracker(), 0L);
+        builder.add(MiniumTrackData.getMaxHealthBoostTracker(), 0);
     }
     @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
     private void writeCustomNbt(NbtCompound nbt, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object)this;
-        long time = entity.getDataTracker().get(MiniumTrackDatas.getPrevDamageTimeTracker());
-        int healthBoost = entity.getDataTracker().get(MiniumTrackDatas.getMaxHealthBoostTracker());
+        long time = entity.getDataTracker().get(MiniumTrackData.getPrevDamageTimeTracker());
+        int healthBoost = entity.getDataTracker().get(MiniumTrackData.getMaxHealthBoostTracker());
         nbt.putLong(PREV_DAMAGE_TYPE_NBT, time);
         nbt.putInt(HEALTH_BOOST_VALUE_NBT, healthBoost);
     }
@@ -227,11 +227,11 @@ public class LivingEntityMixin{
         LivingEntity entity = (LivingEntity) (Object)this;
         if (nbt.contains(PREV_DAMAGE_TYPE_NBT)) {
             long time = nbt.getLong(PREV_DAMAGE_TYPE_NBT);
-            entity.getDataTracker().set(MiniumTrackDatas.getPrevDamageTimeTracker(), time);
+            entity.getDataTracker().set(MiniumTrackData.getPrevDamageTimeTracker(), time);
         }
         if (nbt.contains(HEALTH_BOOST_VALUE_NBT)) {
             int healthBoost = nbt.getInt(HEALTH_BOOST_VALUE_NBT);
-            entity.getDataTracker().set(MiniumTrackDatas.getMaxHealthBoostTracker(), healthBoost);
+            entity.getDataTracker().set(MiniumTrackData.getMaxHealthBoostTracker(), healthBoost);
         }
     }
 

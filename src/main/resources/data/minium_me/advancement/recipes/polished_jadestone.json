@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:polished_jadestone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_jadestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minium_me:jadestone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_jadestone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:polished_jadestone"
+    ]
+  }
+}

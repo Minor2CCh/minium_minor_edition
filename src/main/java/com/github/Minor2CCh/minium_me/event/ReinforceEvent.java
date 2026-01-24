@@ -1,11 +1,12 @@
 package com.github.Minor2CCh.minium_me.event;
 
 import com.github.Minor2CCh.minium_me.block.MiniumBlock;
+import com.github.Minor2CCh.minium_me.block.MiniumBlockTag;
 import com.github.Minor2CCh.minium_me.component.ArmorReinforcedComponent;
 import com.github.Minor2CCh.minium_me.component.MiniumModComponent;
 import com.github.Minor2CCh.minium_me.component.ToolReinforcedComponent;
 import com.github.Minor2CCh.minium_me.util.EntityFunctions;
-import com.github.Minor2CCh.minium_me.registry.MiniumTrackDatas;
+import com.github.Minor2CCh.minium_me.registry.MiniumTrackData;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
@@ -44,6 +45,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
 
 import java.util.Objects;
@@ -51,9 +53,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 
-public class ReinforceEvent {
+public final class ReinforceEvent {
     private static final int INVINCIBLE_TIME = 60;
     private static final int AP_INVINCIBLE_TIME = 40;
+    private ReinforceEvent() {}
     public static void initialize() {
         // ダメージ無効化
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
@@ -72,11 +75,11 @@ public class ReinforceEvent {
 
             }
             if (EntityFunctions.numReinforcedComponent(entity, ArmorReinforcedComponent.ALL_PROTECTION) == 4){
-                long prevHitTime = entity.getDataTracker().get(MiniumTrackDatas.getPrevDamageTimeTracker());
+                long prevHitTime = entity.getDataTracker().get(MiniumTrackData.getPrevDamageTimeTracker());
                 if(entity.getWorld().getTime() - prevHitTime >= 0 && entity.getWorld().getTime() - prevHitTime < AP_INVINCIBLE_TIME){
                     return false;
                 }else{
-                    entity.getDataTracker().set(MiniumTrackDatas.getPrevDamageTimeTracker(), entity.getWorld().getTime());
+                    entity.getDataTracker().set(MiniumTrackData.getPrevDamageTimeTracker(), entity.getWorld().getTime());
                 }
             }
             if (source.isIn(DamageTypeTags.IS_FIRE)){
@@ -146,9 +149,13 @@ public class ReinforceEvent {
         });
         AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
             ItemStack weaponStack = player.getWeaponStack();
-            if(world.getRandom().nextInt(10) == 0){
-                if(weaponStack.getOrDefault(MiniumModComponent.TOOL_REINFORCED, ToolReinforcedComponent.EMPTY).equals(ToolReinforcedComponent.WIND_SLINGER) || EntityFunctions.numReinforcedComponent(player, ArmorReinforcedComponent.WIND_AMULET) == 4){
-                    addWindChargedTime(player, 1200, 200);
+            if(!world.isClient()){
+                if(weaponStack.getOrDefault(MiniumModComponent.TOOL_REINFORCED, ToolReinforcedComponent.EMPTY).equals(ToolReinforcedComponent.WIND_SLINGER)
+                        || EntityFunctions.numReinforcedComponent(player, ArmorReinforcedComponent.WIND_AMULET) == 4){
+                    if(world.getRandom().nextInt((weaponStack.getOrDefault(MiniumModComponent.TOOL_REINFORCED, ToolReinforcedComponent.EMPTY).equals(ToolReinforcedComponent.WIND_SLINGER)
+                            && EntityFunctions.numReinforcedComponent(player, ArmorReinforcedComponent.WIND_AMULET) == 4) ? 5 : 10) == 0){
+                        addWindChargedTime(player, 1200, 200);
+                    }
                 }
             }
             return ActionResult.PASS;
@@ -221,54 +228,55 @@ public class ReinforceEvent {
                     }
                 }
             }
-
             return TypedActionResult.pass(handStack);
         });
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             ItemStack handStack = player.getStackInHand(hand);
-            if(!player.isSneaking() && handStack.getOrDefault(MiniumModComponent.TOOL_REINFORCED, ToolReinforcedComponent.EMPTY).equals(ToolReinforcedComponent.GENERATE_LIGHT)){
-                BlockPos blockPos = hitResult.getBlockPos().offset(hitResult.getSide());
-                if((world.isAir(blockPos) || world.isWater(blockPos) || world.getBlockState(blockPos).isReplaceable())) {
-                    world.setBlockState(blockPos, MiniumBlock.GLOWSTONE_ENERGY_BLOCK.getDefaultState().with(Properties.WATERLOGGED, world.getFluidState(blockPos).getFluid() == Fluids.WATER));
-                    handStack.damage(5, player, LivingEntity.getSlotForHand(hand));
-                    BlockSoundGroup blockSoundGroup = world.getBlockState(blockPos).getSoundGroup();
-                    world.playSound(
-                            player,
-                            blockPos,
-                            world.getBlockState(blockPos).getSoundGroup().getPlaceSound(),
-                            SoundCategory.BLOCKS,
-                            (blockSoundGroup.getVolume() + 1.0F) / 2.0F,
-                            blockSoundGroup.getPitch() * 0.8F
-                    );
-                    return ActionResult.success(world.isClient());
+            if(player.canModifyBlocks()){
+                if(handStack.getDamage() < handStack.getMaxDamage() - 5 || !handStack.isDamageable()){
+                    if(!player.isSneaking() && handStack.getOrDefault(MiniumModComponent.TOOL_REINFORCED, ToolReinforcedComponent.EMPTY).equals(ToolReinforcedComponent.GENERATE_LIGHT)){
+                        BlockPos blockPos = hitResult.getBlockPos().offset(hitResult.getSide());
+                        if((world.isAir(blockPos) || world.isWater(blockPos) || world.getBlockState(blockPos).isReplaceable())) {
+                            world.setBlockState(blockPos, MiniumBlock.GLOWSTONE_ENERGY_BLOCK.getDefaultState().with(Properties.WATERLOGGED, world.getFluidState(blockPos).getFluid() == Fluids.WATER));
+                            handStack.damage(5, player, LivingEntity.getSlotForHand(hand));
+                            BlockSoundGroup blockSoundGroup = world.getBlockState(blockPos).getSoundGroup();
+                            world.playSound(
+                                    player,
+                                    blockPos,
+                                    world.getBlockState(blockPos).getSoundGroup().getPlaceSound(),
+                                    SoundCategory.BLOCKS,
+                                    (blockSoundGroup.getVolume() + 1.0F) / 2.0F,
+                                    blockSoundGroup.getPitch() * 0.8F
+                            );
+                            world.emitGameEvent(GameEvent.BLOCK_PLACE, blockPos, GameEvent.Emitter.of(player, world.getBlockState(blockPos)));
+                            return ActionResult.success(world.isClient());
+                        }
+                    }
                 }
-            }
-
-            if(handStack.getOrDefault(MiniumModComponent.TOOL_REINFORCED, ToolReinforcedComponent.EMPTY).equals(ToolReinforcedComponent.HONEY_PAINTER)){
-                if(!player.isSneaking() && (hand == Hand.OFF_HAND || !(player.getOffHandStack().getItem() instanceof ShieldItem))){
-                    BlockState blockState = world.getBlockState(hitResult.getBlockPos());
-                    ItemStack honeycombStack = new ItemStack(Items.HONEYCOMB, 1);
-                    player.setStackInHand(hand, honeycombStack);
-                    if(!blockState.hasBlockEntity() || blockState.getBlock() instanceof AbstractSignBlock){
-                        ItemActionResult itemActionResult = blockState.onUseWithItem(player.getStackInHand(hand), world, player, hand, hitResult);
-                        if(itemActionResult.isAccepted()){
+                if(handStack.getOrDefault(MiniumModComponent.TOOL_REINFORCED, ToolReinforcedComponent.EMPTY).equals(ToolReinforcedComponent.HONEY_PAINTER)){
+                    if(handStack.getDamage() < handStack.getMaxDamage() - 10 || !handStack.isDamageable()){
+                        if(!player.isSneaking() && (hand == Hand.OFF_HAND || !(player.getOffHandStack().getItem() instanceof ShieldItem))){
+                            BlockState blockState = world.getBlockState(hitResult.getBlockPos());
+                            ItemStack honeycombStack = new ItemStack(Items.HONEYCOMB, 1);
+                            player.setStackInHand(hand, honeycombStack);
+                            if(!blockState.hasBlockEntity() || blockState.getBlock() instanceof AbstractSignBlock || blockState.isIn(MiniumBlockTag.HONEY_PAINTER_WHITELIST)){
+                                ItemActionResult itemActionResult = blockState.onUseWithItem(player.getStackInHand(hand), world, player, hand, hitResult);
+                                if(itemActionResult.isAccepted()){
+                                    int useCount = honeycombStack.getItem() != Items.HONEYCOMB ? 1 : 1 - honeycombStack.getCount();
+                                    handStack.damage(useCount * 10, player, LivingEntity.getSlotForHand(hand));
+                                    player.setStackInHand(hand, handStack);
+                                    return itemActionResult.toActionResult();
+                                }
+                            }
+                            ItemUsageContext context = new ItemUsageContext(world, player, hand, honeycombStack, hitResult);
+                            ActionResult result = Items.HONEYCOMB.useOnBlock(context);
                             int useCount = honeycombStack.getItem() != Items.HONEYCOMB ? 1 : 1 - honeycombStack.getCount();
                             handStack.damage(useCount * 10, player, LivingEntity.getSlotForHand(hand));
                             player.setStackInHand(hand, handStack);
-                            return itemActionResult.toActionResult();
+                            return result;
                         }
                     }
-                    ItemUsageContext context = new ItemUsageContext(world, player, hand, honeycombStack, hitResult);
-                    ActionResult result = Items.HONEYCOMB.useOnBlock(context);
-                    int useCount = honeycombStack.getItem() != Items.HONEYCOMB ? 1 : 1 - honeycombStack.getCount();
-                    handStack.damage(useCount * 10, player, LivingEntity.getSlotForHand(hand));
-                    player.setStackInHand(hand, handStack);
-                    return result;
-
                 }
-
-
-
             }
             return ActionResult.PASS;
 

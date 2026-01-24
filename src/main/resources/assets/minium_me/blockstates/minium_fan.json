@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "powered=false,facing=down": {
+      "model": "minium_me:block/minium_fan",
+      "x": 90
+    },
+    "powered=false,facing=east": {
+      "model": "minium_me:block/minium_fan",
+      "y": 90
+    },
+    "powered=false,facing=north": {
+      "model": "minium_me:block/minium_fan"
+    },
+    "powered=false,facing=south": {
+      "model": "minium_me:block/minium_fan",
+      "y": 180
+    },
+    "powered=false,facing=up": {
+      "model": "minium_me:block/minium_fan",
+      "x": 270
+    },
+    "powered=false,facing=west": {
+      "model": "minium_me:block/minium_fan",
+      "y": 270
+    },
+    "powered=true,facing=down": {
+      "model": "minium_me:block/minium_fan_powered",
+      "x": 90
+    },
+    "powered=true,facing=east": {
+      "model": "minium_me:block/minium_fan_powered",
+      "y": 90
+    },
+    "powered=true,facing=north": {
+      "model": "minium_me:block/minium_fan_powered"
+    },
+    "powered=true,facing=south": {
+      "model": "minium_me:block/minium_fan_powered",
+      "y": 180
+    },
+    "powered=true,facing=up": {
+      "model": "minium_me:block/minium_fan_powered",
+      "x": 270
+    },
+    "powered=true,facing=west": {
+      "model": "minium_me:block/minium_fan_powered",
+      "y": 270
+    }
+  }
+}

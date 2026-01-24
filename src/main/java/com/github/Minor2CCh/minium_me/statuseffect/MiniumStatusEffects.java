@@ -6,11 +6,11 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 
-public class MiniumStatusEffects {
+public final class MiniumStatusEffects {
     public static final RegistryEntry<StatusEffect> POISON_HEAL = Registry.registerReference(Registries.STATUS_EFFECT, Minium_me.of("poison_heal"), new PoisonHealEffect());
     public static final RegistryEntry<StatusEffect> POISONOUS_REGENERATION = Registry.registerReference(Registries.STATUS_EFFECT, Minium_me.of("poisonous_regeneration"), new PoisonousRegenerationEffect());
     public static final RegistryEntry<StatusEffect> PICKLING_SALT = Registry.registerReference(Registries.STATUS_EFFECT, Minium_me.of("pickling_salt"), new PicklingSaltEffect());
-
+    private MiniumStatusEffects() {}
     public static void initialize() {
     }
 }

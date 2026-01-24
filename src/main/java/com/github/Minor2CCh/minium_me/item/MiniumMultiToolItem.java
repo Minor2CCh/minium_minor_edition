@@ -141,13 +141,15 @@ public class MiniumMultiToolItem extends MiningToolItem implements HasCustomTool
         }
         return blockState.isIn(ConventionalBlockTags.STONES)
                 || blockState.isIn(BlockTags.STONE_ORE_REPLACEABLES)
-                || blockState.isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
+                || blockState.isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
+                || blockState.isIn(BlockTags.BASE_STONE_OVERWORLD);
     }
     private static boolean isNetherrackBlock(BlockState blockState){
         if(blockState.getBlock().getHardness() < 0){
             return false;
         }
-        return blockState.isIn(ConventionalBlockTags.NETHERRACKS);
+        return blockState.isIn(ConventionalBlockTags.NETHERRACKS)
+                || blockState.isIn(BlockTags.BASE_STONE_NETHER);
     }
     private static boolean isEndStoneBlock(BlockState blockState){
         if(blockState.getBlock().getHardness() < 0){

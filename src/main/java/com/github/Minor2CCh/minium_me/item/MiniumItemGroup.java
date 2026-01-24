@@ -15,13 +15,13 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 
-public class MiniumItemGroup {
+public final class MiniumItemGroup {
     public static final RegistryKey<ItemGroup> MINIUM_ITEM_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Minium_me.of("minium_item_group"));
     public static final ItemGroup MINIUM_ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(MiniumItem.MINIUM_INGOT))
             .displayName(Text.translatable(String.format("itemGroup.%s.%s", Minium_me.MOD_ID, "minium_item")))
             .build();
-
+    private MiniumItemGroup() {}
     public static void initialize() {
         Registry.register(Registries.ITEM_GROUP, MINIUM_ITEM_GROUP_KEY, MINIUM_ITEM_GROUP);
         ItemGroupEvents.modifyEntriesEvent(MINIUM_ITEM_GROUP_KEY).register(itemGroup -> {
@@ -110,8 +110,11 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumItem.IRIS_QUARTZ_MACE);
             itemGroup.add(MiniumBlock.MINIUM_LANTERN);
             itemGroup.add(MiniumBlock.MINIUM_GLASS);
+            itemGroup.add(MiniumBlock.MINIUM_GLASS_PANE);
             itemGroup.add(MiniumBlock.MINIUM_PASSABLE_GLASS);
+            itemGroup.add(MiniumBlock.MINIUM_PASSABLE_GLASS_PANE);
             itemGroup.add(MiniumBlock.MINIUM_TOUCHABLE_GLASS);
+            itemGroup.add(MiniumBlock.MINIUM_TOUCHABLE_GLASS_PANE);
             itemGroup.add(MiniumBlock.OSMIUM_CHAIN);
             itemGroup.add(MiniumBlock.OSMIUM_LANTERN);
             itemGroup.add(MiniumBlock.MINIUM_ANVIL);
@@ -128,6 +131,19 @@ public class MiniumItemGroup {
             itemGroup.add(MiniumBlock.MINIUM_TRAPDOOR);
             itemGroup.add(MiniumBlock.MINIUM_DOOR);
             itemGroup.add(MiniumItem.IRIS_QUARTZ_APPLE);
+            itemGroup.add(MiniumBlock.MINIUM_FAN);
+            itemGroup.add(MiniumBlock.JADESTONE);
+            itemGroup.add(MiniumBlock.JADESTONE_SLAB);
+            itemGroup.add(MiniumBlock.JADESTONE_STAIRS);
+            itemGroup.add(MiniumBlock.JADESTONE_WALL);
+            itemGroup.add(MiniumBlock.POLISHED_JADESTONE);
+            itemGroup.add(MiniumBlock.POLISHED_JADESTONE_SLAB);
+            itemGroup.add(MiniumBlock.POLISHED_JADESTONE_STAIRS);
+            itemGroup.add(MiniumBlock.POLISHED_JADESTONE_WALL);
+            itemGroup.add(MiniumBlock.JADESTONE_BRICKS);
+            itemGroup.add(MiniumBlock.JADESTONE_BRICK_SLAB);
+            itemGroup.add(MiniumBlock.JADESTONE_BRICK_STAIRS);
+            itemGroup.add(MiniumBlock.JADESTONE_BRICK_WALL);
             //from mekanism
             itemGroup.add(MiniumItem.OSMIUM_INGOT_FROM_MEKANISM);
             itemGroup.add(MiniumItem.RAW_OSMIUM_FROM_MEKANISM);

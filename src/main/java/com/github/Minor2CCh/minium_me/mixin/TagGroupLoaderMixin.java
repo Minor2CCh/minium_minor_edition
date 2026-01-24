@@ -29,7 +29,8 @@ public class TagGroupLoaderMixin {
                 Map.of(MiniumItemTag.REINFORCEABLE_TOOL, List.of(MiniumItemTag.REINFORCE_BLACKLIST),
                         MiniumItemTag.REINFORCEABLE_WEAPON, List.of(MiniumItemTag.REINFORCE_BLACKLIST),
                         MiniumItemTag.REINFORCEABLE_ARMOR, List.of(MiniumItemTag.REINFORCE_BLACKLIST),
-                        MiniumItemTag.REINFORCEABLE_AXE, List.of(MiniumItemTag.REINFORCE_BLACKLIST));
+                        MiniumItemTag.REINFORCEABLE_AXE, List.of(MiniumItemTag.REINFORCE_BLACKLIST),
+                        MiniumItemTag.REINFORCEABLE_BOTH, List.of(MiniumItemTag.REINFORCE_BLACKLIST));
         if (RegistryKeys.getTagPath(RegistryKeys.ITEM).equals(dataType)) {
             for (Map.Entry<TagKey<Item>, List<TagKey<Item>>> entry : blackLists.entrySet()) {
                 Map<Identifier, Collection<T>> result = cir.getReturnValue();

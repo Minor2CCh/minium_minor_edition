@@ -64,9 +64,12 @@ public enum ToolReinforcedComponent implements StringIdentifiable {
             AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
             AttributeModifierSlot attributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(slot);
             Identifier identifier = Minium_me.of("reinforced.tool." + slot.asString());
-            builder.add(EntityAttributes.PLAYER_MINING_EFFICIENCY, new EntityAttributeModifier(identifier, 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), attributeModifierSlot);
+            builder.add(EntityAttributes.PLAYER_BLOCK_BREAK_SPEED, new EntityAttributeModifier(identifier, 0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), attributeModifierSlot);
             builder.add(
                     EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(identifier, 0.3, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), attributeModifierSlot
+            );
+            builder.add(
+                    EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(identifier, 0.3, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE), attributeModifierSlot
             );
             return builder.build();
         };

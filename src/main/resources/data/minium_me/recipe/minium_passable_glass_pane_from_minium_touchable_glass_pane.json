@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "minium_passable_glass_pane",
+  "ingredients": [
+    {
+      "item": "minium_me:minium_touchable_glass_pane"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minium_me:minium_passable_glass_pane"
+  }
+}

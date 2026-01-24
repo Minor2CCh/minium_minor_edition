@@ -11,14 +11,14 @@ import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
-public class MiniumPotions {
+public final class MiniumPotions {
     public static final Potion POISON_HEAL = Registry.register(Registries.POTION,
             Minium_me.of("poison_heal"),
             new Potion(new StatusEffectInstance(MiniumStatusEffects.POISON_HEAL, 3600)));
     public static final Potion LONG_POISON_HEAL = Registry.register(Registries.POTION,
             Minium_me.of("long_poison_heal"),
             new Potion(new StatusEffectInstance(MiniumStatusEffects.POISON_HEAL, 9600)));
-
+    private MiniumPotions() {}
     public static void initialize() {
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
         builder.registerPotionRecipe(

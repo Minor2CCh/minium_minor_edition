@@ -13,12 +13,12 @@ import net.minecraft.registry.Registry;
 
 import java.util.function.Function;
 
-public class MiniumParticles {
+public final class MiniumParticles {
     public static final ParticleType<EnergyGunParticleType> ENERGY_HIT_PARTICLE = register(
             "energy_hit", false, EnergyGunParticleType::createCodec, EnergyGunParticleType::createPacketCodec
     );
     public static final SimpleParticleType ENERGY_HIT_PARTICLE2 = registerSimpleParticle("energy2_hit", false);
-
+    private MiniumParticles() {}
     public static void initialize() {
     }
     @SuppressWarnings("all")

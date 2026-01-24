@@ -1,0 +1,28 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "oritech"
+      ]
+    }
+  ],
+  "type": "oritech:pulverizer",
+  "fluidInput": {
+    "amount": 0,
+    "fluid": "minecraft:empty"
+  },
+  "fluidOutputs": [],
+  "ingredients": [
+    {
+      "tag": "c:ores/iris_quartz"
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "id": "minium_me:iris_quartz"
+    }
+  ],
+  "time": 120
+}

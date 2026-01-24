@@ -21,7 +21,7 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 import java.util.function.Function;
 
 
-public class MiniumBlock{
+public final class MiniumBlock{
 
     public static final Block MINIUM_ORE = register(new ExperienceDroppingBlock(
             ConstantIntProvider.create(0),Block.Settings.create().strength(3f, 3.0f).mapColor(MapColor.STONE_GRAY).requiresTool()), "minium_ore", defaultBlockItemSettings());
@@ -142,6 +142,12 @@ public class MiniumBlock{
                     .solidBlock(Blocks::never)
                     .suffocates(Blocks::never)
                     .blockVision(Blocks::never)), "minium_glass", defaultBlockItemSettings());
+    public static final Block MINIUM_GLASS_PANE = register(
+            new PaneBlock(Block.Settings.create().instrument(NoteBlockInstrument.HAT)
+                    .strength(0.3F, 6.0F)
+                    .sounds(BlockSoundGroup.GLASS)
+                    .mapColor(MINIUM_BLOCK.getDefaultMapColor())
+                    .nonOpaque()), "minium_glass_pane", defaultBlockItemSettings());
     public static final Block MINIUM_PASSABLE_GLASS = register(
             new PassableGlassBlock(Block.Settings.create().instrument(NoteBlockInstrument.HAT)
                     .strength(0.3F, 6.0F)
@@ -152,6 +158,12 @@ public class MiniumBlock{
                     .solidBlock(Blocks::never)
                     .suffocates(Blocks::never)
                     .blockVision(Blocks::never)), "minium_passable_glass", defaultBlockItemSettings());
+    public static final Block MINIUM_PASSABLE_GLASS_PANE = register(
+            new PassableGlassPaneBlock(Block.Settings.create().instrument(NoteBlockInstrument.HAT)
+                    .strength(0.3F, 6.0F)
+                    .sounds(BlockSoundGroup.GLASS)
+                    .mapColor(MINIUM_BLOCK.getDefaultMapColor())
+                    .nonOpaque()), "minium_passable_glass_pane", defaultBlockItemSettings());
     public static final Block MINIUM_TOUCHABLE_GLASS = register(
             new TouchableGlassBlock(Block.Settings.create().instrument(NoteBlockInstrument.HAT)
                     .strength(0.3F, 6.0F)
@@ -162,6 +174,12 @@ public class MiniumBlock{
                     .solidBlock(Blocks::never)
                     .suffocates(Blocks::never)
                     .blockVision(Blocks::never)), "minium_touchable_glass", defaultBlockItemSettings());
+    public static final Block MINIUM_TOUCHABLE_GLASS_PANE = register(
+            new TouchableGlassPaneBlock(Block.Settings.create().instrument(NoteBlockInstrument.HAT)
+                    .strength(0.3F, 6.0F)
+                    .sounds(BlockSoundGroup.GLASS)
+                    .mapColor(MINIUM_BLOCK.getDefaultMapColor())
+                    .nonOpaque()), "minium_touchable_glass_pane", defaultBlockItemSettings());
     public static final Block OSMIUM_CHAIN = register(
             new ChainBlock(Block.Settings.create().solid().requiresTool().strength(7.5F, 12.0F).sounds(BlockSoundGroup.CHAIN).nonOpaque()), "osmium_chain", defaultBlockItemSettings());
     public static final Block OSMIUM_LANTERN = register(
@@ -196,9 +214,34 @@ public class MiniumBlock{
             new MiniumHopperBlock(Block.Settings.copy(Blocks.HOPPER).strength(5.0F, 20.0F).mapColor(MINIUM_BLOCK.getDefaultMapColor())), "minium_hopper", defaultBlockItemSettings());
     public static final Block MINIUM_TRAPDOOR = register(new TrapdoorBlock(BlockSetType.COPPER,
                     AbstractBlock.Settings.create().mapColor(MINIUM_BLOCK.getDefaultMapColor()).strength(5.0F, 20.0F).requiresTool().nonOpaque().allowsSpawning(Blocks::never)), "minium_trapdoor", defaultBlockItemSettings());
-
-
     public static final Block MINIUM_DOOR = register(new DoorBlock(BlockSetType.COPPER, AbstractBlock.Settings.create().mapColor(MINIUM_BLOCK.getDefaultMapColor()).strength(5.0F, 20.0F).nonOpaque().pistonBehavior(PistonBehavior.DESTROY)), "minium_door", defaultBlockItemSettings());
+    public static final Block MINIUM_FAN = register(
+            new MiniumFanBlock(Block.Settings.create()
+                    .mapColor(MINIUM_BLOCK.getDefaultMapColor())
+                    .requiresTool()
+                    .strength(5.0F, 20.0F)
+                    .sounds(BlockSoundGroup.HEAVY_CORE)
+                    .solidBlock(Blocks::never)), "minium_fan", defaultBlockItemSettings());
+    public static final Block JADESTONE = register(
+            new Block(Block.Settings.create()
+                    .mapColor(MapColor.DARK_AQUA)
+                    .requiresTool()
+                    .strength(1.5F, 6.0F)
+                    .sounds(BlockSoundGroup.STONE)), "jadestone", defaultBlockItemSettings());
+    public static final Block JADESTONE_SLAB = register(new SlabBlock(AbstractBlock.Settings.copy(JADESTONE)), "jadestone_slab", defaultBlockItemSettings());
+    public static final Block JADESTONE_STAIRS = register(new StairsBlock(JADESTONE.getDefaultState(), AbstractBlock.Settings.copy(JADESTONE)), "jadestone_stairs", defaultBlockItemSettings());
+    public static final Block JADESTONE_WALL = register(new WallBlock(AbstractBlock.Settings.copy(JADESTONE)), "jadestone_wall", defaultBlockItemSettings());
+    public static final Block POLISHED_JADESTONE = register(
+            new Block(AbstractBlock.Settings.copy(JADESTONE).sounds(BlockSoundGroup.POLISHED_TUFF)), "polished_jadestone", defaultBlockItemSettings());
+    public static final Block POLISHED_JADESTONE_SLAB = register(new SlabBlock(AbstractBlock.Settings.copy(POLISHED_JADESTONE)), "polished_jadestone_slab", defaultBlockItemSettings());
+    public static final Block POLISHED_JADESTONE_STAIRS = register(new StairsBlock(POLISHED_JADESTONE.getDefaultState(), AbstractBlock.Settings.copy(POLISHED_JADESTONE)), "polished_jadestone_stairs", defaultBlockItemSettings());
+    public static final Block POLISHED_JADESTONE_WALL = register(new WallBlock(AbstractBlock.Settings.copy(POLISHED_JADESTONE)), "polished_jadestone_wall", defaultBlockItemSettings());
+    public static final Block JADESTONE_BRICKS = register(
+            new Block(AbstractBlock.Settings.copy(JADESTONE).sounds(BlockSoundGroup.TUFF_BRICKS)), "jadestone_bricks", defaultBlockItemSettings());
+    public static final Block JADESTONE_BRICK_SLAB = register(new SlabBlock(AbstractBlock.Settings.copy(JADESTONE_BRICKS)), "jadestone_brick_slab", defaultBlockItemSettings());
+    public static final Block JADESTONE_BRICK_STAIRS = register(new StairsBlock(JADESTONE_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(JADESTONE_BRICKS)), "jadestone_brick_stairs", defaultBlockItemSettings());
+    public static final Block JADESTONE_BRICK_WALL = register(new WallBlock(AbstractBlock.Settings.copy(JADESTONE_BRICKS)), "jadestone_brick_wall", defaultBlockItemSettings());
+
     //from mekanism
     public static final Block OSMIUM_BLOCK_FROM_MEKANISM = register(new Block(Block.Settings.create().strength(7.5f, 12.0f).mapColor(MapColor.LIGHT_BLUE_GRAY).requiresTool()), "osmium_block", defaultBlockItemSettings());
     public static final Block RAW_OSMIUM_BLOCK_FROM_MEKANISM = register(new Block(Block.Settings.create().strength(7.5f, 12.0f).mapColor(MapColor.LIGHT_BLUE_GRAY).requiresTool()), "raw_osmium_block", defaultBlockItemSettings());
@@ -226,6 +269,7 @@ public class MiniumBlock{
     private static Function<BlockState, MapColor> createMapColorFromWaterloggedBlockState(MapColor mapColor) {
         return state -> state.get(Properties.WATERLOGGED) ? MapColor.WATER_BLUE : mapColor;
     }
+    private MiniumBlock(){}
     public static void initialize() {
         LandPathNodeTypesRegistry.register(MiniumBlock.EASY_GRINDER, PathNodeType.DAMAGE_OTHER, PathNodeType.DAMAGE_OTHER);
         LandPathNodeTypesRegistry.register(MiniumBlock.ADVANCED_GRINDER, PathNodeType.DAMAGE_OTHER, PathNodeType.DAMAGE_OTHER);

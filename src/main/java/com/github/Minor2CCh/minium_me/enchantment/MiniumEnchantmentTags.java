@@ -7,10 +7,10 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 @SuppressWarnings("all")
-public class MiniumEnchantmentTags {
+public final class MiniumEnchantmentTags {
     public static final TagKey<Enchantment> TRANSFORMER_STONE = modOf("transformer_stone");
     public static final TagKey<Enchantment> FREEZABLE_TEMPORALLY_BLOCK = modOf("freezable_temporally_block");
-
+    private MiniumEnchantmentTags() {}
     private static TagKey<Enchantment> modOf(String id) {
         return TagKey.of(RegistryKeys.ENCHANTMENT, Minium_me.of(id));
     }

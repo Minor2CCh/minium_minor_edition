@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "minium_me:block/polished_jadestone",
+    "side": "minium_me:block/polished_jadestone",
+    "top": "minium_me:block/polished_jadestone"
+  }
+}

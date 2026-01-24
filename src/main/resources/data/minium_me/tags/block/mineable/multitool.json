@@ -19,6 +19,10 @@
     {
       "id": "ars_nouveau:mage_block",
       "required": false
+    },
+    {
+      "id": "#c:skulls",
+      "required": false
     }
   ]
 }

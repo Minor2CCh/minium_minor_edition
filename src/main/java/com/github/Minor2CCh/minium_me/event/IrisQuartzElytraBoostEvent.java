@@ -23,11 +23,12 @@ import net.minecraft.world.explosion.ExplosionBehavior;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class IrisQuartzElytraBoostEvent {
+public final class IrisQuartzElytraBoostEvent {
     public static final int BOOST_COOL_TIME = 100;
     private static final float REQUIRE_COOL_PROGRESS = 0.5F;
     private static final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
             true, false, Optional.of(1.22F), Registries.BLOCK.getEntryList(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity()));
+    private IrisQuartzElytraBoostEvent() {}
     public static void initialize(){
         PayloadTypeRegistry.playC2S().register(IrisQuartzElytraBoostPayLoad.ID, IrisQuartzElytraBoostPayLoad.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(IrisQuartzElytraBoostPayLoad.ID, (payload, context) -> {

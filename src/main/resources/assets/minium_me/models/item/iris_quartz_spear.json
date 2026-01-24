@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minium_me:item/spears",
   "textures": {
     "layer0": "minium_me:item/iris_quartz_spear"
   }

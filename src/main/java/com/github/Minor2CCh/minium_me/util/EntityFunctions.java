@@ -12,9 +12,12 @@ import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
-public class EntityFunctions {
+public final class EntityFunctions {
+    private EntityFunctions() {}
     public static final List<EquipmentSlot> EQUIPMENT_SLOT_LIST = List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
+    public static Supplier<PlayerEntity> getClientPlayer = () -> null;
     public static boolean hasItem(LivingEntity entity, Item item){
         if(entity instanceof PlayerEntity playerEntity){
             if(playerEntity.getOffHandStack().getItem() == item){

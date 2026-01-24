@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "N": {
+      "tag": "c:nuggets/minium"
+    }
+  },
+  "pattern": [
+    " N",
+    "# "
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:name_tag"
+  }
+}

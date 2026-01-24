@@ -20,7 +20,7 @@ import net.minecraft.util.Util;
 
 import java.util.List;
 
-public class MiniumItem{
+public final class MiniumItem{
     public static final Item MINIUM_INGOT = register(new Item(new Item.Settings()), "minium_ingot");
     public static final Item C_MINIUM_INGOT = register(new Item(new Item.Settings()), "concentrated_minium_ingot");
     public static final Item R_MINIUM = register(new Item(new Item.Settings()), "raw_minium");
@@ -91,6 +91,7 @@ public class MiniumItem{
     public static final Item OSMIUM_NUGGET_FROM_MEKANISM = register(new Item(new Item.Settings()), "osmium_nugget");
     public static final Item RAW_OSMIUM_FROM_MEKANISM = register(new Item(new Item.Settings()), "raw_osmium");
 
+    private MiniumItem() {}
     public static Item register(Item item, String id) {
         Identifier itemID = Minium_me.of(id);
         return Registry.register(Registries.ITEM, itemID, item);

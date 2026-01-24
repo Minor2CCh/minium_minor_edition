@@ -82,45 +82,48 @@ public class TemporallyBlockPlacerItem extends Item implements HasCustomTooltip 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
-        // クライアントでも視線を取れるが、実際の設置はサーバー側で行う
-        BlockHitResult hit = raycast(world, user, RaycastContext.FluidHandling.NONE);
+        if(user.canModifyBlocks()){
+            // クライアントでも視線を取れるが、実際の設置はサーバー側で行う
+            BlockHitResult hit = raycast(world, user, RaycastContext.FluidHandling.NONE);
+            if (hit.getType() == HitResult.Type.MISS) {
+                if (placeableTemporallyBlock(user, stack)) {
+                    // 空中クリック → プレイヤーの視線方向に仮想的な設置位置を決定
+                    Vec3d eyePos = user.getCameraPosVec(1.0F);
+                    Vec3d lookVec = user.getRotationVec(1.0F);
+                    Vec3d target = eyePos.add(lookVec.multiply(user.getAttributeValue(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE)));
 
-        if (hit.getType() == HitResult.Type.MISS) {
-            if (placeableTemporallyBlock(user, stack)) {
-                // 空中クリック → プレイヤーの視線方向に仮想的な設置位置を決定
-                Vec3d eyePos = user.getCameraPosVec(1.0F);
-                Vec3d lookVec = user.getRotationVec(1.0F);
-                Vec3d target = eyePos.add(lookVec.multiply(user.getAttributeValue(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE)));
+                    BlockPos placePos = BlockPos.ofFloored(target);
+                    BlockState state = getBlock().getDefaultState();
+                    BlockSoundGroup blockSoundGroup = state.getSoundGroup();
 
-                BlockPos placePos = BlockPos.ofFloored(target);
-                BlockState state = getBlock().getDefaultState();
-                BlockSoundGroup blockSoundGroup = state.getSoundGroup();
-
-                // 空気中にも強制設置
-                if (placePos.getY() >= world.getDimension().minY() && placePos.getY() < (world.getDimension().height() + world.getDimension().minY()) &&
-                        (world.getBlockState(placePos).isAir()
-                                || world.isWater(placePos)
-                                || world.getBlockState(placePos).isReplaceable())) {
-                    if(world.canPlace(state, placePos, ShapeContext.of(user))){
-                        if(!world.isClient()){
-                            int extendTime = EnchantmentHelper.hasAnyEnchantmentsIn(stack, MiniumEnchantmentTags.FREEZABLE_TEMPORALLY_BLOCK) ? 0 : MiniumEnchantments.getEnchantmentLevel(user, stack, Enchantments.FORTUNE);
-                            world.setBlockState(placePos, state.with(Properties.WATERLOGGED, world.getFluidState(placePos).getFluid() == Fluids.WATER).with(TemporallyBlock.FREEZE, EnchantmentHelper.hasAnyEnchantmentsIn(stack, MiniumEnchantmentTags.FREEZABLE_TEMPORALLY_BLOCK)).with(TemporallyBlock.EXTEND, extendTime));
+                    // 空気中にも強制設置
+                    if (placePos.getY() >= world.getDimension().minY() && placePos.getY() < (world.getDimension().height() + world.getDimension().minY()) &&
+                            (world.getBlockState(placePos).isAir()
+                                    || world.isWater(placePos)
+                                    || world.getBlockState(placePos).isReplaceable())) {
+                        if(world.canPlace(state, placePos, ShapeContext.of(user))){
+                            if(!world.isClient()){
+                                int extendTime = EnchantmentHelper.hasAnyEnchantmentsIn(stack, MiniumEnchantmentTags.FREEZABLE_TEMPORALLY_BLOCK) ? 0 : MiniumEnchantments.getEnchantmentLevel(user, stack, Enchantments.FORTUNE);
+                                world.setBlockState(placePos, state.with(Properties.WATERLOGGED, world.getFluidState(placePos).getFluid() == Fluids.WATER).with(TemporallyBlock.FREEZE, EnchantmentHelper.hasAnyEnchantmentsIn(stack, MiniumEnchantmentTags.FREEZABLE_TEMPORALLY_BLOCK)).with(TemporallyBlock.EXTEND, extendTime));
+                            }
+                            world.playSound(
+                                    user,
+                                    placePos,
+                                    this.getPlaceSound(state),
+                                    SoundCategory.BLOCKS,
+                                    (blockSoundGroup.getVolume() + 1.0F) / 2.0F,
+                                    blockSoundGroup.getPitch() * 0.8F
+                            );
+                            if (!user.isCreative())
+                                useTemporallyBlock(user, stack);
+                            world.emitGameEvent(GameEvent.BLOCK_PLACE, placePos, GameEvent.Emitter.of(user, state));
+                            return TypedActionResult.success(stack, world.isClient);
                         }
-                        world.playSound(
-                                user,
-                                placePos,
-                                this.getPlaceSound(state),
-                                SoundCategory.BLOCKS,
-                                (blockSoundGroup.getVolume() + 1.0F) / 2.0F,
-                                blockSoundGroup.getPitch() * 0.8F
-                        );
-                        if (!user.isCreative())
-                            useTemporallyBlock(user, stack);
-                        return TypedActionResult.success(stack, world.isClient);
                     }
                 }
+                return TypedActionResult.fail(stack);
             }
-            return TypedActionResult.fail(stack);
+
         }
 
         // 通常ブロッククリック時は普通に設置
@@ -300,6 +303,9 @@ public class TemporallyBlockPlacerItem extends Item implements HasCustomTooltip 
     }
     public boolean placeableTemporallyBlock(@Nullable PlayerEntity player, ItemStack itemStack){
         if(player != null){
+            if(!player.canModifyBlocks()){
+                return false;
+            }
             Integer tempRemain = itemStack.get(MiniumModComponent.TEMPORALLY_REMAIN);
             if(tempRemain != null){
                 return player.isCreative() || tempRemain > 0;

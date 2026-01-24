@@ -1,4 +1,4 @@
-package com.github.Minor2CCh.minium_me.platform;
+package com.github.Minor2CCh.minium_me.platform.trinkets;
 
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
 import net.minecraft.entity.EquipmentSlot;

@@ -15,6 +15,7 @@ import com.github.Minor2CCh.minium_me.component.ToolReinforcedComponent;
 import com.github.Minor2CCh.minium_me.config.MiniumConfigLoader;
 import com.github.Minor2CCh.minium_me.event.IrisQuartzElytraBoostEvent;
 import com.github.Minor2CCh.minium_me.item.WindExploderItem;
+import com.github.Minor2CCh.minium_me.util.EntityFunctions;
 import com.github.Minor2CCh.minium_me.util.HasCustomTooltip;
 import com.github.Minor2CCh.minium_me.item.IrisQuartzElytraItem;
 import com.github.Minor2CCh.minium_me.item.MiniumItem;
@@ -28,6 +29,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
@@ -45,6 +47,7 @@ public class Minium_meClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        EntityFunctions.getClientPlayer = () -> MinecraftClient.getInstance().player;
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
                 MiniumBlock.MINIUM_GRATE,
                 MiniumBlock.REDSTONE_ENERGY_BLOCK,
@@ -66,8 +69,11 @@ public class Minium_meClient implements ClientModInitializer {
                 MiniumBlock.MINIUM_DOOR);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
                 MiniumBlock.MINIUM_GLASS,
+                MiniumBlock.MINIUM_GLASS_PANE,
                 MiniumBlock.MINIUM_PASSABLE_GLASS,
+                MiniumBlock.MINIUM_PASSABLE_GLASS_PANE,
                 MiniumBlock.MINIUM_TOUCHABLE_GLASS,
+                MiniumBlock.MINIUM_TOUCHABLE_GLASS_PANE,
                 MiniumBlock.TEMPORALLY_BLOCK);
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT
@@ -109,7 +115,7 @@ public class Minium_meClient implements ClientModInitializer {
                 if(MiniumConfigLoader.getConfig().getHealthBoostValue() > 0){
                     if (hasShiftDown) {
                         lines.add(Text.translatable(stack.getTranslationKey()+".desc.0", MiniumConfigLoader.getConfig().getHealthBoostValue()).formatted(Formatting.WHITE));
-                        if(!FabricLoader.getInstance().isModLoaded("maxhealthfix")){
+                        if(!(FabricLoader.getInstance().isModLoaded("maxhealthfix") || FabricLoader.getInstance().isModLoaded("max_health_fix"))){
                             lines.add(Text.translatable(stack.getTranslationKey()+".desc.1").formatted(Formatting.DARK_RED));
                         }
                     } else {

@@ -23,7 +23,7 @@ public class TouchableGlassBlock extends TransparentBlock implements HasCustomTo
             Entity entity = esc.getEntity();
             if (entity != null) {
                 if (entity instanceof PlayerEntity) {
-                    return VoxelShapes.fullCube();
+                    return super.getCollisionShape(state, world, pos, context);
                 }
             }
         }

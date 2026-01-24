@@ -9,7 +9,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 
 import java.util.Objects;
 
-public class PicklingSaltReduceEvent {
+public final class PicklingSaltReduceEvent {
+    private PicklingSaltReduceEvent() {}
     public static void initialize(){
         ServerLivingEntityEvents.AFTER_DAMAGE.register((LivingEntity entity, DamageSource source, float amount, float damageTaken, boolean blocked) -> {
             if(entity.hasStatusEffect(MiniumStatusEffects.PICKLING_SALT)){

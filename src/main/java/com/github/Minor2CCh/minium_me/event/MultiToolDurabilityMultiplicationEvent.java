@@ -5,7 +5,8 @@ import com.github.Minor2CCh.minium_me.item.MiniumMultiToolItem;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.minecraft.component.DataComponentTypes;
 
-public class MultiToolDurabilityMultiplicationEvent {
+public final class MultiToolDurabilityMultiplicationEvent {
+    private MultiToolDurabilityMultiplicationEvent() {}
     public static void initialize(){
         DefaultItemComponentEvents.MODIFY.register(context -> {
             modifyDurability(context, (MiniumMultiToolItem) MiniumItem.MINIUM_MULTITOOL, 3);

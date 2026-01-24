@@ -31,6 +31,6 @@ public class PassableGlassBlock extends TransparentBlock implements HasCustomToo
             }
         }
         // デフォルトは普通の当たり判定
-        return VoxelShapes.fullCube();
+        return super.getCollisionShape(state, world, pos, context);
     }
 }

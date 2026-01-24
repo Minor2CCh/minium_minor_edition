@@ -10,7 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class MaceAdvancementEvent {
+public final class MaceAdvancementEvent {
+    private MaceAdvancementEvent() {}
     public static void initialize(){
         //死ぬとAFTER_DAMAGEを読まないので両方
         ServerLivingEntityEvents.AFTER_DAMAGE.register((LivingEntity entity, DamageSource source, float amount, float damageTaken, boolean blocked) -> {

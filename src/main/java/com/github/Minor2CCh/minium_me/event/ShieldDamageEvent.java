@@ -5,6 +5,7 @@ import com.github.Minor2CCh.minium_me.mixin.LivingEntityAccessor;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -13,7 +14,8 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 
-public class ShieldDamageEvent {
+public final class ShieldDamageEvent {
+    private ShieldDamageEvent() {}
     public static void initialize(){
         ServerLivingEntityEvents.AFTER_DAMAGE.register((LivingEntity entity, DamageSource source, float amount, float damageTaken, boolean blocked) -> {
             if(entity instanceof PlayerEntity player){

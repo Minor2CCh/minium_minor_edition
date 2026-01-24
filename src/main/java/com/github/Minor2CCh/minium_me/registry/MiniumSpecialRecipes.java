@@ -11,7 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-public class MiniumSpecialRecipes {
+public final class MiniumSpecialRecipes {
     public static final RecipeSerializer<MiniumShieldDecorationRecipe> MINIUM_SHIELD_DECORATION = register(
             "crafting_special_miniumshielddecoration", new SpecialRecipeSerializer<>(MiniumShieldDecorationRecipe::new)
     );
@@ -21,6 +21,7 @@ public class MiniumSpecialRecipes {
     public static final RecipeSerializer<SmithingToolReinforcedRecipe> SMITHING_TOOL_REINFORCED = register(
             "smithing_tool_reinforced", new SmithingToolReinforcedRecipe.Serializer()
     );
+    private MiniumSpecialRecipes() {}
     public static void initialize() {
     }
     static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String id, S serializer) {

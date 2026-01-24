@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minium_me:jadestone_brick_stairs_from_jadestone_bricks_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_jadestone_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minium_me:jadestone_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_jadestone_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minium_me:jadestone_brick_stairs_from_jadestone_bricks_stonecutting"
+    ]
+  }
+}

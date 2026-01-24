@@ -1,7 +1,7 @@
 package com.github.Minor2CCh.minium_me.item;
 
 import com.github.Minor2CCh.minium_me.config.MiniumConfigLoader;
-import com.github.Minor2CCh.minium_me.registry.MiniumTrackDatas;
+import com.github.Minor2CCh.minium_me.registry.MiniumTrackData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -20,10 +20,10 @@ public class IrisQuartzAppleItem extends Item {
         if(!world.isClient()){
             EntityAttributeInstance instance = user.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
             if(instance != null){
-                int healthBoost = user.getDataTracker().get(MiniumTrackDatas.getMaxHealthBoostTracker());
+                int healthBoost = user.getDataTracker().get(MiniumTrackData.getMaxHealthBoostTracker());
                 final int boostLimit = MiniumConfigLoader.getConfig().getHealthBoostLimit();
                 if(healthBoost < boostLimit){
-                    user.getDataTracker().set(MiniumTrackDatas.getMaxHealthBoostTracker(), Math.min(healthBoost + MiniumConfigLoader.getConfig().getHealthBoostValue(), boostLimit));
+                    user.getDataTracker().set(MiniumTrackData.getMaxHealthBoostTracker(), Math.min(healthBoost + MiniumConfigLoader.getConfig().getHealthBoostValue(), boostLimit));
                 }else {
                     user.setHealth(user.getMaxHealth());
                     if(user instanceof PlayerEntity player){

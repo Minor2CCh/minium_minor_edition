@@ -12,12 +12,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
 @SuppressWarnings("unused")
-public class MiniumEnchantments {
+public final class MiniumEnchantments {
     public static final RegistryKey<Enchantment> STONE_ALCHEMY = of("stone_alchemy");
     public static final RegistryKey<Enchantment> ENERGY_BOOST = of("energy_boost");
     private static RegistryKey<Enchantment> of(String id) {
         return RegistryKey.of(RegistryKeys.ENCHANTMENT, Minium_me.of(id));
     }
+    private MiniumEnchantments() {}
     public static void initialize() {
 
     }

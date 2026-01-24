@@ -1,0 +1,25 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "techreborn"
+      ]
+    }
+  ],
+  "type": "techreborn:centrifuge",
+  "ingredients": [
+    {
+      "count": 8,
+      "item": "minium_me:jadestone"
+    }
+  ],
+  "outputs": [
+    {
+      "count": 1,
+      "id": "techreborn:emerald_nugget"
+    }
+  ],
+  "power": 5,
+  "time": 2400
+}

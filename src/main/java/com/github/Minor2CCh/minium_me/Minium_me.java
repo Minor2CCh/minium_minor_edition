@@ -9,9 +9,9 @@ import com.github.Minor2CCh.minium_me.entity.MiniumEntityType;
 import com.github.Minor2CCh.minium_me.event.*;
 import com.github.Minor2CCh.minium_me.item.*;
 import com.github.Minor2CCh.minium_me.particle.MiniumParticles;
-import com.github.Minor2CCh.minium_me.platform.AccessoryPlatform;
-import com.github.Minor2CCh.minium_me.platform.DisableAccessoryPlatform;
-import com.github.Minor2CCh.minium_me.platform.EnableAccessoryPlatform;
+import com.github.Minor2CCh.minium_me.platform.trinkets.AccessoryPlatform;
+import com.github.Minor2CCh.minium_me.platform.trinkets.DisableAccessoryPlatform;
+import com.github.Minor2CCh.minium_me.platform.trinkets.EnableAccessoryPlatform;
 import com.github.Minor2CCh.minium_me.sound.MiniumSoundsEvent;
 import com.github.Minor2CCh.minium_me.statuseffect.MiniumStatusEffects;
 import com.github.Minor2CCh.minium_me.util.AddLootTable;
@@ -24,6 +24,7 @@ public class Minium_me implements ModInitializer {
 
     public static final String MOD_ID = "minium_me";
     public static final AccessoryPlatform ACCESSORY_PLATFORM = FabricLoader.getInstance().isModLoaded("trinkets") ? new EnableAccessoryPlatform() : new DisableAccessoryPlatform();
+
 
     @Override
     public void onInitialize() {
